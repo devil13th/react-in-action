@@ -9,15 +9,20 @@ class ThdTabContainerSingle extends React.Component{
         this.open = this.open.bind(this);
 
         this.state={
-            open : false,
+            open : this.props.open ? false : true,
             title : this.props.tit,
             index : this.props.index
         };
     }
 
     open(){
-        console.log(this)
-        this.setState({open:!this.state.open});
+        console.log("open()");
+        this.setState({open:true});
+    }
+    
+    close(){
+        console.log("close()");
+        this.setState({open:false});
     }
 
     render(){

@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import ReactDOM from 'react-dom';
 import {ThdTabContainerSingle} from './ThdTabContainerSingle.js';
 
 class ThdTabSingle extends React.Component{
@@ -18,13 +19,25 @@ class ThdTabSingle extends React.Component{
             currentTab:0
         };
 
-        
-
     }
 
     fnA(x){
         this.setState({currentTab:x});
-        console.log(this.props.children);
+        
+        //找到子组件的DOM
+        ReactDOM.findDOMNode(this.refs[x]);
+        
+        //循环子组件
+        Object.values(this.refs).forEach((element)=>{
+            element.close()
+        });
+        /*for(var pro in this.refs){
+            this.refs[pro].close();
+        }*/
+       
+        //找到子组件,并调用其方法
+        this.refs[x].open();
+
     }
     
 
@@ -39,17 +52,18 @@ class ThdTabSingle extends React.Component{
        
         this.state.data.forEach((item,x) =>{
             //console.log(item,x);
-            let k = `tab{x}`;
+            let k = "tab_"+ item.index;
             let _this = this;
+            let ref = "tab_"+ item.index;
             //doms.push(<ThdTabContainerSingle clickCb={this.fnA} key={k} tit={item.tit} index={item.index}>{item.content}</ThdTabContainerSingle>);
-            doms.push(<ThdTabContainerSingle clickCb={()=>{_this.fnA(x)}} key={k} tit={item.tit} index={item.index}>{item.content}</ThdTabContainerSingle>);
+            let open = true;
+            if(x == 0){
+                open = false;
+            }
+            doms.push(<ThdTabContainerSingle ref={ref} open={open} clickCb={()=>{_this.fnA(k)}} key={k} tit={item.tit} index={item.index}>{item.content}</ThdTabContainerSingle>);
         })
-        //alert(1);
-        //console.log(doms);
-        
-
-        //console.log(<ThdTabContainerSingle></ThdTabContainerSingle>);
-        return (<div>当前打开{this.state.currentTab}<br/>{doms}</div>);
+     
+        return (<div>{doms}</div>);
     }
 }
 
