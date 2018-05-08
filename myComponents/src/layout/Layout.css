@@ -1,0 +1,22 @@
+html,body{height:100%;font-size:14px;margin:0px;padding:0px;}
+
+.main{display:-moz-box; /* Firefox */
+    display:-webkit-box; /* Safari and Chrome */
+    display:box; 
+    width:100%;
+    height:100%;
+    align-items:stretch
+}
+
+#layoutHeader{
+    -moz-box-flex:1.0; /* Firefox */
+    -webkit-box-flex:1.0; /* Safari and Chrome */
+    box-flex:1.0;
+    border:1px solid red;
+}
+#layoutFooter{
+    -moz-box-flex:2.0; /* Firefox */
+    -webkit-box-flex:2.0; /* Safari and Chrome */
+    box-flex:2.0;
+    border:1px solid blue;
+}
