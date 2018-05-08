@@ -23,7 +23,7 @@ class ThdTabSingle extends React.Component{
 
     fnA(x){
         this.setState({currentTab:x});
-        
+        console.log(this.state)
         //找到子组件的DOM
         ReactDOM.findDOMNode(this.refs[x]);
         
@@ -60,7 +60,16 @@ class ThdTabSingle extends React.Component{
             if(x == 0){
                 open = false;
             }
-            doms.push(<ThdTabContainerSingle ref={ref} open={open} clickCb={()=>{_this.fnA(k)}} key={k} tit={item.tit} index={item.index}>{item.content}</ThdTabContainerSingle>);
+            doms.push(
+                <ThdTabContainerSingle 
+                ref={ref} 
+                open={open} 
+                clickCb={()=>{_this.fnA(k)}} 
+                key={k} 
+                tit={item.tit} 
+                index={item.index}>
+                    {item.content}
+                </ThdTabContainerSingle>);
         })
      
         return (<div>{doms}</div>);
