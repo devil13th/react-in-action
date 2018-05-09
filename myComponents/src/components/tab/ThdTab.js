@@ -22,4 +22,5 @@ class ThdTab extends React.Component{
         return (<div className="ThdTab" style={style}>{this.props.children}</div>);
     }
 }
+
 export {ThdTab};
