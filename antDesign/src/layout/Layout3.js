@@ -14,7 +14,6 @@ class Layout3 extends React.Component{
     }
     render(){
       return (
-
         <Layout>
           <Header className="header">
             <div className="logo" />

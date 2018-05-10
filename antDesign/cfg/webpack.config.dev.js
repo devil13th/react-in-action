@@ -6,7 +6,7 @@ module.exports ={
     path:__dirname+'/../dist',
     filename:'bundle.js'
   },
-  mode:'development', // 生产模式production  开发模式development
+  mode:'production', // 生产模式production  开发模式development
   devServer: {
     contentBase: __dirname+'/../dist',//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转

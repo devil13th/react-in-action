@@ -15,7 +15,6 @@ class App extends React.Component{
                     <li><Link to="/Layout2">Layout2</Link></li>
                     <li><Link to="/Layout3">Layout3</Link></li>
                     <li><Link to="/Layout4">Layout4</Link></li>
-
                     <li><Link to="/Modal1">Modal1</Link></li>
                     
                 </ul>
