@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './Todo.js'
-
+/*
 const TodoList = ({ todos, onTodoClick }) => (
   <ul>
     {todos.map((todo, index) => (
@@ -9,6 +9,25 @@ const TodoList = ({ todos, onTodoClick }) => (
     ))}
   </ul>
 )
+*/
+
+class TodoList extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return (
+      <ul> 
+        {this.props.todos.map((todo, index) => (
+          <Todo key={index} text={ index + "|" + todo.text + "|" + todo.completed} onClick={() => this.props.onTodoClick(index)} />
+        ))}
+      </ul>
+    )
+  }
+}
+
+
+
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(

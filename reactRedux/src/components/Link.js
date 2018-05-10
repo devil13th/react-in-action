@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+
+/*
 const Link = ({ active, children, onClick }) => {
   if (active) {
     return <span>{children}</span>
@@ -10,14 +12,34 @@ const Link = ({ active, children, onClick }) => {
     <a
       href=""
       onClick={e => {
-        e.preventDefault()
-        onClick()
+        e.preventDefault();
+        onClick();
       }}
     >
       {children}
     </a>
   )
 }
+*/
+class Link extends React.Component{
+
+    constructor(props){
+      super(props);
+    }
+    render(){
+      if (this.props.active) {
+        return <span>{this.props.children}</span>
+      }
+    
+      return (
+        <a href="" onClick={e => {e.preventDefault();this.props.onClick();}}>
+          {this.props.children}
+        </a>
+      );
+    }
+}
+
+
 
 Link.propTypes = {
   active: PropTypes.bool.isRequired,
