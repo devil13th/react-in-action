@@ -40,9 +40,14 @@ function todos(state = [], action) {
   }
 }
 
+/**
+ * 重点!!!!!!!!!!!!
+ * 传递给combineReducer的是key-value 键值对，其中键表示传递到对应reducer的数据，
+ * 也就是说：slice reducer中的state并不是全局state，而是state.articles/state.papers等数据。
+ */
 const todoApp = combineReducers({
-  visibilityFilter,
-  todos
+  visibilityFilter : visibilityFilter,
+  todos : todos
 })
 
 export default todoApp

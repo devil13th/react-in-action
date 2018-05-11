@@ -33,7 +33,7 @@ class Link extends React.Component{
     
       return (
         <a href="" onClick={e => {e.preventDefault();this.props.onClick();}}>
-          {this.props.children}
+          {this.props.children} 
         </a>
       );
     }
