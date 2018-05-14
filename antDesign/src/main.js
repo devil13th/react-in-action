@@ -7,6 +7,7 @@ import { Layout2 } from './layout/Layout2.js';
 import { Layout3 } from './layout/Layout3.js';
 import { Layout4 } from './layout/Layout4.js';
 import { Modal1 } from './modal/Modal1.js';
+import { Button1 } from './button/Button1.js';
 
 ReactDOM.render((
     <BrowserRouter>
@@ -18,6 +19,7 @@ ReactDOM.render((
           <Route path="/Layout4" component={Layout4}/>
 
           <Route path="/Modal1" component={Modal1}/>
+          <Route path="/Button1" component={Button1}/>
 
           
       </Switch>

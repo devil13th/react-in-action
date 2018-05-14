@@ -45,9 +45,11 @@ const reducers = (state = [],action) => {
             return action.data;
         }
         case actionType.ADD : {
+            console.log("ADD...");
             return [...state,action.data];
         }
         case actionType.UPDATE : {
+            console.log("UPDATE...");
             return state.map((item) => {
                 if(item.id === action.data.id){
                     return action.data;
@@ -57,14 +59,10 @@ const reducers = (state = [],action) => {
             })
         }
         case actionType.DELETE : {
-            const r = [];
-             state.map((item) => {
-                if(item.id != action.id){
-                    r.push(item);
-                }
+            console.log("DELETE...");
+            return state.filter((item) => {
+               return item.id != action.id
             })
-
-            return r;
         };
         default : {
             return state;
@@ -78,7 +76,16 @@ const store = createStore(reducers);
 
 
 store.subscribe(() => {
-    console.log(" trigger :",store.getState());
+    console.log(" trigger1 :",store.getState());
+});
+
+
+store.subscribe(() => {
+    console.log(" trigger2 : 执行");
+});
+
+store.subscribe(() => {
+    console.log(" trigger3 : 执行");
 });
 
 store.dispatch(createAddAction({id:1,userName:"devil13th"}));
