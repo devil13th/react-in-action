@@ -4,7 +4,7 @@
   "description": "wsst web designer",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --config cfg/webpack.config.dev.js",
+    "dev": "webpack --config ./cfg/webpack.config.dev.js",
     "server": "webpack-dev-server --config ./cfg/webpack.config.dev.js"
   },
   "keywords": [

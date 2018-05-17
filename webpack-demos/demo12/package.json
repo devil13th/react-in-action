@@ -5,5 +5,8 @@
     "dev": "webpack-dev-server --open",
     "build": "webpack"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "webpack-dev-server": "^3.1.4"
+  }
 }

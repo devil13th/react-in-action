@@ -1,19 +1,8 @@
-webpackJsonp([1],{
+webpackJsonp([1],[
+/* 0 */
+/***/ (function(module, exports) {
 
-/***/ 15:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var React = __webpack_require__(2);
-var ReactDOM = __webpack_require__(8);
-ReactDOM.render(React.createElement(
-  'h1',
-  null,
-  'Hello World'
-), document.getElementById('a'));
+throw new Error("Module build failed: Error: Couldn't find preset \"react-app\" relative to directory \"/Users/devil13th/Desktop\"\n    at /Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/file/options/option-manager.js:293:19\n    at Array.map (<anonymous>)\n    at OptionManager.resolvePresets (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/file/options/option-manager.js:275:20)\n    at OptionManager.mergePresets (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/file/options/option-manager.js:264:10)\n    at OptionManager.mergeOptions (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/file/options/option-manager.js:249:14)\n    at OptionManager.init (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/file/options/option-manager.js:368:12)\n    at File.initOptions (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/file/index.js:212:65)\n    at new File (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/file/index.js:135:24)\n    at Pipeline.transform (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-core/lib/transformation/pipeline.js:46:16)\n    at transpile (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-loader/lib/index.js:50:20)\n    at Object.module.exports (/Users/devil13th/Desktop/github/react-in-action/webpack-demos/node_modules/babel-loader/lib/index.js:173:20)");
 
 /***/ })
-
-},[15]);
+],[0]);
