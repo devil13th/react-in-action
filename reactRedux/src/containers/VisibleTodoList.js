@@ -14,6 +14,7 @@ const getVisibleTodos = (todos, filter) => {
 }
 
 const mapStateToProps = state => {
+  console.log(" [mapStateToProps ][ todoList ] ... computed todos ....");
   return {
     todos: getVisibleTodos(state.todos, state.visibilityFilter)
   }

@@ -3,12 +3,13 @@ import {
   ADD_TODO,
   TOGGLE_TODO,
   SET_VISIBILITY_FILTER,
-  VisibilityFilters
+  VisibilityFilters,
+  MONITOR_ACTION
 } from './actions.js'
 const { SHOW_ALL } = VisibilityFilters
 
 function visibilityFilter(state = SHOW_ALL, action) {
-  console.log("visibilityFilter reducer ...");
+  console.log(" [visibilityFilter] [todos]  ...");
   switch (action.type) {
     case SET_VISIBILITY_FILTER:
       return action.filter
@@ -17,12 +18,22 @@ function visibilityFilter(state = SHOW_ALL, action) {
   }
 }
 
+function monitorReducer(state = 1, action) {
+  console.log(" [monitor] [todos]  ...");
+  switch (action.type) {
+    case MONITOR_ACTION:
+      return state+1;
+    default:
+      return state
+  }
+}
+
 function todos(state = [], action) {
-  console.log("todos reducer ...");
+  console.log(" [reducer] [todos]  ...");
   switch (action.type) {
     case ADD_TODO:
       return [
-        ...state,
+        ...state ,
         {
           text: action.text,
           completed: false
@@ -49,7 +60,8 @@ function todos(state = [], action) {
  */
 const todoApp = combineReducers({
   visibilityFilter : visibilityFilter,
-  todos : todos
+  todos : todos,
+  monitor : monitorReducer
 })
 
 export default todoApp

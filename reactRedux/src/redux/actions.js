@@ -4,7 +4,7 @@
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
-
+export const MONITOR_ACTION = 'MONITOR_ACTION'
 /*
  * 其它的常量
  */
@@ -31,7 +31,9 @@ export function setVisibilityFilter(filter) {
     return { type: SET_VISIBILITY_FILTER, filter }
 }
 
-
+export function createMonitorAction(){
+    return {type : MONITOR_ACTION}
+}
 
 
 

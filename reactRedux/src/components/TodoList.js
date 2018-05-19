@@ -13,9 +13,44 @@ const TodoList = ({ todos, onTodoClick }) => (
 
 class TodoList extends React.Component{
   constructor(props){
+    console.log("######### constructor [TodoList] #########");
     super(props);
   }
+
+  componentWillMount(){
+    console.log("######### componentWillMount [TodoList] #########");
+  }
+
+  componentDidMount(){
+    console.log("######### componentDidMount [TodoList] #########");
+  }
+
+  shouldComponentUpdate(nextProps,nextState){
+    console.log("######### shouldComponentUpdate [TodoList] #########");
+    console.log(nextProps);
+    console.log(nextState);
+    return true;
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log("######### componentWillReceiveProps [TodoList] #########");
+    console.log(nextProps);
+  }
+
+  componentWillUpdate(nextProps,nextState){
+    console.log("######### componentWillUpdate [TodoList] #########");
+    console.log(nextProps);
+    console.log(nextState);
+  }
+  
+  componentDidUpdate(nextProps,nextState){
+    console.log("######### componentDidUpdate [TodoList] #########");
+    console.log(nextProps);
+    console.log(nextState);
+  }
+
   render(){
+    console.log("######### render [TodoList] #########");
     return (
       <ul> 
         {this.props.todos.map((todo, index) => (
