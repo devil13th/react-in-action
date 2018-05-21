@@ -16,7 +16,13 @@ class Tab extends React.Component{
 
         this.props.tabList.map((item,index)=>{
             if(item.valid){
-                doms.push(<TabContent key={item.idx} idx={item.idx} title={item.title} open={item.open} content={item.content + "|||" + item.idx}></TabContent>);
+                doms.push(<TabContent  
+                    key={item.idx} 
+                    idx={item.idx} 
+                    title={item.title} 
+                    open={item.open} 
+                    content={item.content + "|||" + item.idx}>
+                    </TabContent>);
             }
         })
 
