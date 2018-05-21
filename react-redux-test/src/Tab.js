@@ -48,7 +48,11 @@ const mapStateToProps = function(state,ownerProps){
 
 const mapDispatchToProps = function(dispatch,ownerProps){
     return {
-        addTabContent : () => {console.log(this);dispatch(createTabAddAction("x","y"))}
+        addTabContent : () => {
+           dispatch(createTabAddAction("x","y"))
+           dispatch(createTabAddAction("a","b"))
+           dispatch(createTabAddAction("c","d"))
+        }
     }
 }
 

@@ -11,12 +11,16 @@ class TabContent extends React.Component{
     render(){
         return (
             <div>
-                <h3 onClick={this.props.activeTab}>
-                    {this.props.title}
-                </h3>
-                <span onClick={this.props.removeTab}>[删除]</span>
-                <div style={{display:this.props.open?"block":"none"}}>
-                    {this.props.content}
+                <h3 style={{padding:0,margin:0}} onClick={this.props.activeTab} style={{cursor:"pointer"}}>
+                   Title: {this.props.title}
+                </h3> 
+                <div style={{padding:5,display:this.props.open?"block":"none"}}>
+                    Content:<br/> <br/>   
+                    <div style={{padding:10}}>
+                        {this.props.content}
+                    </div>
+                    <br/>
+                    <span onClick={this.props.removeTab}>[删除]</span>
                 </div>
                 <hr/>
             </div>

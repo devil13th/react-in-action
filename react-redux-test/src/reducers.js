@@ -34,12 +34,13 @@ function tabList(state=tabListsInit,action){
         case TAB_ACTIVE_ACTION:{
             const newTabs = state.map((item) => {
                 if(item.idx == action.activeIndex){
+
                     return {
                         idx:item.idx,
                         title:item.title,
                         content:item.content,
                         valid:item.valid,
-                        open:true
+                        open:!item.open
                     }
                 }else{
                     return {
@@ -47,7 +48,7 @@ function tabList(state=tabListsInit,action){
                         title:item.title,
                         content:item.content,
                         valid:item.valid,
-                        open:item.open
+                        open:false
                     }
                 }
             })
