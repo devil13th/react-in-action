@@ -1,0 +1,17 @@
+{
+    "root":{
+        "users":[
+            {"name":"zhangsan","age":5},
+            {"name":"lisi","age":6},
+            {"name":"wangwu","age":7},
+            {"name":"zhaoliu","age":8}
+
+        ],
+        "class":{
+            "name":"class-1",
+            "grade":1,
+            "level":"normal",
+            "leader":"Mr. Wang"
+        }
+    }
+}

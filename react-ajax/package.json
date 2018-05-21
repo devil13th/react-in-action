@@ -1,0 +1,21 @@
+{
+  "name": "react-ajax",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --config cfg/webpack.config.dev.js",
+    "server": "webpack-dev-server --config ./cfg/webpack.config.dev.js"
+  },
+
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "superagent": "^3.8.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-server": "^3.1.4"
+  }
+}
