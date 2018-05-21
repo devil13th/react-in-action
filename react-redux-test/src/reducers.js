@@ -2,9 +2,11 @@ import {
     TAB_ACTIVE_ACTION,
     TAB_ADD_ACTION,
     TAB_REMOVE_ACTION,
+    TAB_REMOVEALL_ACTION,
     createTabActiveAction,
     createTabAddAction,
-    createTabRemoveAction
+    createTabRemoveAction,
+    createTabRemoveallAction
 } from './action.js'
 import { combineReducers } from 'redux'
 
@@ -56,6 +58,9 @@ function tabList(state=tabListsInit,action){
         };
         case TAB_ADD_ACTION:{
             return [...state,{idx:state.length,title:action.title,content:action.content,valid:true,open:false}];
+        };
+        case TAB_REMOVEALL_ACTION:{
+            return [];
         };
         case TAB_REMOVE_ACTION:{
             const newTabs = state.map((item) => {

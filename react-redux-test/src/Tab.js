@@ -5,7 +5,8 @@ import TabContent from './TabContent';
 import {
     createTabActiveAction,
     createTabAddAction,
-    createTabRemoveAction
+    createTabRemoveAction,
+    createTabRemoveallAction
 } from './action'
 
 class Tab extends React.Component{
@@ -23,8 +24,9 @@ class Tab extends React.Component{
         return (
 
             <div>
-                
+            
                 <button onClick={this.props.addTabContent}>添加</button>选项卡数量:{this.props.tabCounter}
+                <button onClick={this.props.removeAllTabContent}>全部清除</button>
                 <hr/>
                 {doms}
             </div>
@@ -52,7 +54,13 @@ const mapDispatchToProps = function(dispatch,ownerProps){
            dispatch(createTabAddAction("x","y"))
            dispatch(createTabAddAction("a","b"))
            dispatch(createTabAddAction("c","d"))
+        },
+        removeAllTabContent : () => {
+            dispatch(createTabRemoveallAction())
+            
         }
+
+        
     }
 }
 
