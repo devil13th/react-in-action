@@ -1,8 +1,9 @@
-
+import {combineReducers} from 'redux'
+import {userListReducer,userNameReducer} from '../components/UserManager/UserList'
 //reducers
 
 const initialState = {};
-export default (state = initialState, action) => {  
+const textReducer  = (state = initialState, action) => {  
     switch (action.type) {  
         case 'CHANGE_TEXT':
             return {  
@@ -16,3 +17,9 @@ export default (state = initialState, action) => {
             return initialState;  
     }  
 }
+
+export default combineReducers({
+    text : textReducer,
+    userList : userListReducer,
+    userName : userNameReducer
+});

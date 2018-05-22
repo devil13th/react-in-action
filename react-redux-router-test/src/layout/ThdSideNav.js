@@ -31,6 +31,11 @@ class ThdSideNav extends React.Component{
                 onCollapse={this.onCollapse}>
 
                 <Collapse accordion bordered={false}>
+                    <Panel header="用户管理" key="0">
+                    <p>
+                        <Link to="/UserList">Home</Link>
+                    </p>
+                    </Panel>
                     <Panel header="基本控件" key="1">
                     <p>
                         <Link to="/Home">Home</Link>

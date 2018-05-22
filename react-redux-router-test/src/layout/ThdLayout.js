@@ -6,7 +6,7 @@ import { Layout,Collapse } from 'antd';
 import {Route,Switch} from 'react-router-dom'
 import Home from '../components/Home';
 import About from '../components/About';
-
+import UserList from '../components/UserManager/UserList';
 
 
 const Panel = Collapse.Panel;
@@ -34,6 +34,7 @@ class ThdLayout extends React.Component{
                             <Route exact path="/" name="idx" component={Home} ></Route>
                             <Route path="/Home" name="home" component={Home} ></Route>
                             <Route path="/About" name="about" component={About} ></Route>
+                            <Route path="/UserList" name="about" component={UserList} ></Route>
                         </Switch>
                     </Content>
                 </Layout>

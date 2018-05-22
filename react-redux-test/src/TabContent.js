@@ -30,7 +30,7 @@ class TabContent extends React.Component{
 }
 
 
-const mapStoreToProps = function(state,ownProps){
+const mapStateToProps = function(state,ownProps){
     return {};
 }
 
@@ -47,4 +47,4 @@ const mapDispatchToProps = function(dispatch,ownProps){
 }
 
 
-export default connect(mapStoreToProps,mapDispatchToProps)(TabContent);
+export default connect(mapStateToProps,mapDispatchToProps)(TabContent);
