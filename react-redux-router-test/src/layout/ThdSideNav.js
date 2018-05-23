@@ -49,6 +49,11 @@ class ThdSideNav extends React.Component{
                     <Panel header="模式控件" key="3">
                     <p>xxx</p>
                     </Panel>
+                    <Panel header="Antd" key="4">
+                    <p>
+                        <Link to="/AntdTree">Antd Tree</Link>
+                    </p>
+                    </Panel>
                 </Collapse>
             
             </Sider>

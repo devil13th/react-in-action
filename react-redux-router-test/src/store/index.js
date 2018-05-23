@@ -1,6 +1,24 @@
 import reducers from '../reducers';
-import { createStore } from 'redux';
+import { createStore,compose  } from 'redux';
 
-const store = createStore(reducers,{}); 
+import DevTools from '../container/DevTools'
+
+
+
+
+//const store = createStore(reducers,{}); 
+
+
+
+
+const enhancer = compose(
+    DevTools.instrument()
+  );
+  
+const store = createStore(reducers, enhancer);
+
+
+
+
 
 export default store; 
