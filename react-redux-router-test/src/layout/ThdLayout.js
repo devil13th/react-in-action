@@ -7,8 +7,8 @@ import {Route,Switch} from 'react-router-dom'
 import Home from '../components/Home';
 import About from '../components/About';
 import UserList from '../components/UserManager/UserList';
-import AntdTree from '../components/AntdTree/components'
-
+import {AntdTreeForHtml,AntdTreeForData} from '../components/AntdTree/components'
+import {MyLayout} from '../components/Layout/components';
 const Panel = Collapse.Panel;
 const {  Sider, Content } = Layout;
 
@@ -35,8 +35,9 @@ class ThdLayout extends React.Component{
                             <Route path="/Home" name="home" component={Home} ></Route>
                             <Route path="/About" name="about" component={About} ></Route>
                             <Route path="/UserList" name="about" component={UserList} ></Route>
-                            <Route path="/AntdTree" name="antdTree" component={AntdTree} ></Route>
-                            
+                            <Route path="/AntdTreeForHtml" name="antdTree" component={AntdTreeForHtml} ></Route>
+                            <Route path="/AntdTreeForData" name="antdTree" component={AntdTreeForData} ></Route>
+                            <Route path="/MyLayout" name="MyLayout" component={MyLayout} ></Route>
                         </Switch>
                     </Content>
                 </Layout>

@@ -4,13 +4,6 @@ import { createStore,compose  } from 'redux';
 import DevTools from '../container/DevTools'
 
 
-
-
-//const store = createStore(reducers,{}); 
-
-
-
-
 const enhancer = compose(
     DevTools.instrument()
   );

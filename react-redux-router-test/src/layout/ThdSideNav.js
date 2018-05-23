@@ -51,8 +51,17 @@ class ThdSideNav extends React.Component{
                     </Panel>
                     <Panel header="Antd" key="4">
                     <p>
-                        <Link to="/AntdTree">Antd Tree</Link>
+                        <Link to="/AntdTreeForHtml">Antd Tree Html</Link>
                     </p>
+                    <p>
+                        <Link to="/AntdTreeForData">Antd Tree Data</Link>
+                    </p>
+
+                    <p>
+                        <Link to="/MyLayout">MyLayout</Link>
+                    </p>
+                    
+                    
                     </Panel>
                 </Collapse>
             
