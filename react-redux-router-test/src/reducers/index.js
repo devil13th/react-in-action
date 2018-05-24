@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux'
 import {userListReducer,userNameReducer} from '../components/UserManager/UserList'
+import {dataCollectionReducer} from '../components/Layout/TransferTree'
 //reducers
 
 const initialState = {};
@@ -21,5 +22,6 @@ const textReducer  = (state = initialState, action) => {
 export default combineReducers({
     text : textReducer,
     userList : userListReducer,
-    userName : userNameReducer
+    userName : userNameReducer,
+    dataCollection:dataCollectionReducer
 });

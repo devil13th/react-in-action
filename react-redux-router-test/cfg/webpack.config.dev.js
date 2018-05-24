@@ -1,6 +1,7 @@
 // __dirname是node.js的全局变量，它指向当前执行脚本所在的目录。
 module.exports ={
-  devtool: 'cheap-module-source-map',
+  //devtool: 'cheap-module-source-map',
+  devtool:'eval-source-map',
   entry:[__dirname + '/../src/index.js'],
   output:{
     path:__dirname+'/../public',
