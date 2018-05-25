@@ -60,6 +60,10 @@ class ThdSideNav extends React.Component{
                     <p>
                         <Link to="/MyLayout">MyLayout</Link>
                     </p>
+
+                    <p>
+                        <Link to="/AntdTable">AntdTable</Link>
+                    </p>
                     
                     
                     </Panel>

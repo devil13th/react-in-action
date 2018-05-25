@@ -9,6 +9,7 @@ import About from '../components/About';
 import UserList from '../components/UserManager/UserList';
 import {AntdTreeForHtml,AntdTreeForData} from '../components/AntdTree/components'
 import {MyLayout} from '../components/Layout/components';
+import {AntdTable} from '../components/AntdTable/components'
 const Panel = Collapse.Panel;
 const {  Sider, Content } = Layout;
 
@@ -38,6 +39,8 @@ class ThdLayout extends React.Component{
                             <Route path="/AntdTreeForHtml" name="antdTree" component={AntdTreeForHtml} ></Route>
                             <Route path="/AntdTreeForData" name="antdTree" component={AntdTreeForData} ></Route>
                             <Route path="/MyLayout" name="MyLayout" component={MyLayout} ></Route>
+                            <Route path="/AntdTable" name="AntdTable" component={AntdTable} ></Route>
+                            
                         </Switch>
                     </Content>
                 </Layout>

@@ -1,13 +1,13 @@
 import {combineReducers} from 'redux'
 import {userListReducer,userNameReducer} from '../components/UserManager/UserList'
-import {dataCollectionReducer} from '../components/Layout/TransferTree'
+import {dataCollectionReducer,dataCollectionTreeKeyCountReducer} from '../components/Layout/TransferTree'
 //reducers
 
 const initialState = {};
 const textReducer  = (state = initialState, action) => {  
-    switch (action.type) {  
+    switch (action.type) {
         case 'CHANGE_TEXT':
-            return {  
+            return {
                 text: state.text=='Hello' ? 'world':'Hello'  
             }  
         case 'BUTTON_CLICK':  
