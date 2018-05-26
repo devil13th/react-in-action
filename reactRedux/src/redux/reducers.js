@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+
 import {
   ADD_TODO,
   TOGGLE_TODO,
@@ -6,6 +7,10 @@ import {
   VisibilityFilters,
   MONITOR_ACTION
 } from './actions.js'
+
+import {
+  msgReducer
+} from '../components/AjaxExample'
 const { SHOW_ALL } = VisibilityFilters
 
 function visibilityFilter(state = SHOW_ALL, action) {
@@ -61,7 +66,8 @@ function todos(state = [], action) {
 const todoApp = combineReducers({
   visibilityFilter : visibilityFilter,
   todos : todos,
-  monitor : monitorReducer
+  monitor : monitorReducer,
+  msg:msgReducer
 })
 
 export default todoApp

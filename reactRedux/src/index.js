@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import DevTools from './containers/DevTools.js'
 import store from './redux/store'
 import App from './components/App.js'
-
+import AjaxExample from './components/AjaxExample'
 
 
 
@@ -13,6 +13,9 @@ render(
   <Provider store={store}>
     <div>
       <App />
+
+      <hr/>
+      <AjaxExample></AjaxExample>
       <DevTools />
     </div>
   </Provider>,
