@@ -67,6 +67,8 @@ class TransferTree extends React.Component {
     //右键点击数据集树节点
     //this.onRightClickDataCollection = this.onRightClickDataCollection.bind(this);
 
+    //修改数据集名称
+    this.onChangeEditDataCollectionName = this.onChangeEditDataCollectionName.bind(this);
     //选择数据集树节点
     this.onSelectDataCollection = this.onSelectDataCollection.bind(this);
     //删除数据集树节点
@@ -249,31 +251,7 @@ class TransferTree extends React.Component {
     
   }
 
-  //点击数据集节点编辑图标
-  onDataCollectionIconClick(key){
-    let dataCollection_temp = null;
-    for (let item of this.props.dataCollectionList.values()) {
-      if(item.key == key){
-        dataCollection_temp = item;
-        break;
-      }
-    }
-
-    
-    if(dataCollection_temp ){
-
-      //弹出属性窗口
-      this.setState({ 
-        //selectEnityPropertiesObj : _temp,
-        //columns:columns,//设置表格数据
-        editDataCollectionModalVisible:true,//模态窗口是否显示
-        editPropertiesList :dataCollection_temp.children,
-        dataCollectionName:dataCollection_temp.name
-        //showContentMenu:false,//右键菜单是否显示  
-       // defaultCheckedKeys:_temp.key
-      });
-    }
-  }
+  
   
   //根据数据渲染树形目录节点
   renderTreeNodes(data){
@@ -384,18 +362,71 @@ class TransferTree extends React.Component {
 
 
 
+  //点击数据集节点编辑图标
+  onDataCollectionIconClick(key){
+    console.log("==========1================");
+    console.log(this.props.dataCollectionList);
+
+    let dataCollection_temp = null;
+    for (let item of this.props.dataCollectionList.values()) {
+      if(item.key == key){
+        dataCollection_temp = _.cloneDeep(item);
+        break;
+      }
+    }
+    
+    /*if(dataCollection_temp){
+
+      //弹出属性窗口
+      this.setState({ 
+        //selectEnityPropertiesObj : _temp,
+        //columns:columns,//设置表格数据
+        editDataCollectionModalVisible:true,//模态窗口是否显示
+        //editPropertiesList:dataCollection_temp.children,
+        editDataCollectionName:dataCollection_temp.name,
+        editDataCollection:dataCollection_temp
+        //showContentMenu:false,//右键菜单是否显示  
+       // defaultCheckedKeys:_temp.key
+      });
+    }*/
+
+    if(dataCollection_temp){
+
+      //弹出属性窗口
+      this.setState({ 
+        //selectEnityPropertiesObj : _temp,
+        //columns:columns,//设置表格数据
+        editDataCollectionModalVisible:true,//模态窗口是否显示
+        //editPropertiesList:dataCollection_temp.children,
+       
+        editDataCollection:dataCollection_temp
+        //showContentMenu:false,//右键菜单是否显示
+       // defaultCheckedKeys:_temp.key
+      });
+    }
+
+    console.log("==========2================");
+    console.log(this.props.dataCollectionList);
+
+
+    
+
+  }
 
   //编辑数据集 弹出窗口OK事件
   onHandleEditDataCollectionProperties(){
+   
+    console.log("===========3===============");
+    console.log(this.props.dataCollectionList);
+
     this.setState({ loading: true });
-    console.log(this.state.editPropertiesList);
+    //console.log(this.state.editDataCollection);
 
-
-    //this.props.onEditDataCollection(this.state.editPropertiesList);
-
-
+    
+    this.props.onEditDataCollection(this.state.editDataCollection);
     message.warning('操作成功');
     this.setState({ loading: false, editDataCollectionModalVisible: false });
+    this.dataCollection_temp = null;
 
   }
 
@@ -459,6 +490,10 @@ class TransferTree extends React.Component {
   //修改实体名称
   onChangeDataCollectionName(e){
     this.setState({"dataCollectionName":e.target.value});
+  }
+
+  onChangeEditDataCollectionName(e){
+    this.setState({editDataCollection:{...this.state.editDataCollection,name:e.target.value}});
   }
 
  
@@ -591,8 +626,8 @@ class TransferTree extends React.Component {
             <Button key="submit" type="primary" loading={this.state.loading} onClick={this.onHandleEditDataCollectionProperties}>保存</Button>
           ]}>
           数据集名称：
-          <Input onChange={this.onChangeDataCollectionName} value={this.state.dataCollectionName ? this.state.dataCollectionName : ""}/>
-          <Table size="small" style={{marginTop:5}}  pagination={false} dataSource={this.state.editPropertiesList} columns={this.state.columns}  />
+          <Input onChange={this.onChangeEditDataCollectionName} value={this.state.editDataCollection ? this.state.editDataCollection.name : ""}/>
+          <Table size="small" style={{marginTop:5}}  pagination={false} dataSource={this.state.editDataCollection?this.state.editDataCollection.children:[]} columns={this.state.columns}  />
         </Modal>
 
       </div>
@@ -655,8 +690,8 @@ const mapDispatchToProps =  (dispatch,ownProps) =>{
       dispatch(createTransfertreeAddDataCollectionAction(o.selectEnityPropertiesObj))
     },
 
-    onEditDataCollection : (o) => {
-      dispatch(createTransfertreeEditDataCollectionAction(o.selectEnityPropertiesObj))
+    onEditDataCollection : (dataCollection) => {
+      dispatch(createTransfertreeEditDataCollectionAction(dataCollection))
     },
 
 
@@ -697,6 +732,7 @@ const dataCollectionListDataInit = [{
 
 
 const dataCollectionListReducer = (state = dataCollectionListDataInit,action) => {
+  
   switch(action.type){
     case 'TRANSFERTREE_ADD_DATACOLLECTION' : {
       var _nodeTemp = _.cloneDeep(action.dataCollection);
@@ -714,6 +750,23 @@ const dataCollectionListReducer = (state = dataCollectionListDataInit,action) =>
       return dataCollectionList_temp;
     }
 
+    case 'TRANSFERTREE_EDIT_DATACOLLECTION' : {
+      /*console.log("============eee==============");
+      console.log(action.dataCollection);
+      console.log(state);
+
+      return state;*/
+
+      const newDataCollection = state.map(item => {
+        if(item.key == action.dataCollection.key){
+          return action.dataCollection;
+        }else{
+          return item;
+        }
+      })
+
+      return newDataCollection;
+    }
     default : {
       return state;
     }
