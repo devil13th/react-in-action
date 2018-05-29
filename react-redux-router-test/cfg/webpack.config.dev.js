@@ -1,3 +1,4 @@
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
 // __dirname是node.js的全局变量，它指向当前执行脚本所在的目录。
 module.exports ={
   //devtool: 'cheap-module-source-map',
@@ -16,17 +17,38 @@ module.exports ={
   ,
   module:{
     rules:[
+
+    
+
       {
         test:/\.(js|jsx)$/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react', 'es2015']
+            presets: ['es2015','react', 'stage-0']
           }
         },
        //use:['react-tools'],
         exclude:/node_modules/
       },
+
+      /*{
+        test: /\.(js|jsx|mjs)$/,
+        enforce: 'pre',
+        use: [
+          {
+            options: {
+              formatter: eslintFormatter,
+              eslintPath: require.resolve('eslint'),
+              
+            },
+            loader: require.resolve('eslint-loader'),
+          },
+        ],
+        include:  __dirname+'/../src',
+      },*/
+
+
       //如果要打包css文件需要加如下内容
      
       {

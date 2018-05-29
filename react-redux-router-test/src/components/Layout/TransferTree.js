@@ -10,8 +10,6 @@ const TreeNode = Tree.TreeNode;
 
 
 
-
-
 //重新生成实体key
 const makeTreeNodeKey = (dataCollection) => {
   dataCollection.map((item) => {
@@ -48,16 +46,12 @@ class TransferTree extends React.Component {
     this.addNode = this.addNode.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onCheckDataCollection = this.onCheckDataCollection.bind(this);
-
     this.onChange = this.onChange.bind(this);
-    
     this.handleCancel = this.handleCancel.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.queryEnity = this.queryEnity.bind(this);
-
     this.onRightClick = this.onRightClick.bind(this);
     this.onCheckEnityProps = this.onCheckEnityProps.bind(this);
-  
     this.selectedPropertiesData = [];
 
 
@@ -67,12 +61,16 @@ class TransferTree extends React.Component {
     
     //定义模态表的表头
     const columns = [{
-      title: 'Name',
-      dataIndex: 'title',
-    }, {
-      title: 'Key',
-      dataIndex: 'key',
-    }];
+        title: 'Name',
+        dataIndex: 'title'
+      }, {
+        title: 'Key',
+        dataIndex: 'key',
+      },{
+        title: 'Data Type',
+        dataIndex: 'type',
+      }
+    ];
     
 
     
@@ -137,8 +135,6 @@ class TransferTree extends React.Component {
 
   //添加数据集 按钮事件
   addNode(){    
-    
-
     if(this.state.selected){
       //console.log(this.state.selected);
       //console.log("-----------------------");
@@ -369,8 +365,6 @@ class TransferTree extends React.Component {
         </Row>
         <Row>
           <Col span={5} offset={3} style={{textAlign:"left"}}>
-           
-
             <Tree
                 defaultExpandedKeys={['dc']}
                 onSelect = {this.onSelect}
@@ -483,17 +477,18 @@ const enityDataInit = [{
   key: '0-0-0a',
  
   children: [
-    { title: 'id', key: '0-0-0-0a' },
-    { title: 'name', key: '0-0-0-1a' },
-    { title: 'age', key: '0-0-0-2a' },
+    { title: 'id', key: '0-0-0-0a' ,type:"string"},
+    { title: 'name', key: '0-0-0-1a' ,type:"string"},
+    { title: 'age', key: '0-0-0-2a',type:"string" },
   ],
 }, {
   title: 'Menu Enity',
   key: '0-0-1a',
+  
   children: [
-    { title: 'id', key: '0-0-1-0a' },
-    { title: 'name', key: '0-0-1-1a' },
-    { title: 'url', key: '0-0-1-2a' },
+    { title: 'id', key: '0-0-1-0a' ,type:"string"},
+    { title: 'name', key: '0-0-1-1a',type:"string" },
+    { title: 'url', key: '0-0-1-2a',type:"string" },
   ],
 }, {
   title: '0-0-2a',

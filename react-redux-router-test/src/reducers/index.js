@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux'
 import {userListReducer,userNameReducer} from '../components/UserManager/UserList'
 import {dataCollectionReducer,dataCollectionTreeKeyCountReducer} from '../components/Layout/TransferTree'
+import {saveFormDataReducer} from '../components/Layout/MyForm'
 //reducers
 
 const initialState = {};
@@ -23,5 +24,6 @@ export default combineReducers({
     text : textReducer,
     userList : userListReducer,
     userName : userNameReducer,
-    dataCollection:dataCollectionReducer
+    dataCollection:dataCollectionReducer,
+    formData:saveFormDataReducer
 });

@@ -64,6 +64,14 @@ class ThdSideNav extends React.Component{
                     <p>
                         <Link to="/AntdTable">AntdTable</Link>
                     </p>
+                    <p>
+                     <Link to="/EditTable">EditTable</Link>
+                    </p>
+                    
+                    <p>
+                        <Link to="/AntdForm">AntdForm</Link>
+                    </p>
+                    
                     
                     
                     </Panel>
