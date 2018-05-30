@@ -1,12 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {Divider,Table,Modal, Popconfirm,Tooltip, Row,Col,Form, Icon, Input, Button,Tree ,message,Menu,Dropdown} from 'antd';
-import EditableCell  from './EditableCell'
+import {Table,Modal, Tooltip, Row,Col,Form, Icon, Input, Button,Tree ,message,Menu,Dropdown} from 'antd';
+ 
 import _ from 'lodash';
 import {lowerDimension,uuid} from '../../helper'
-import './style.css'
-
-
 const FormItem = Form.Item;
 const Search = Input.Search;
 const TreeNode = Tree.TreeNode;
@@ -88,7 +85,6 @@ class TransferTree extends React.Component {
     //点击数据集节点编辑图标
     this.onDataCollectionIconClick = this.onDataCollectionIconClick.bind(this);
 
-    this.onCellChange = this.onCellChange.bind(this);
     this.selectedPropertiesList = [];
 
 
@@ -111,35 +107,6 @@ class TransferTree extends React.Component {
       }
 
     ];
-
-
-    const columnsForEditColumn = [
-      {
-        title: '名称',
-        dataIndex: 'name',
-        width: '60%'
-        ,
-
-        render: (text, record) => (
-          <EditableCell
-            value={text}
-            onChange={this.onCellChange(record.key, 'name')}
-          />
-        )
-      }, {
-        title: '标题',
-        width: '20%',
-        dataIndex: 'title',
-      },{
-        title: '类型',
-        width: '20%',
-        dataIndex: 'dataType',
-      }
-
-    ];
-
-
-    
     
 
     
@@ -155,7 +122,6 @@ class TransferTree extends React.Component {
     this.state = {
       selectProperties:selectProperties,
       columns : columns,
-      columnsForEditColumn:columnsForEditColumn,
       addPropertiesButtonDisabled : true,
       removePropertiesButtonDisabled : true
     }
@@ -173,7 +139,7 @@ class TransferTree extends React.Component {
         children: [
           { title: 'ID',name:'用户ID',description:'用户唯一标识',type:'column', dataType:'String' ,key: '0-0-0-0' ,selectable : false},
           { title: 'NAME',name:'用户姓名',description:'用户姓名',type:'column', dataType:'String', key: '0-0-0-1',selectable : false },
-          { title: 'AGE',name:'用户年龄',description:'用户年龄',type:'column', dataType:'Integer', key: '0-0-0-2' ,selectable : false},
+          { title: 'AGE',name:'用户年龄',description:'用户年龄',type:'column', dataType:'INTEGER', key: '0-0-0-2' ,selectable : false},
           { title: 'SEX',name:'用户性别',description:'用户性别',type:'column', dataType:'String', key: '0-0-0-3' ,selectable : false},
         ],
       }, {
@@ -237,22 +203,6 @@ class TransferTree extends React.Component {
   }
 
   
-  onCellChange = (key, dataIndex) => {
-    
-    return (value) => {
-      
-      const dataSource = [...this.state.editDataCollection.children];
-      const target = dataSource.find(item => item.key === key);
-      if (target) {
-        target[dataIndex] = value;
-        this.setState({ editDataCollection:this.state.editDataCollection });
-      }
-
-      
-    };
-  }
-
-
   //添加数据集 按钮事件
   onAddDataCollection(){    
     if(this.state.selectedEnity){
@@ -581,7 +531,7 @@ class TransferTree extends React.Component {
       name: '新属性',
       key: uuid(),
       type:'attribute',
-      dataType:'String',
+      dataType:'STRING',
       selectable : false 
      
     });
@@ -679,10 +629,7 @@ class TransferTree extends React.Component {
   }
 
  
-  onCancelConfirm(){
-
-  }
-  
+ 
   render() {
     
     //树的JSX初始化 根据json数据生成JSX
@@ -700,7 +647,7 @@ class TransferTree extends React.Component {
     //console.log(enityDataSourceDom);
     //console.log(dataCollectionDom);
     //console.log(selectedDom);
-
+    const { getFieldDecorator } = this.props.form;
 
     
 
@@ -733,6 +680,7 @@ class TransferTree extends React.Component {
             <Tree
                 defaultExpandedKeys={['dc']}
                 onSelect = {this.onSelectEnity}
+                
             >
               <TreeNode title="实体" key="dc" selectable={false}>
               {enityDataSourceDom}
@@ -746,13 +694,7 @@ class TransferTree extends React.Component {
             <div style={{height:"100px",backgroun:"#eee"}}></div>
             <Button type="primary" icon="right" size="small" onClick={this.onAddDataCollection} style={{marginBottom:10}}>添加数据集</Button>
             <br/>
-            {/*
             <Button type="primary" icon="left" size="small" onClick={this.onRemoveDataCollection}>删除数据集</Button>
-            */}
-            <Popconfirm title="确定选中的数据集吗?" onConfirm={this.onRemoveDataCollection} onCancel={this.onCancelConfirm} okText="Yes" cancelText="No">
-              <Button type="primary" icon="left" size="small" >删除数据集</Button>
-            </Popconfirm>
-            
           </Col>
 
 
@@ -773,6 +715,7 @@ class TransferTree extends React.Component {
                   <TreeNode title="数据集" key="dc" selectable={false} >
                       {dataCollectionDom}
                   </TreeNode>
+                
               </Tree>
            
           </Col>
@@ -797,7 +740,7 @@ class TransferTree extends React.Component {
 
 
         <Modal
-          width="90%"
+          width="50%"
           visible={this.state.editDataCollectionModalVisible}
           title="编辑数据集"
           closable={false}
@@ -806,42 +749,45 @@ class TransferTree extends React.Component {
             <Button key="submit" type="primary" loading={this.state.loading} onClick={this.onHandleEditDataCollectionProperties}>保存</Button>
           ]}>
           
-
+          
           
           <Row>
-            <Col span={4} >
-              <div style={{paddingTop:4,textAlign:"right"}}>数据集名称：</div>
-            </Col>
-            <Col span={20}>
-              <Input onChange={this.onChangeEditDataCollectionName} value={this.state.editDataCollection ? this.state.editDataCollection.name : ""}/>
+            <Col span={24}>
+
+              <Form  layout="inline" onSubmit={this.handleSubmit} className="login-form" id="components-form-demo-normal-login">
+                <FormItem 
+                  labelCol={{
+                    span: 10
+                  }}
+                  wrapperCol={{
+                    span: 12
+                  }}
+                label="数据集名称" className="w">
+                    {getFieldDecorator('formId', {
+                    rules: [{ required: true, message: '请输入数据集名称!' },{max:15,message: '请输入15个字符以内!'}],
+                    })(
+                    <Input prefix={<Icon type="form" style={{ color: 'rgba(0,0,0,.25)' }} />} onChange={this.onChangeEditDataCollectionName} value={this.state.editDataCollection ? this.state.editDataCollection.name : ""}/>
+                    )}
+                </FormItem>
+              </Form>
+              
+              
+             
             </Col>
           </Row>
 
-          <Divider orientation="left">字段信息</Divider>
-
           <Row style={{marginTop:5}} >
-            
-            <Col span={4}  style={{textAlign:"center"}}>
+            <Col span={20}>
+              <Table size="small" pagination={false} expandedRowKeys={[this.state.expandedColumnRowKeys]} rowSelection={{selectedRowKeys:[this.state.selectedEditDataCollectionPropertiesKey],onChange:this.onCheckEditDataCollectionProperties,type:"radio"}} dataSource={this.state.editDataCollection?this.state.editDataCollection.children:[]} columns={this.state.columns}  />
+            </Col>
+            <Col span={4}  style={{textAlign:"right"}}>
               
               <Button size="small" icon="plus" type="primary" disabled={this.state.addPropertiesButtonDisabled}  title="添加属性" onClick={this.onClickAddProperties}></Button>
              
               <br/>
               
-
-              <Popconfirm title="确定删除吗?" onConfirm={this.onClickRemoveProperties} onCancel={this.onCancelConfirm} okText="Yes" cancelText="No">
-                <Button size="small" icon="minus" style={{marginTop:5}} disabled={this.state.removePropertiesButtonDisabled} type="primary" title="删除属性" ></Button>
-              </Popconfirm>
-
-              {/*
               <Button size="small" icon="minus" style={{marginTop:5}} disabled={this.state.removePropertiesButtonDisabled} type="primary" title="删除属性" onClick={this.onClickRemoveProperties}></Button>
-              */}
-              <br/>
-              <Button size="small" icon="edit" style={{marginTop:5}} type="primary" title="编辑属性" ></Button>
-             
-
-            </Col>
-            <Col span={20}>
-              <Table size="small" pagination={false}  defaultExpandAllRows={true}  rowSelection={{selectedRowKeys:[this.state.selectedEditDataCollectionPropertiesKey],onChange:this.onCheckEditDataCollectionProperties,type:"radio"}} dataSource={this.state.editDataCollection?this.state.editDataCollection.children:[]} columns={this.state.columnsForEditColumn}  />
+              
             </Col>
           </Row>
         
@@ -931,7 +877,7 @@ const dataCollectionListDataInit = [{
   children: [
     { title: 'ID',name:'用户ID',description:'用户唯一标识',type:'column', dataType:'String', key: '0-0-0-0' ,selectable : false},
     { title: 'NAME',name:'用户姓名',description:'用户姓名',type:'column', dataType:'String', key: '0-0-0-1',selectable : false },
-    { title: 'AGE',name:'用户年龄',description:'用户年龄',type:'column', dataType:'Integer', key: '0-0-0-2' ,selectable : false},
+    { title: 'AGE',name:'用户年龄',description:'用户年龄',type:'column', dataType:'INTEGER', key: '0-0-0-2' ,selectable : false},
     { title: 'SEX',name:'用户性别',description:'用户性别',type:'column', dataType:'String', key: '0-0-0-3' ,selectable : false},
   ],
 }, {

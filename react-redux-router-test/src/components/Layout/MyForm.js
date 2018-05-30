@@ -181,7 +181,13 @@ class MyForm extends React.Component {
 }
 
 
-const WrappedHorizontalLoginForm = Form.create()(MyForm);
+const WrappedHorizontalLoginForm = Form.create({
+  onValuesChange : function(props, changedValues, allValues){
+    //console.log(props);
+    
+  }
+
+})(MyForm);
 
 const mapStateToProps = function(state,ownProps){
   return {
