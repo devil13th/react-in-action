@@ -1,10 +1,12 @@
 import React from 'react';
 import { Row,Col,Form, Icon, Input, Button,message } from 'antd';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import style from  './style.css';
+import {creatSaveViewBaseInfoFormAction} from './action';
+import reducer from './reducer';
+
 const FormItem = Form.Item;
 const { TextArea } = Input;
-
 
 
 
@@ -12,7 +14,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-class MyForm extends React.Component {
+class BaseInfo extends React.Component {
   constructor(props){
     super(props);
     this.saveFormData = this.saveFormData.bind(this);
@@ -143,7 +145,7 @@ class MyForm extends React.Component {
 
 
 
-          {/*
+        {/*
         <Row>
           <Col span={3} offset={4} style={{textAlign:"left",lineHeight:"30px"}}>表单ID</Col>
           <Col span={4} style={{textAlign:"left",lineHeight:"30px"}}><Input size="small" placeholder="表单ID" /></Col>
@@ -187,7 +189,7 @@ const WrappedHorizontalLoginForm = Form.create({
     
   }
 
-})(MyForm);
+})(BaseInfo);
 
 const mapStateToProps = function(state,ownProps){
   return {
@@ -197,36 +199,16 @@ const mapStateToProps = function(state,ownProps){
 const mapDispatchToProps = function(dispatch,ownProps){
   return{
     saveFormData:(formData)=>{
-      dispatch(creatSaveFormDataAction(formData));
+      dispatch(creatSaveViewBaseInfoFormAction(formData));
     }
   }
 }
 
 
-// --------------------------- action -------------------------
-const SAVE_FORM_DATA_ACTION = "SAVE_FORM_DATA_ACTION";
-// --------------------------- action creator -----------------
-const creatSaveFormDataAction = (formData) => {
-  return {
-    type:SAVE_FORM_DATA_ACTION,
-    formData 
-  }
-}
 
-// --------------------------- reducer -----------------
 
-const saveFormDataReducer = function(state={},action){
-  switch(action.type){
-    case SAVE_FORM_DATA_ACTION : {
-      return action.formData;
-    }
-    default : {
-      return state;
-    }
-  }
-}
 
-const WrapForm = connect(mapStateToProps,mapDispatchToProps)(WrappedHorizontalLoginForm);
 
-export{ WrapForm as default,
-  saveFormDataReducer as saveFormDataReducer};
+const BaseInfoWrapForm = connect(mapStateToProps,mapDispatchToProps)(WrappedHorizontalLoginForm);
+
+export{ BaseInfoWrapForm as BaseInfo};

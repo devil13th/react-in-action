@@ -53,7 +53,21 @@ module.exports ={
      
       {
         test:/\.css$/,
-        loaders:['style-loader','css-loader']
+        /*loaders:['style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]','css-loader']*/
+        use: [
+          { loader: "style-loader" },
+          /*{ loader: "css-loader"}*/
+          { loader: "css-loader",
+            options: {
+              modules: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          }
+         
+
+
+
+        ]
       },
 
       //如果要编译打包less文件需要加如下内容

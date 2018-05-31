@@ -135,7 +135,6 @@ class TransferTree extends React.Component {
         width: '20%',
         dataIndex: 'dataType',
       }
-
     ];
 
 
@@ -240,15 +239,29 @@ class TransferTree extends React.Component {
   onCellChange = (key, dataIndex) => {
     
     return (value) => {
+      const allNode = lowerDimension(this.state.editDataCollection.children,"children");
+      //const editDataCollection_temp = _.cloneDeep(this.state.editDataCollection);
+      const editNode = allNode.find(item => item.key === key);
+      if("column" == editNode.type){ //如果编辑的是字段
+        const dataSource = [...this.state.editDataCollection.children];
+        const target = dataSource.find(item => item.key === key);
       
-      const dataSource = [...this.state.editDataCollection.children];
-      const target = dataSource.find(item => item.key === key);
-      if (target) {
-        target[dataIndex] = value;
-        this.setState({ editDataCollection:this.state.editDataCollection });
+        if (target) {
+          target[dataIndex] = value;
+          //this.setState({ editDataCollection:editDataCollection_temp});
+          this.setState({ editDataCollection:this.state.editDataCollection});
+        }
       }
 
-      
+      if("attribute" == editNode.type){ //如果编辑的是字段
+        for(let i = 0 , j = this.state.editDataCollection.children.length ; i < j ; i++){
+          let column = this.state.editDataCollection.children[i];
+          if(column.children){
+            const target = column.children.find(item => item.key === key);
+            target[dataIndex] = value;
+          }
+        }
+      }
     };
   }
 
@@ -480,7 +493,7 @@ class TransferTree extends React.Component {
     //console.log(this.props.dataCollectionList);
 
     this.setState({ loading: true });
-    //console.log(this.state.editDataCollection);
+    console.log(this.state.editDataCollection);
 
     this.props.onEditDataCollection(this.state.editDataCollection);
     message.warning('操作成功');
@@ -548,13 +561,6 @@ class TransferTree extends React.Component {
       addPropertiesButtonDisabled:true,
       removePropertiesButtonDisabled:true
     })
-
-   
-
-
-    
-
-
 
   }
   //点击添加属性的时候
@@ -702,13 +708,6 @@ class TransferTree extends React.Component {
     //console.log(selectedDom);
 
 
-    
-
-
-   
-
-
-   
 
 
     return (
@@ -810,18 +809,22 @@ class TransferTree extends React.Component {
           
           <Row>
             <Col span={4} >
-              <div style={{paddingTop:4,textAlign:"right"}}>数据集名称：</div>
+              <div style={{paddingTop:4,textAlign:"left"}}>数据集名称：</div>
             </Col>
-            <Col span={20}>
+            <Col span={4}>
               <Input onChange={this.onChangeEditDataCollectionName} value={this.state.editDataCollection ? this.state.editDataCollection.name : ""}/>
             </Col>
           </Row>
-
-          <Divider orientation="left">字段信息</Divider>
+          {/*
+            <Divider orientation="left">字段信息</Divider>
+          */}
+          
 
           <Row style={{marginTop:5}} >
-            
-            <Col span={4}  style={{textAlign:"center"}}>
+            <Col span={20}>
+              <Table size="small" pagination={false}  defaultExpandAllRows={true}  rowSelection={{selectedRowKeys:[this.state.selectedEditDataCollectionPropertiesKey],onChange:this.onCheckEditDataCollectionProperties,type:"radio"}} dataSource={this.state.editDataCollection?this.state.editDataCollection.children:[]} columns={this.state.columnsForEditColumn}  />
+            </Col>
+            <Col span={3} offset={1} style={{textAlign:"left"}}>
               
               <Button size="small" icon="plus" type="primary" disabled={this.state.addPropertiesButtonDisabled}  title="添加属性" onClick={this.onClickAddProperties}></Button>
              
@@ -840,9 +843,7 @@ class TransferTree extends React.Component {
              
 
             </Col>
-            <Col span={20}>
-              <Table size="small" pagination={false}  defaultExpandAllRows={true}  rowSelection={{selectedRowKeys:[this.state.selectedEditDataCollectionPropertiesKey],onChange:this.onCheckEditDataCollectionProperties,type:"radio"}} dataSource={this.state.editDataCollection?this.state.editDataCollection.children:[]} columns={this.state.columnsForEditColumn}  />
-            </Col>
+            
           </Row>
         
         </Modal>
@@ -965,7 +966,7 @@ const dataCollectionListDataInit = [{
 }];
 
 
-const dataCollectionListReducer = (state = dataCollectionListDataInit,action) => {
+const dataCollection2ListReducer = (state = dataCollectionListDataInit,action) => {
   
   switch(action.type){
     case 'TRANSFERTREE_ADD_DATACOLLECTION' : {
@@ -1009,4 +1010,4 @@ const dataCollectionListReducer = (state = dataCollectionListDataInit,action) =>
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(TransferTree);
-export {dataCollectionListReducer as dataCollectionListReducer}
+export {dataCollection2ListReducer as dataCollection2ListReducer}

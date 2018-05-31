@@ -1,7 +1,14 @@
-import {combineReducers} from 'redux'
-import {userListReducer,userNameReducer} from '../components/UserManager/UserList'
-import {dataCollectionListReducer} from '../components/Layout/TransferTree'
-import {saveFormDataReducer} from '../components/Layout/MyForm'
+import {combineReducers} from 'redux';
+import {userListReducer,userNameReducer} from '../components/UserManager/UserList';
+import {dataCollection2ListReducer,creatSaveFormDataAction} from '../components/Layout/TransferTree';
+import {saveFormDataReducer} from '../components/Layout/MyForm';
+import {
+    dataViewBaseInfoReducer,
+    enityListReducer,
+    dataCollectionListReducer
+} from '../components/DataView';
+
+
 //reducers
 
 const initialState = {};
@@ -24,6 +31,10 @@ export default combineReducers({
     text : textReducer,
     userList : userListReducer,
     userName : userNameReducer,
+    dataCollection2ListReducer:dataCollection2ListReducer,
+    formData:saveFormDataReducer,
+    enityList:enityListReducer,
+    dataViewBaseInfo:dataViewBaseInfoReducer,
     dataCollectionList:dataCollectionListReducer,
-    formData:saveFormDataReducer
+
 });
