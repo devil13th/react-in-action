@@ -115,15 +115,26 @@ const dataCollectionListReducer = function(state=dataCollectionListDataInit,acti
             return state;
         }
         case SAVE__DATA_VIEW_DATA_COLLECTION__ACTION : {
-            const dataCollectionList_temp = _.cloneDeep(state);
-            return [...dataCollectionList_temp,action.dataCollection];
+            if(action.operateType == "add"){
+                const dataCollectionList_temp = _.cloneDeep(state);
+                return [...dataCollectionList_temp,action.dataCollection];
+            }else if(action.operateType == "edit"){
+                const dataCollectionList_temp = _.cloneDeep(state);
+                const dataCollectionList_result = dataCollectionList_temp.map(item => {
+                    return item.key == action.dataCollection.key ? action.dataCollection : item
+                })
+                return dataCollectionList_result;
+            }
         }
         case DELETE__DATA_VIEW_DATA_COLLECTION__ACTION : {
-            var dataCollectionList_temp = state.filter(item => {
-                return item.key != action.dataCollectionkey;        
+            const dataCollectionList_temp = _.cloneDeep(state);
+            var dataCollectionListResult = dataCollectionList_temp.filter(item => {
+                //alert(item.key + "| " + action.dataCollectionKey)
+                //alert(item.key != action.dataCollectionKey)
+                return item.key != action.dataCollectionKey;        
             })
             
-            return dataCollectionList_temp;
+            return dataCollectionListResult;
         }
 
        

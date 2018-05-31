@@ -4,6 +4,7 @@ import {Row,Col,Icon,Tree,Button,Popconfirm,message} from 'antd';
 import {lowerDimension,uuid} from '../../helper';
 import {EditDataCollectionModal} from './EditDataCollectionModal';
 import {createDeleteDataCollectionAction} from './action';
+import {connect} from 'react-redux';
 const TreeNode = Tree.TreeNode;
 
 
@@ -36,8 +37,11 @@ class Transfer extends React.Component {
         //点击添加数据集按钮
         this.onClickAddDataCollectionBton = this.onClickAddDataCollectionBton.bind(this);
         //删除数据集树节点
-        this.onRemoveDataCollection = this.onRemoveDataCollection.bind(this);
-
+        this.onDeleteDataCollection = this.onDeleteDataCollection.bind(this);
+        //选择数据集节点
+        this.onSelectDataCollection = this.onSelectDataCollection.bind(this);
+        //点击数据集编辑图标
+        this.onClickDataCollectionEditIcon = this.onClickDataCollectionEditIcon.bind(this);
         //关闭模态窗口
         this.closeModal = this.closeModal.bind(this);
     }
@@ -87,7 +91,8 @@ class Transfer extends React.Component {
                 selectedEnity:selectedEnity_temp
             })
             this.setState({
-                editDataCollectionModalVasible:true
+                editDataCollectionModalVasible:true,
+                dataCollectionOperateType:"add" //模态窗口保存按钮执行新增数据集操作
             })
         }else{
             message.warning('请先选择实体');
@@ -97,13 +102,30 @@ class Transfer extends React.Component {
 
 
     //删除数据集
-    onRemoveDataCollection(){    
-        if(this.selectedDataCollection){
-            this.props.onRemoveDataCollection(this.selectedDataCollection.key)
+    onDeleteDataCollection(){    
+        //console.log(this.state.selectedDataCollection)
+        if(this.state.selectedDataCollection){
+            this.props.deleteDataCollection(this.state.selectedDataCollection.key)
         }else{
             message.warning('请先选择数据集');
             return false;
         }
+    }
+
+    //点击数据集编辑图标
+    onClickDataCollectionEditIcon(dataCollectionKey){
+        const dataCollectionList_temp = lowerDimension(this.props.dataCollectionList,"children");
+        dataCollectionList_temp.map((item) => {
+            if(item.key == dataCollectionKey){
+                //this.setState({selectedDataCollection:item});
+                //设置模态窗口编辑的数据集
+                this.setState({selectedEnity:item})
+            } 
+        })
+        this.setState({
+            editDataCollectionModalVasible:true,
+            dataCollectionOperateType:"edit"//模态窗口保存按钮执行编辑数据集操作
+        })
     }
 
 
@@ -113,7 +135,7 @@ class Transfer extends React.Component {
         return data.map((item) => {
             
             if (item.children ) {
-                const icon = item.type == 'table' ? <Icon type="edit" onClick={()=>{this.onDataCollectionIconClick(item.key)}}/> : null;
+                const icon = item.type == 'table' ? <Icon type="edit" onClick={()=>{this.onClickDataCollectionEditIcon(item.key)}}/> : null;
                 return (
                 <TreeNode icon={icon} key={item.key} dataRef={item} {...item}  title={item.name + " " + item.title}>
                     {this.renderTreeNodes(item.children)}
@@ -156,7 +178,7 @@ class Transfer extends React.Component {
                     {/*
                     <Button type="primary" icon="left" size="small" onClick={this.onRemoveDataCollection}>删除数据集</Button>
                     */}
-                    <Popconfirm title="确定选中的数据集吗?" onConfirm={this.onRemoveDataCollection} onCancel={this.onCancelConfirm} okText="Yes" cancelText="No">
+                    <Popconfirm title="确定选中的数据集吗?" onConfirm={this.onDeleteDataCollection} onCancel={this.onCancelConfirm} okText="Yes" cancelText="No">
                         <Button type="primary" icon="left" size="small" >删除数据集</Button>
                     </Popconfirm>
                 </Col>
@@ -164,7 +186,6 @@ class Transfer extends React.Component {
                     <Tree
                         defaultExpandedKeys={['dc']}
                         checkStrictly={true}
-                        onCheck={this.onCheckDataCollection}
                         onSelect={this.onSelectDataCollection}
                         showIcon
                     >
@@ -180,6 +201,7 @@ class Transfer extends React.Component {
                 this.state.editDataCollectionModalVasible ? 
                 <EditDataCollectionModal 
                     closeModal={this.closeModal} 
+                    dataCollectionOperateType = {this.state.dataCollectionOperateType}
                     dataCollection={this.state.selectedEnity} 
                     visible={true}>
                 </EditDataCollectionModal> 

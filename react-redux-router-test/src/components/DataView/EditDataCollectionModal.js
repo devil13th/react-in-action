@@ -14,7 +14,8 @@ class EditDataCollectionModal extends React.Component {
             dataCollection : this.props.dataCollection,
             visible : this.props.visible,
             //selectedRowKeys:this.props.dataCollection.children.map(item => item.key)
-            selectedRowKeys:[] //选中的属性
+            selectedRowKeys:[], //选中的属性
+            dataCollectionOperateType: this.props.dataCollectionOperateType // 操作类型 save:新增  edit:编辑
             
         }
         
@@ -105,7 +106,7 @@ class EditDataCollectionModal extends React.Component {
         }
     
        
-        this.props.saveDataCollection(this.state.dataCollection,"save");
+        this.props.saveDataCollection(this.state.dataCollection,this.state.dataCollectionOperateType);
       
         message.warning('操作成功');
         this.setState({ loading: false });        

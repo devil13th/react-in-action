@@ -4,7 +4,7 @@ const SAVE__DATA_VIEW_DATA_COLLECTION__ACTION = "SAVE__DATA_VIEW_DATA_COLLECTION
 /**
  * 
  * @param {*} dataCollection : 数据集对象
- * @param {*} operateType : save or update
+ * @param {*} operateType : add or edit
  */
 const createSaveDataCollectionAction = (dataCollection,operateType) => {
   return {
