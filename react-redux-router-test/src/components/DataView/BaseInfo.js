@@ -37,8 +37,6 @@ class BaseInfo extends React.Component {
         message.warning('请根据提示修改表单信息数据');
       }
     });
-    
-    
   }
 
   render() {
