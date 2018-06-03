@@ -74,6 +74,11 @@ class ThdSideNav extends React.Component{
                         <Link to="/DataViewLayout">DataViewLayout</Link>
                     </p>
                     </Panel>
+                    <Panel header="生命周期" key="6">
+                    <p>
+                        <Link to="/LifecycleExample">LifecycleExample</Link>
+                    </p>
+                    </Panel>
                 </Collapse>
             
             </Sider>

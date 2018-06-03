@@ -13,6 +13,7 @@ import {AntdTable} from '../components/AntdTable/components'
 import {AntdForm} from '../components/AntdForm/components'
 import EditTable from '../components/AntdTable/EditTable'
 import {DataViewLayout} from '../components/DataView'
+import {LifecycleExample} from '../components/LifecycleExample'
 const Panel = Collapse.Panel;
 const {  Sider, Content } = Layout;
 
@@ -46,6 +47,7 @@ class ThdLayout extends React.Component{
                             <Route path="/EditTable" name="EditTable" component={EditTable} ></Route>
                             <Route path="/AntdForm" name="AntdForm" component={AntdForm} ></Route>
                             <Route path="/DataViewLayout" name="DataViewLayout" component={DataViewLayout} ></Route>
+                            <Route path="/LifecycleExample" name="LifecycleExample" component={LifecycleExample} ></Route>
                             
                         </Switch>
                     </Content>
