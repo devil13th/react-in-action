@@ -12,8 +12,9 @@ class AdvanceComponent extends NormalComponent{
     onChange(ipt){
         alert(ipt.value)
         this.setState({
-            value : ipt.value
+            value : ipt.value+"x"
         })
+        
     }
 
     render(){
@@ -26,12 +27,9 @@ class AdvanceComponent extends NormalComponent{
         return (
             <div>
                 <NormalComponent {...allProps}></NormalComponent>
-                <NormalComponent {...allProps}></NormalComponent>
-                <NormalComponent {...allProps}></NormalComponent>
-                <NormalComponent {...allProps}></NormalComponent>
+                
                 <div>{this.state.value}</div>
-                <div>xxx</div>
-                <div>ccc</div>
+               
             </div>
         )
     }

@@ -56,6 +56,7 @@ class LifecycleExample extends React.Component{
         this.setState({
             ct:this.state.ct + 1
         })
+        
     }
 
     showCounter(){
