@@ -34,13 +34,13 @@ class PropertiesForm extends React.Component{
                 //console.log('Received values of form: ', values);
                 //console.log(this.props.form.getFieldsValue());
                 //this.props.saveFormData(this.props.form.getFieldsValue());
-                message.warning('保存成功',1);
+                message.success('保存成功');
 
                 const formData = _this.props.form.getFieldsValue();
 
                 _this.props.onSubmit(formData);
             }else{
-                message.warning('请根据提示修改表单信息数据');
+                message.error('请根据提示修改表单信息数据');
             }
         });
 

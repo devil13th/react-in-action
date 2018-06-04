@@ -32,7 +32,7 @@ class BaseInfo extends React.Component {
         //console.log('Received values of form: ', values);
         //console.log(this.props.form.getFieldsValue());
         this.props.saveFormData(this.props.form.getFieldsValue());
-        message.warning('保存成功',1);
+        message.success('保存成功');
       }else{
         message.warning('请根据提示修改表单信息数据');
       }

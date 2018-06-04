@@ -207,7 +207,7 @@ class EditDataCollectionModal extends React.Component {
         //数据集名称判空
         //console.log(this.state.dataCollection);
         if(_.trim(this.state.dataCollection.name) == ''){
-          message.warning('请填写数据集名称');
+          message.error('请填写数据集名称');
           this.setState({ loading: false });
           return ;
         };
@@ -221,7 +221,7 @@ class EditDataCollectionModal extends React.Component {
 
             //如果存在重名节点(重名并且非本节点)
             if(existNode){
-                message.warning('不能与已有的数据集名称重复');
+                message.error('不能与已有的数据集名称重复');
                 this.setState({ loading: false });
                 //this.setState({ loading: false, addDataCollectionModalVisible: false });
                 return ;
@@ -240,7 +240,7 @@ class EditDataCollectionModal extends React.Component {
             if(  idx >= 0 ){
                 //alert(allNode[idx].key + " ||| " +  this.state.dataCollection.key)
                 if(allNode[idx].key != this.state.dataCollection.key){
-                    message.warning('不能与已有的数据集名称重复');
+                    message.error('不能与已有的数据集名称重复');
                     this.setState({ loading: false });
                     //this.setState({ loading: false, addDataCollectionModalVisible: false });
                     return ;
@@ -270,7 +270,7 @@ class EditDataCollectionModal extends React.Component {
             }
         })
         if(hasDublicProperty.length > 0){
-            message.warning('存在相同的属性名称或标题(' + [...hasDublicProperty] + ')');
+            message.error('存在相同的属性名称或标题(' + [...hasDublicProperty] + ')');
             this.setState({ loading: false });
             return;
         }
@@ -280,7 +280,7 @@ class EditDataCollectionModal extends React.Component {
        
         this.props.saveDataCollection(this.state.dataCollection,this.state.dataCollectionOperateType);
       
-        message.warning('操作成功');
+        message.success('操作成功');
         this.setState({ loading: false });        
         this.props.closeModal();
     }
