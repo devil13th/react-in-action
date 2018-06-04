@@ -11,6 +11,7 @@ import {AntdTreeForHtml,AntdTreeForData} from '../components/AntdTree/components
 import {MyLayout} from '../components/Layout/components';
 import {AntdTable} from '../components/AntdTable/components'
 import {AntdForm} from '../components/AntdForm/components'
+import {FormInitExample} from '../components/AntdForm/FormInitExample'
 import EditTable from '../components/AntdTable/EditTable'
 import {DataViewLayout} from '../components/DataView'
 import {LifecycleExample} from '../components/LifecycleExample'
@@ -46,6 +47,8 @@ class ThdLayout extends React.Component{
                             <Route path="/AntdTable" name="AntdTable" component={AntdTable} ></Route>
                             <Route path="/EditTable" name="EditTable" component={EditTable} ></Route>
                             <Route path="/AntdForm" name="AntdForm" component={AntdForm} ></Route>
+                            <Route path="/FormInitExample" name="FormInitExample" component={FormInitExample} ></Route>
+                            
                             <Route path="/DataViewLayout" name="DataViewLayout" component={DataViewLayout} ></Route>
                             <Route path="/LifecycleExample" name="LifecycleExample" component={LifecycleExample} ></Route>
                             

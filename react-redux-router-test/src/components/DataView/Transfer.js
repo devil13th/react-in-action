@@ -165,6 +165,7 @@ class Transfer extends React.Component {
                     <Tree
                         defaultExpandedKeys={['dc']}
                         onSelect = {this.onSelectEnity}
+                        showLine
                     >
                         <TreeNode title="实体" key="dc" selectable={false}>
                         {enityListDom}
@@ -173,13 +174,13 @@ class Transfer extends React.Component {
                 </Col>
                 <Col span={3}>
                     <div style={{height:"100px",backgroun:"#eee"}}></div>
-                    <Button type="primary" icon="right" size="small" onClick={this.onClickAddDataCollectionBton} style={{marginBottom:10}}>添加数据集</Button>
+                    <Button icon="right" type="primary" size="small" onClick={this.onClickAddDataCollectionBton} style={{marginBottom:10}}>添加</Button>
                     <br/>
                     {/*
                     <Button type="primary" icon="left" size="small" onClick={this.onRemoveDataCollection}>删除数据集</Button>
                     */}
                     <Popconfirm title="确定选中的数据集吗?" onConfirm={this.onDeleteDataCollection} onCancel={this.onCancelConfirm} okText="Yes" cancelText="No">
-                        <Button type="primary" icon="left" size="small" >删除数据集</Button>
+                        <Button  icon="left" size="small" >删除</Button>
                     </Popconfirm>
                 </Col>
                 <Col span={10}>
@@ -188,6 +189,7 @@ class Transfer extends React.Component {
                         checkStrictly={true}
                         onSelect={this.onSelectDataCollection}
                         showIcon
+                        showLine
                     >
                         <TreeNode title="数据集" key="dc" selectable={false} >
                             {dataCollectionDom}
@@ -209,8 +211,6 @@ class Transfer extends React.Component {
             
             </div>
 
-
-
         )
     }
 }
@@ -219,7 +219,26 @@ class Transfer extends React.Component {
 
 const mapStateToProps = (state,props) => {
     return {
-        enityList : (function(){ return state.enityList })(),
+        enityList : (function(){
+            //关键字搜索结果
+            if(state.dataViewSearchKeyWord){
+                if(state.enityList && state.enityList.length > 0){
+                    const enityListFilterResult = []
+                    state.enityList.filter(item => {
+                        //匹配实体的name和title
+                        if(
+                            item.name.toLowerCase().indexOf(state.dataViewSearchKeyWord.trim().toLowerCase()) != -1 
+                            ||
+                            item.title.toLowerCase().indexOf(state.dataViewSearchKeyWord.trim().toLowerCase()) != -1 
+                        ){
+                            enityListFilterResult.push(item);
+                        }
+                    })
+                    return enityListFilterResult;
+                }
+            }
+            return state.enityList ;
+        })(),
         dataCollectionList : state.dataCollectionList
     }
 }

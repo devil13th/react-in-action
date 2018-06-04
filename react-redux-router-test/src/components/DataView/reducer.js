@@ -3,7 +3,8 @@ import {
     ENITY_LIST_INIT,
     SAVE__DATA_VIEW_DATA_COLLECTION__ACTION,
     DATA_COLLECTION_LIST_INIT,
-    DELETE__DATA_VIEW_DATA_COLLECTION__ACTION
+    DELETE__DATA_VIEW_DATA_COLLECTION__ACTION,
+    SEARCH__DATA_VIEW_ENITY__ACTION
 } from './action';
 
 
@@ -115,6 +116,7 @@ const dataCollectionListReducer = function(state=dataCollectionListDataInit,acti
             return state;
         }
         case SAVE__DATA_VIEW_DATA_COLLECTION__ACTION : {
+            //alert(action.operateType)
             if(action.operateType == "add"){
                 const dataCollectionList_temp = _.cloneDeep(state);
                 return [...dataCollectionList_temp,action.dataCollection];
@@ -148,7 +150,7 @@ const dataCollectionListReducer = function(state=dataCollectionListDataInit,acti
 /**
  * 保存数据视图基本信息
  * @param {*} state : store.dataViewBaseInfo
- * @param {*} action : 数据视图基本信息
+ * @param {*} action.formData : 数据视图基本信息
  */
 const dataViewBaseInfoReducer = function(state={},action){
     switch(action.type){
@@ -162,8 +164,27 @@ const dataViewBaseInfoReducer = function(state={},action){
     }
 }
 
+
+/**
+ * 搜索关键词设置
+ * @param {*} state : store.dataViewBaseInfo
+ * @param {*} action.dataViewSearchKeyWord : 搜索关键字
+ */
+
+const dataViewSearchKeyWordReducer = function(state,action){
+    switch(action.type){
+        case SEARCH__DATA_VIEW_ENITY__ACTION : {
+            return action.dataViewSearchKeyWord;
+        }
+        default :{
+            return null;
+        }
+    }
+} 
+
 export{
     dataViewBaseInfoReducer as dataViewBaseInfoReducer,
     enityListReducer as enityListReducer,
-    dataCollectionListReducer as dataCollectionListReducer
+    dataCollectionListReducer as dataCollectionListReducer,
+    dataViewSearchKeyWordReducer as dataViewSearchKeyWordReducer
 }

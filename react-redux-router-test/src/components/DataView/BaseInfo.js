@@ -132,9 +132,9 @@ class BaseInfo extends React.Component {
 
 
           <Col span={4} offset={9} style={{textAlign:"center"}} align="">
-            <Button type="primary" icon="save" size="small" onClick={this.saveFormData}>暂存</Button>  
+            <Button icon="save" size="small" onClick={this.saveFormData}>保存</Button>  
             &nbsp;
-            <Button type="primary" icon="sync" size="small" onClick={this.resetFormData}>重置</Button>
+            <Button icon="sync" size="small" onClick={this.resetFormData}>重置</Button>
           </Col>
 
         </Row>

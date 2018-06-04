@@ -56,16 +56,31 @@ const createEnityListInitAction = (enityList) => {
   }
 }
 
-// -------------------------------  数据视图 - 保存基本信息表单 --------------------------
+
+// -------------------------------  数据视图 - 搜索数据集 --------------------------
+const SEARCH__DATA_VIEW_ENITY__ACTION = "SEARCH__DATA_VIEW_ENITY__ACTION";
+
+/**
+ * 
+ * @param {*} kw : 关键字
+ */
+const createSearchDataViewEnityAction = (dataViewSearchKeyWord) => {
+  return {
+    type:SEARCH__DATA_VIEW_ENITY__ACTION,
+    dataViewSearchKeyWord
+  }
+}
 
 export{
     SAVE__DATA_VIEW_BASE_INFO_FORM__ACTION as SAVE__DATA_VIEW_BASE_INFO_FORM__ACTION,
     DATA_COLLECTION_LIST_INIT as DATA_COLLECTION_LIST_INIT,
     SAVE__DATA_VIEW_DATA_COLLECTION__ACTION as SAVE__DATA_VIEW_DATA_COLLECTION__ACTION,
     ENITY_LIST_INIT as ENITY_LIST_INIT,
-    DELETE__DATA_VIEW_DATA_COLLECTION__ACTION,
+    DELETE__DATA_VIEW_DATA_COLLECTION__ACTION as DELETE__DATA_VIEW_DATA_COLLECTION__ACTION,
+    SEARCH__DATA_VIEW_ENITY__ACTION as SEARCH__DATA_VIEW_ENITY__ACTION,
     creatSaveViewBaseInfoFormAction as creatSaveViewBaseInfoFormAction,
     createSaveDataCollectionAction as createSaveDataCollectionAction,
-    createDeleteDataCollectionAction
+    createDeleteDataCollectionAction as createDeleteDataCollectionAction,
+    createSearchDataViewEnityAction as createSearchDataViewEnityAction
     
 }

@@ -11,9 +11,10 @@ const { Header, Footer, Sider, Content } = Layout;
 class DataViewLayout extends React.Component {
     constructor(props){
         super(props);
-
-        
     }
+
+  
+
     render(){
         return(
             <Layout style={{height:"100%"}}>
@@ -26,7 +27,7 @@ class DataViewLayout extends React.Component {
                     
                     <Row>
                         <Col span={8} offset={2}>
-                            <SearchEnity></SearchEnity>
+                            <SearchEnity ></SearchEnity>
                         </Col>
                     </Row>
 
@@ -45,8 +46,8 @@ class DataViewLayout extends React.Component {
 
 const mapStateToProps = (state,props) => {
     return {
-        enityList : (function(){ return state.enityList })(),
-        dataCollectionList : state.dataCollectionList
+        //enityList : (function(){ return state.enityList })(),
+        //dataCollectionList : state.dataCollectionList
     }
 }
 

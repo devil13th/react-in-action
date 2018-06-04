@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Icon,Modal,Table,Button,Input,Row,Col,Popconfirm,message,Tooltip} from 'antd';
+import {Icon,Modal,Table,Button,Input,Row,Col,Popconfirm,message,Tooltip,Divider} from 'antd';
 import {connect} from 'react-redux';
 import {lowerDimension,uuid} from '../../helper';
 import {createSaveDataCollectionAction} from './action';
@@ -11,13 +11,15 @@ import _ from 'lodash';
 class EditDataCollectionModal extends React.Component {
     constructor(props){
         super(props);
+
+
         this.state = {
             dataCollection : this.props.dataCollection,
             visible : this.props.visible,
             //selectedRowKeys:this.props.dataCollection.children.map(item => item.key)
-            selectedRowKeys:[], //选中的属性
-            dataCollectionOperateType: this.props.dataCollectionOperateType // 操作类型 save:新增  edit:编辑
-            
+            selectedRowKeys:(this.props.dataCollection.children && this.props.dataCollection.children.length > 0 ) ? [this.props.dataCollection.children[0].key] : [], //选中的属性key数组
+            dataCollectionOperateType: this.props.dataCollectionOperateType // 操作类型 add:新增  edit:编辑
+          
         }
         
        
@@ -28,13 +30,14 @@ class EditDataCollectionModal extends React.Component {
         this.onCheckEditDataCollectionProperties = this.onCheckEditDataCollectionProperties.bind(this);
         //保存数据集
         this.onSaveDataCollection = this.onSaveDataCollection.bind(this);
-        //删除数据集属性或字段
-        this.onClickRemoveProperties = this.onClickRemoveProperties.bind(this);
         //删除属性
         this.onDeleteProperties = this.onDeleteProperties.bind(this);
         //添加属性
         this.onAddProperties = this.onAddProperties.bind(this);
-
+        ////编辑属性界面中的值发生改变
+        this.formValueChange = this.formValueChange.bind(this);
+        //点击表格行
+        this.clickRow = this.clickRow.bind(this);
         //已选择的属性
         this.selectedPropertiesList = [];
         
@@ -64,7 +67,7 @@ class EditDataCollectionModal extends React.Component {
                     
                     const operationBtons = [];
                     const baseKey = record.key;
-                    if(this.state.dataCollection.children && this.state.dataCollection.children.length > 1 ){
+                    if(this.state.dataCollection.children && this.state.dataCollection.children.length > 0 ){
                         operationBtons.push(
                             <Popconfirm key={baseKey+"_pop"} title="确定删除此属性吗?" onConfirm={() => this.onDeleteProperties(record.key)}>
                                 <Tooltip key={baseKey+"_del_tip"} title="删除" placement="bottom">
@@ -72,23 +75,23 @@ class EditDataCollectionModal extends React.Component {
                                 </Tooltip>
                             </Popconfirm>
                         )
-                    }
-                    if(record.type == 'column'){
-                        operationBtons.push(<span key={baseKey+"_span01"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
-                        operationBtons.push(
-                            <Tooltip key={baseKey+"_add_tip"} title="新增属性" placement="bottom">
-                                <Icon key={baseKey+"_add_icon"} type="plus-circle" style={{cursor:"pointer"}}  onClick={() => this.onAddProperties(record.key)}/>
-                            </Tooltip>
-                        )
-                    }
-                    operationBtons.push(<span key={baseKey+"_span02"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
                     
-                    operationBtons.push(
-                        <Tooltip key={baseKey+"_edit_tip"} title="编辑" placement="bottom">
-                            <Icon key={baseKey+"_edit_icon"} type="edit"  style={{cursor:"pointer"}}/>
-                        </Tooltip>
-                    );
-
+                        if(record.type == 'column'){
+                            operationBtons.push(<span key={baseKey+"_span01"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
+                            operationBtons.push(
+                                <Tooltip key={baseKey+"_add_tip"} title="新增属性" placement="bottom">
+                                    <Icon key={baseKey+"_add_icon"} type="plus-circle" style={{cursor:"pointer"}}  onClick={() => this.onAddProperties(record.key)}/>
+                                </Tooltip>
+                            )
+                        }
+                        operationBtons.push(<span key={baseKey+"_span02"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
+                        
+                        operationBtons.push(
+                            <Tooltip key={baseKey+"_edit_tip"} title="编辑" placement="bottom">
+                                <Icon key={baseKey+"_edit_icon"} type="edit" onClick={() => this.onEditProperties(record.key)} style={{cursor:"pointer"}}/>
+                            </Tooltip>
+                        );
+                    }
 
                     return operationBtons;
                     
@@ -141,83 +144,138 @@ class EditDataCollectionModal extends React.Component {
 
     //新增属性
     onAddProperties(key){
-        alert(key)
+        //console.log(key)
         const dataCollection_temp = _.cloneDeep(this.state.dataCollection);
-
-        
-        if(dataCollection_temp.children){
-            const newPropertiesList = dataCollection_temp.children.map(item => {
-                
-                if(item.key == key){
-                    if(!item.children){
-                        item.children = [];
-                        item.children.push({        
-                            title: 'New Property',
-                            name: '新属性',
-                            key: uuid(),
-                            type:'attribute',
-                            dataType:'String',
-                            selectable : false             
-                        });
-                    }
+        //console.log(dataCollection_temp)
+        const newKey = uuid();
+        const newProperties = {        
+            title: 'New Property',
+            name: '新属性',
+            key: newKey,
+            type:'attribute',
+            dataType:'String',
+            selectable : false
+        };
+        //if(dataCollection_temp.children){ //肯定有子节点,否则点不了添加按钮,不用做判断
+        const newPropertiesList = dataCollection_temp.children.map(item => {
+            
+            if(item.key == key){
+                if(!item.children){
+                    item.children = [];                    
                 }
-                return item;
-            })
 
-            dataCollection_temp.children = newPropertiesList;
-            console.log(dataCollection_temp);
-            this.setState({dataCollection:dataCollection_temp})
-        }
+                item.children.push(newProperties);
+            }
+            return item;
+        })
 
+        dataCollection_temp.children = newPropertiesList;
+        console.log(dataCollection_temp);
+        this.setState({
+            dataCollection:dataCollection_temp,
 
+            selectedRowKeys:[newKey]
+        })
+        //}
 
-       
-
-        
     }
-
+    //编辑字段或属性
+    onEditProperties(key){
+        this.setState({
+            selectedRowKeys:[key]
+        });
+    }
 
     //选择字段或属性
     onCheckEditDataCollectionProperties(selectedRowKeys, selectedRows){
         
-        if(selectedRows[0].type != 'column'){
-            this.setState({
-              selectedPropertiesKey:selectedRowKeys[0],
-              addPropertiesButtonDisabled:true,
-              removePropertiesButtonDisabled:false,
-              selectedRowKeys:[selectedRows[0].key]
-            });
-            
+        /*
+        if(selectedRows[0].type != 'column'){//选择的是字段
         }else{
-            this.setState({
-                selectedPropertiesKey:selectedRowKeys[0],
-                addPropertiesButtonDisabled:false,
-                removePropertiesButtonDisabled:false,
-                selectedRowKeys:[selectedRows[0].key]
-            });
-        }
-
+        }*/
+        this.setState({
+            selectedRowKeys:[selectedRows[0].key]
+        });
     }
 
     //保存数据集
     onSaveDataCollection(){
         this.setState({ loading: true });
-        console.log(this.state.dataCollection);
+
+        //数据集名称判空
+        //console.log(this.state.dataCollection);
         if(_.trim(this.state.dataCollection.name) == ''){
           message.warning('请填写数据集名称');
           this.setState({ loading: false });
           return ;
         };
 
-        console.log(this.props.dataCollectionList);
-        const allNode = lowerDimension(this.props.dataCollectionList,"children");
-        const existNode = _.findIndex(allNode, { 'name': this.state.dataCollection.name }) >= 0 ? true :false ;
-        if(existNode){
-          message.warning('不能与已有的数据集名称重复');
-          this.setState({ loading: false });
-          //this.setState({ loading: false, addDataCollectionModalVisible: false });
-          return ;
+       
+        if(this.state.dataCollectionOperateType == 'add'){
+            //如果是新增责数据集名称判重
+            //console.log(this.props.dataCollectionList);
+            const allNode = lowerDimension(this.props.dataCollectionList,"children");
+            const existNode = _.findIndex(allNode, { 'name': this.state.dataCollection.name }) >= 0 ? true :false ;
+
+            //如果存在重名节点(重名并且非本节点)
+            if(existNode){
+                message.warning('不能与已有的数据集名称重复');
+                this.setState({ loading: false });
+                //this.setState({ loading: false, addDataCollectionModalVisible: false });
+                return ;
+            }
         }
+     
+        if(this.state.dataCollectionOperateType == 'edit'){
+            //如果是新增责数据集名称判重
+            //console.log(this.props.dataCollectionList);
+            const allNode = lowerDimension(this.props.dataCollectionList,"children");
+            const idx = _.findIndex(allNode, { 'name': this.state.dataCollection.name }) ;
+            //alert(idx);
+
+
+            //如果存在重名节点(重名并且非本节点) 判重
+            if(  idx >= 0 ){
+                //alert(allNode[idx].key + " ||| " +  this.state.dataCollection.key)
+                if(allNode[idx].key != this.state.dataCollection.key){
+                    message.warning('不能与已有的数据集名称重复');
+                    this.setState({ loading: false });
+                    //this.setState({ loading: false, addDataCollectionModalVisible: false });
+                    return ;
+                }
+            }
+        }
+
+
+        //属性名称及标题判重
+        let hasDublicPropertyName = false;
+        const nameMap = new Map();
+        const titleMap = new Map();
+
+        
+        const columnsAndProperties = lowerDimension(this.state.dataCollection.children,"children");
+
+        columnsAndProperties.forEach(item => {
+           
+            if(nameMap.get(item.name)){
+                hasDublicPropertyName = true;
+            }else{
+                nameMap.set(item.name,true)
+            }
+
+            if(nameMap.get(item.title)){
+                hasDublicPropertyName = true;
+            }else{
+                titleMap.set(item.title,true)
+            }
+        })
+        if(hasDublicPropertyName){
+            message.warning('存在相同的属性名称或标题');
+            this.setState({ loading: false });
+            return;
+        }
+
+
     
        
         this.props.saveDataCollection(this.state.dataCollection,this.state.dataCollectionOperateType);
@@ -228,53 +286,82 @@ class EditDataCollectionModal extends React.Component {
     }
 
 
-    //删除数据集属性或字段
-    onClickRemoveProperties(){
-
-        if(!this.state.selectedPropertiesKey){
-            message.warning('请选择数据集字段');
-            return;
-        }
-      
-          const selectedKey = this.state.selectedPropertiesKey;
-          const allNode = lowerDimension(this.state.dataCollection.children,"children");
-
-          const idx = _.findIndex(allNode, { 'key':selectedKey });
-          //选择的属性
-          const selectedProperties = _.cloneDeep(allNode[idx]);
-          
-          const editDataCollection_temp = _.cloneDeep(this.state.dataCollection);
-          if(selectedProperties.type == 'column'){//删除字段
-                const newPropertiesList = editDataCollection_temp.children.filter(item => {
-                    return selectedKey != item.key
-                })
-                editDataCollection_temp.children = newPropertiesList;
-          }else if(selectedProperties.type == 'attribute'){//删除属性
-            for(let i = 0 , j = editDataCollection_temp.children.length ; i < j ; i++){
-              let column = editDataCollection_temp.children[i];
-              if(column.children){
-                _.remove(column.children, function(attr) {
-                  //alert(attr.key + "|" + selectedKey)
-                  return attr.key == selectedKey;
-                });
-              }
-            }
-          }
-      
-          this.setState({
-            dataCollection : editDataCollection_temp,
-            selectedPropertiesKey:null,
-            addPropertiesButtonDisabled:true,
-            removePropertiesButtonDisabled:true
-          })        
-    }
-
-  
     
+    //编辑属性界面中的值发生改变
+    formValueChange(changeObj){
+        const dataCollection_temp = _.cloneDeep(this.state.dataCollection);
+        const allNode = lowerDimension(dataCollection_temp.children,"children");
+        const idx = _.findIndex(allNode, { 'key':this.state.selectedRowKeys[0] });
+
+        //已选择的字段或属性
+        const property_temp = _.cloneDeep(allNode[idx]);
+
+
+        /*console.log(property_temp)
+        console.log(this.state.checkedProperty)
+        console.log(property_temp)
+        console.log(changeObj)
+        alert(changeObj.name + "|" + changeObj.value)*/
+        
+        
+        
+        if(property_temp.type == "column"){//如果是字段
+            if(changeObj.name){
+                property_temp.name=changeObj.name.value;
+            }
+            if(changeObj.title){
+                property_temp.title=changeObj.title.value;
+            }
+
+            const newPropertiesList = this.state.dataCollection.children.map(item => {
+                return item.key == this.state.selectedRowKeys[0] ? property_temp : item;
+            })
+            dataCollection_temp.children = newPropertiesList;
+        }else if(property_temp.type == "attribute"){//如果是字段的属性
+
+            if(changeObj.name){
+                allNode[idx].name=changeObj.name.value;
+            }
+            if(changeObj.title){
+                allNode[idx].title=changeObj.title.value;
+            }
+/*
+            if(dataCollection_temp.children){
+                dataCollection_temp.children.map(item => {
+                    dataCollection_temp
+                })
+            }*/
+        }
+
+        
+
+        this.setState({
+            dataCollection:dataCollection_temp
+        });
+    }
+    
+    //点击表格行
+    clickRow(record){
+        //console.log(record)
+        this.setState({
+            selectedRowKeys:[record.key]
+        });
+    }
     render(){
+        //console.log(this.state.selectedRowKeys[0])
+        let checkedProperty = null;
+        if(this.state.selectedRowKeys[0]){
+            const allNode = lowerDimension(this.state.dataCollection.children,"children");
+            //console.log(allNode)
+            const idx = _.findIndex(allNode, { 'key':this.state.selectedRowKeys[0] });
+            //console.log(idx);
+            checkedProperty = allNode[idx];
+            //console.log(checkedProperty);
+        }
+
         return(
             <Modal
-                width="90%"
+                width={950}
                 visible={this.state.visible}
                 title="编辑数据集"
                 closable={false}
@@ -284,10 +371,10 @@ class EditDataCollectionModal extends React.Component {
                 ]}
             >
                 <Row>
-                    <Col span={4} >
-                        <div style={{paddingTop:4,textAlign:"left"}}>数据集名称：</div>
-                    </Col>
                     <Col span={4}>
+                        <div style={{paddingTop:4,textAlign:"right"}}>数据集名称：</div>
+                    </Col>
+                    <Col span={12}>
                         <Input onChange={this.onChangeDataCollectionName} value={this.state.dataCollection.name}/>
                     </Col>
                 </Row>
@@ -295,7 +382,7 @@ class EditDataCollectionModal extends React.Component {
                 <Divider orientation="left">字段信息</Divider>
                 */}
                 <Row style={{marginTop:5}} >
-                    <Col span={10}>
+                    <Col span={16}>
                         <Table size="small" 
                             style={{marginTop:5}} 
                             defaultExpandAllRows={true}
@@ -304,26 +391,20 @@ class EditDataCollectionModal extends React.Component {
                                 onChange:this.onCheckEditDataCollectionProperties,
                                 type:"radio"
                             }} 
+                            onRow={(record) => {
+                                return {
+                                  onClick: (e) => {this.clickRow(record);},       // 点击行
+                                  onMouseEnter: () => {},  // 鼠标移入行
+                                };
+                            }}
                             pagination={false} 
                             dataSource={this.state.dataCollection.children} 
                             columns={this.columns}  
                         />
                     </Col>
-                    <Col span={3} offset={1} style={{textAlign:"left"}}>
-                        <Button size="small" icon="plus" type="primary" disabled={this.state.addPropertiesButtonDisabled}  title="添加属性" onClick={this.onClickAddProperties}></Button>
-                        <br/>
-                        <Popconfirm title="确定删除吗?" onConfirm={this.onClickRemoveProperties} onCancel={this.onCancelConfirm} okText="Yes" cancelText="No">
-                            <Button size="small" icon="minus" style={{marginTop:5}} disabled={this.state.removePropertiesButtonDisabled} type="primary" title="删除属性" ></Button>
-                        </Popconfirm>
-                        {/*
-                        <Button size="small" icon="minus" style={{marginTop:5}} disabled={this.state.removePropertiesButtonDisabled} type="primary" title="删除属性" onClick={this.onClickRemoveProperties}></Button>
-                        */}
-                        <br/>
-                        <Button size="small" icon="edit" style={{marginTop:5}} type="primary" title="编辑属性" ></Button>
-                    </Col>
-
-                    <Col span={9}>
-                        <PropertiesForm></PropertiesForm>
+                    
+                    <Col span={7}>
+                        {checkedProperty ? <PropertiesForm onChange={this.formValueChange} formState={checkedProperty}></PropertiesForm> : null}
                     </Col>
                 </Row>
                 

@@ -67,7 +67,14 @@ class ThdSideNav extends React.Component{
                     </p>
                     <p>
                         <Link to="/AntdForm">AntdForm</Link>
+
                     </p>
+                    <p>
+                        <Link to="/FormInitExample">FormInitExample</Link>
+
+                    </p>
+
+                    
                     </Panel>
                     <Panel header="数据视图" key="5">
                     <p>

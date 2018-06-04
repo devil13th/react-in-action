@@ -5,7 +5,8 @@ import {saveFormDataReducer} from '../components/Layout/MyForm';
 import {
     dataViewBaseInfoReducer,
     enityListReducer,
-    dataCollectionListReducer
+    dataCollectionListReducer,
+    dataViewSearchKeyWordReducer
 } from '../components/DataView';
 
 
@@ -36,5 +37,6 @@ export default combineReducers({
     enityList:enityListReducer,
     dataViewBaseInfo:dataViewBaseInfoReducer,
     dataCollectionList:dataCollectionListReducer,
+    dataViewSearchKeyWord : dataViewSearchKeyWordReducer
 
 });
