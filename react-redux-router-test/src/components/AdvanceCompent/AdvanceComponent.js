@@ -26,7 +26,12 @@ class AdvanceComponent extends NormalComponent{
         return (
             <div>
                 <NormalComponent {...allProps}></NormalComponent>
+                <NormalComponent {...allProps}></NormalComponent>
+                <NormalComponent {...allProps}></NormalComponent>
+                <NormalComponent {...allProps}></NormalComponent>
                 <div>{this.state.value}</div>
+                <div>xxx</div>
+                <div>ccc</div>
             </div>
         )
     }
