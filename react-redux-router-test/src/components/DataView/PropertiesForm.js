@@ -146,10 +146,11 @@ const WrappedPropertiesForm = Form.create({
     },
     onValuesChange(_, values) {
         //console.log(_,values);
+        //props.onChange(changedFields);
     },
     onFieldsChange(props, changedFields) {//值改变事件
         //console.log(props,changedFields);
-        //props.onChange(changedFields);
+        props.onChange(changedFields);
        
 
     }

@@ -23,7 +23,7 @@ const CustomizedForm = Form.create({
     <Form layout="inline">
       <FormItem label="Username">
         {getFieldDecorator('username', {
-          rules: [{ required: true, message: 'Username is required!' }],
+          rules: [{ required: true, message: 'Username is required!' },{max:5,message: '请输入5个字符以内!'}],
         })(<Input />)}
       </FormItem>
     </Form>
