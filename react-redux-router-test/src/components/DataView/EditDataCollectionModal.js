@@ -38,6 +38,8 @@ class EditDataCollectionModal extends React.Component {
         this.formValueChange = this.formValueChange.bind(this);
         //点击表格行
         this.clickRow = this.clickRow.bind(this);
+        //提交编辑属性内容
+        this.onSubmit = this.onSubmit.bind(this);
         //已选择的属性
         this.selectedPropertiesList = [];
         
@@ -248,7 +250,7 @@ class EditDataCollectionModal extends React.Component {
 
 
         //属性名称及标题判重
-        let hasDublicPropertyName = false;
+        let hasDublicProperty = [];
         const nameMap = new Map();
         const titleMap = new Map();
 
@@ -256,21 +258,19 @@ class EditDataCollectionModal extends React.Component {
         const columnsAndProperties = lowerDimension(this.state.dataCollection.children,"children");
 
         columnsAndProperties.forEach(item => {
-           
             if(nameMap.get(item.name)){
-                hasDublicPropertyName = true;
+                hasDublicProperty.push(item.name);
             }else{
                 nameMap.set(item.name,true)
             }
-
             if(nameMap.get(item.title)){
-                hasDublicPropertyName = true;
+                hasDublicProperty.push(item.title);
             }else{
                 titleMap.set(item.title,true)
             }
         })
-        if(hasDublicPropertyName){
-            message.warning('存在相同的属性名称或标题');
+        if(hasDublicProperty.length > 0){
+            message.warning('存在相同的属性名称或标题(' + [...hasDublicProperty] + ')');
             this.setState({ loading: false });
             return;
         }
@@ -295,15 +295,7 @@ class EditDataCollectionModal extends React.Component {
 
         //已选择的字段或属性
         const property_temp = _.cloneDeep(allNode[idx]);
-
-
-        /*console.log(property_temp)
-        console.log(this.state.checkedProperty)
-        console.log(property_temp)
-        console.log(changeObj)
-        alert(changeObj.name + "|" + changeObj.value)*/
-        
-        
+      
         
         if(property_temp.type == "column"){//如果是字段
             if(changeObj.name){
@@ -318,26 +310,47 @@ class EditDataCollectionModal extends React.Component {
             })
             dataCollection_temp.children = newPropertiesList;
         }else if(property_temp.type == "attribute"){//如果是字段的属性
-
             if(changeObj.name){
                 allNode[idx].name=changeObj.name.value;
             }
             if(changeObj.title){
                 allNode[idx].title=changeObj.title.value;
             }
-/*
-            if(dataCollection_temp.children){
-                dataCollection_temp.children.map(item => {
-                    dataCollection_temp
-                })
-            }*/
         }
-
-        
-
         this.setState({
             dataCollection:dataCollection_temp
         });
+    }
+
+
+    
+    //提交编辑属性内容
+    onSubmit(formData){
+        const dataCollection_temp = _.cloneDeep(this.state.dataCollection);
+        const allNode = lowerDimension(dataCollection_temp.children,"children");
+        const idx = _.findIndex(allNode, { 'key':this.state.selectedRowKeys[0] });
+
+        //已选择的字段或属性
+        const property_temp = _.cloneDeep(allNode[idx]);
+        console.log(formData);
+       
+        if(property_temp.type == "column"){//如果是字段
+            
+            property_temp.name=formData.name;
+            property_temp.title=formData.title;
+            const newPropertiesList = this.state.dataCollection.children.map(item => {
+                return item.key == this.state.selectedRowKeys[0] ? property_temp : item;
+            })
+            dataCollection_temp.children = newPropertiesList;
+        }else if(property_temp.type == "attribute"){//如果是字段的属性
+            allNode[idx].name=formData.name;
+            allNode[idx].title=formData.title;
+        }
+        this.setState({
+            dataCollection:dataCollection_temp
+        });
+       
+
     }
     
     //点击表格行
@@ -367,7 +380,7 @@ class EditDataCollectionModal extends React.Component {
                 closable={false}
                 footer={[
                     <Button key="back" onClick={this.props.closeModal}>取消</Button>,
-                    <Button key="submit" type="primary" loading={this.state.loading} onClick={this.onSaveDataCollection}>保存</Button>
+                    <Button key="submit" type="primary" loading={this.state.loading} onClick={this.onSaveDataCollection}>确定</Button>
                 ]}
             >
                 <Row>
@@ -404,7 +417,7 @@ class EditDataCollectionModal extends React.Component {
                     </Col>
                     
                     <Col span={7}>
-                        {checkedProperty ? <PropertiesForm onChange={this.formValueChange} formState={checkedProperty}></PropertiesForm> : null}
+                        {checkedProperty ? <PropertiesForm onSubmit={this.onSubmit} onChange={this.formValueChange} formState={checkedProperty}></PropertiesForm> : null}
                     </Col>
                 </Row>
                 
