@@ -71,22 +71,16 @@ class EditDataCollectionModal extends React.Component {
                     const operationBtons = [];
                     const baseKey = record.key;
                     if(this.state.dataCollection.children && this.state.dataCollection.children.length > 0 ){
-                        operationBtons.push(
-                            <Popconfirm key={baseKey+"_pop"} title="确定删除此属性吗?" onConfirm={() => this.onDeleteProperties(record.key)}>
-                                <Tooltip key={baseKey+"_del_tip"} title="删除" placement="bottom">
-                                    <Icon key={baseKey+"_icon"} type="delete" style={{cursor:"pointer"}}/>
-                                </Tooltip>
-                            </Popconfirm>
-                        )
+                        
                     
                         if(record.type == 'column'){
-                            operationBtons.push(<span key={baseKey+"_span01"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
                             operationBtons.push(
                                 <Tooltip key={baseKey+"_add_tip"} title="新增属性" placement="bottom">
                                     <Icon key={baseKey+"_add_icon"} type="plus-circle" style={{cursor:"pointer"}}  onClick={() => this.onAddProperties(record.key)}/>
                                 </Tooltip>
                             )
                         }
+
                         operationBtons.push(<span key={baseKey+"_span02"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
                         
                         operationBtons.push(
@@ -94,6 +88,16 @@ class EditDataCollectionModal extends React.Component {
                                 <Icon key={baseKey+"_edit_icon"} type="edit" onClick={() => this.onEditProperties(record.key)} style={{cursor:"pointer"}}/>
                             </Tooltip>
                         );
+
+                        operationBtons.push(<span key={baseKey+"_span01"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
+
+                        operationBtons.push(                            
+                            <Popconfirm key={baseKey+"_pop"} title="确定删除此属性吗?" onConfirm={() => this.onDeleteProperties(record.key)}>
+                                <Tooltip key={baseKey+"_del_tip"} title="删除" placement="bottom">
+                                    <Icon key={baseKey+"_icon"} type="delete" style={{cursor:"pointer"}}/>
+                                </Tooltip>
+                            </Popconfirm>
+                        )
                     }
 
                     return operationBtons;
