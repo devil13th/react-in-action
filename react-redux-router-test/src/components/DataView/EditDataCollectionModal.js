@@ -40,30 +40,31 @@ class EditDataCollectionModal extends React.Component {
         this.clickRow = this.clickRow.bind(this);
         //提交编辑属性内容
         this.onSubmit = this.onSubmit.bind(this);
+      
         //已选择的属性
         this.selectedPropertiesList = [];
         
         //定义模态表的表头
         this.columns = [
             {
-              title: '名称',
-              dataIndex: 'name',
-              align: "left",
-              width: '35%'
-            }, {
-              title: '标题',
-              width: '20%',
-              align: "left",
-              dataIndex: 'title',
+                title: '名称',
+                dataIndex: 'name',
+                align: "left",
+                width: '35%'
             },{
-              title: '类型',
-              width: '15%',
-              align: "center",
-              dataIndex: 'dataType',
+                title: '标题',
+                width: '20%',
+                align: "left",
+                dataIndex: 'title',
+            },{
+                title: '类型',
+                width: '15%',
+                align: "center",
+                dataIndex: 'dataType',
             },{
                 title:'操作',
                 width: '30%',
-                align: "center",
+                align: "right",
                 dataIndex:'key',
                 render: (text, record) => {
                     
@@ -292,11 +293,11 @@ class EditDataCollectionModal extends React.Component {
         const dataCollection_temp = _.cloneDeep(this.state.dataCollection);
         const allNode = lowerDimension(dataCollection_temp.children,"children");
         const idx = _.findIndex(allNode, { 'key':this.state.selectedRowKeys[0] });
-
+        
         //已选择的字段或属性
         const property_temp = _.cloneDeep(allNode[idx]);
       
-        
+       
         if(property_temp.type == "column"){//如果是字段
             if(changeObj.name){
                 property_temp.name=changeObj.name.value;
@@ -317,6 +318,10 @@ class EditDataCollectionModal extends React.Component {
                 allNode[idx].title=changeObj.title.value;
             }
         }
+        
+
+        
+          
         this.setState({
             dataCollection:dataCollection_temp
         });
@@ -346,6 +351,13 @@ class EditDataCollectionModal extends React.Component {
             allNode[idx].name=formData.name;
             allNode[idx].title=formData.title;
         }
+
+      
+
+        
+          
+          
+        
         this.setState({
             dataCollection:dataCollection_temp
         });
@@ -360,6 +372,7 @@ class EditDataCollectionModal extends React.Component {
             selectedRowKeys:[record.key]
         });
     }
+    
     render(){
         //console.log(this.state.selectedRowKeys[0])
         let checkedProperty = null;
@@ -372,12 +385,14 @@ class EditDataCollectionModal extends React.Component {
             //console.log(checkedProperty);
         }
 
+        
         return(
             <Modal
                 width={950}
                 visible={this.state.visible}
                 title="编辑数据集"
-                closable={false}
+                closable={true}
+                onCancel={this.props.closeModal}
                 footer={[
                     <Button key="back" onClick={this.props.closeModal}>取消</Button>,
                     <Button key="submit" type="primary" loading={this.state.loading} onClick={this.onSaveDataCollection}>确定</Button>

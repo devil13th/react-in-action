@@ -17,18 +17,24 @@ const CustomizedForm = Form.create({
   onValuesChange(_, values) {
     console.log(values);
   },
-})((props) => {
-  const { getFieldDecorator } = props.form;
-  return (
-    <Form layout="inline">
-      <FormItem label="Username">
-        {getFieldDecorator('username', {
-          rules: [{ required: true, message: 'Username is required!' },{max:5,message: '请输入5个字符以内!'}],
-        })(<Input />)}
-      </FormItem>
-    </Form>
-  );
-});
+})(
+  
+    (props) => {
+    const { getFieldDecorator } = props.form;
+    return (
+      <Form layout="inline">
+        <FormItem label="Username">
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Username is required!' },{max:5,message: '请输入5个字符以内!'}],
+          })(<Input />)}
+        </FormItem>
+      </Form>
+    );
+  }
+
+);
+
+
 
 class FormInitExample extends React.Component {
   state = {
@@ -39,9 +45,18 @@ class FormInitExample extends React.Component {
     },
   };
   handleFormChange = (changedFields) => {
+    console.log("-----------------changedFields");
+    console.log(changedFields);
+/*
+    this.setState({
+      fields: { ...changedFields },
+    });
+*/
     this.setState(({ fields }) => ({
       fields: { ...fields, ...changedFields },
     }));
+
+
   }
   render() {
     const fields = this.state.fields;

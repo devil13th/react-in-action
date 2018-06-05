@@ -44,6 +44,7 @@ class Transfer extends React.Component {
         this.onClickDataCollectionEditIcon = this.onClickDataCollectionEditIcon.bind(this);
         //关闭模态窗口
         this.closeModal = this.closeModal.bind(this);
+      
     }
 
     //选择实体树节点事件
@@ -147,6 +148,8 @@ class Transfer extends React.Component {
     }
 
 
+
+
     //关闭模态窗口
     closeModal(){
         this.setState({
@@ -207,7 +210,8 @@ class Transfer extends React.Component {
                     dataCollection={this.state.selectedEnity} 
                     visible={true}>
                 </EditDataCollectionModal> 
-                : null}
+                : null
+            }
             
             </div>
 

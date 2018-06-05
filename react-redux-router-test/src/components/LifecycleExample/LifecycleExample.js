@@ -56,6 +56,31 @@ class LifecycleExample extends React.Component{
         this.setState({
             ct:this.state.ct + 1
         })
+        console.log("第1次:" + this.state.ct);
+       
+        this.setState({
+            ct:this.state.ct + 1
+        })
+        console.log("第2次:" + this.state.ct);
+        
+
+
+
+
+        setTimeout(()=>{
+            this.setState({
+                ct:this.state.ct + 1
+            })
+            console.log("第3次:" + this.state.ct);
+
+            this.setState({
+                ct:this.state.ct + 1
+            })
+            console.log("第4次:" + this.state.ct);
+        },0)
+
+
+
         
     }
 
@@ -95,7 +120,7 @@ class LifecycleExample extends React.Component{
         return(
             <div>
                 <h1>生命周期例子1 [{this.state.ct}]</h1>
-                <input type="button" value="操作Counter +1 " onClick={this.onAdd}/>
+                <input type="button" value="操作Counter +4 " onClick={this.onAdd}/>
                 <br/>
                
 

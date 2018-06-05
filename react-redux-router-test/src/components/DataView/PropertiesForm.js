@@ -47,6 +47,16 @@ class PropertiesForm extends React.Component{
         
     }
 
+    componentDidMount(){
+        //this.props.form.validateFields();
+        //alert(1)
+    }
+
+    componentDidUpdate(){
+        //this.props.form.validateFields();
+        //alert(2)
+    }
+
     render(){
 
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
