@@ -81,6 +81,11 @@ class ThdSideNav extends React.Component{
                         <Link to="/DataViewLayout">DataViewLayout</Link>
                     </p>
                     </Panel>
+                    <Panel header="设计视图" key="8">
+                    <p>
+                        <Link to="/DragDesigner">DragDesigner</Link>
+                    </p>
+                    </Panel>
                     <Panel header="生命周期" key="6">
                     <p>
                         <Link to="/LifecycleExample">LifecycleExample</Link>
@@ -92,6 +97,8 @@ class ThdSideNav extends React.Component{
                         <Link to="/AdvanceComponent">AdvanceComponent</Link>
                     </p>
                     </Panel>
+
+                   
 
                     
                 </Collapse>

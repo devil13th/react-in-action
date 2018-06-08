@@ -80,7 +80,7 @@ class EditDataCollectionModal extends React.Component {
                                 </Tooltip>
                             )
                         }
-
+                        {/*
                         operationBtons.push(<span key={baseKey+"_span02"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
                         
                         operationBtons.push(
@@ -88,7 +88,7 @@ class EditDataCollectionModal extends React.Component {
                                 <Icon key={baseKey+"_edit_icon"} type="edit" onClick={() => this.onEditProperties(record.key)} style={{cursor:"pointer"}}/>
                             </Tooltip>
                         );
-
+                        */}
                         operationBtons.push(<span key={baseKey+"_span01"} style={{cursor:"pointer",display:"inline-block",width:16}}></span>);
 
                         operationBtons.push(                            

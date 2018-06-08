@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import {userListReducer,userNameReducer} from '../components/UserManager/UserList';
 import {dataCollection2ListReducer,creatSaveFormDataAction} from '../components/Layout/TransferTree';
 import {saveFormDataReducer} from '../components/Layout/MyForm';
+import {designerViewDataReducer} from '../components/DragDesigner';
 import {
     dataViewBaseInfoReducer,
     enityListReducer,
@@ -37,6 +38,6 @@ export default combineReducers({
     enityList:enityListReducer,
     dataViewBaseInfo:dataViewBaseInfoReducer,
     dataCollectionList:dataCollectionListReducer,
-    dataViewSearchKeyWord : dataViewSearchKeyWordReducer
-
+    dataViewSearchKeyWord : dataViewSearchKeyWordReducer,
+    designerViewData: designerViewDataReducer
 });

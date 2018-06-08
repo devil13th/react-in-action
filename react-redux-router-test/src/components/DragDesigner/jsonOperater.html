@@ -1,0 +1,149 @@
+<script>
+
+var jd = [
+	{
+		id:"1",
+		name:"name_1",
+		children : [
+			{
+				id:"1.1",
+				name:"name_1_1",
+				children : [
+					{
+						id:"1.1.1",
+						name:"name_1_1_1",
+						children : [
+							{
+								id:"1.1.1.1",
+								name:"name_1_1_1_1",
+								children : [
+									
+								]
+							}
+						]
+					},
+					{
+						id:"1.1.2",
+						name:"name_1_1_2",
+						children : [
+							
+						]
+					},
+					{
+						id:"1.1.3",
+						name:"name_1_1_3",
+						children : [
+							
+						]
+					}
+				]
+			},
+			{
+				id:"1.2",
+				name:"name_1_2",
+				children : [
+					
+				]
+			},
+			{
+				id:"1.3",
+				name:"name_1_3",
+				children : [
+					
+				]
+			}
+		]
+	},
+	{
+		id:"2",
+		name:"name_2",
+		children : [
+			{
+				id:"2.1",
+				name:"name_2_1",
+				children : [
+					
+				]
+			},
+			{
+				id:"2.2",
+				name:"name_2_2",
+				children : [
+					
+				]
+			},
+		]
+	},
+	{
+		id:"3",
+		name:"name_3",
+		children : [
+			
+		]
+	}
+]
+
+
+
+function findObj(idName,key,jsonData,childrenName,res){
+	for(var i = 0 , j = jsonData.length ; i < j ; i++){
+		if(jsonData[i][idName] === key){
+			return jsonData[i];
+		}else{
+			if(jsonData[i][childrenName] && jsonData[i][childrenName].length > 0){
+				return findObj(idName,key,jsonData[i][childrenName],childrenName,res);
+			}
+		}
+	}
+}
+
+var a = findObj("id","1.1.1.1",jd,"children");
+console.log(a)
+
+
+
+function addObj(idName,key,jsonData,childrenName,res){
+
+	var r = findObj(idName,key,jsonData,childrenName);
+	console.log(r)
+	if(!r[childrenName]){
+		r[childrenName] = []
+	}
+	
+	r[childrenName].push(res);
+
+}
+
+var b = {
+	id:"1.1.1.1.1",
+	name:"name_1_1_1_1_1"
+}
+
+addObj("id","1.1.1.1",jd,"children",b);
+console.log(jd);
+
+
+function updateObj(idName,key,jsonData,childrenName,res){
+
+	var r = findObj(idName,key,jsonData,childrenName);
+	console.log("--------");
+	console.log(r);
+	r = {...r,...res};
+	console.log(r);
+
+}
+
+updateObj("id","1.1.1.1",jd,"children",{name:"ssssss"});
+console.log(jd);
+
+
+
+
+
+
+
+
+function addObjToJson(id,obj,jsonData,childrenName){
+	
+}
+</script>
