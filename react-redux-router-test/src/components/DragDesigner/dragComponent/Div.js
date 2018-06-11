@@ -5,8 +5,9 @@ import {dragEvent,dropEvent} from '../componentUtil'
 import  {
     createAddDragDesignerComponentAction,
     createRemoveRemoveDragDesignerComponentAction,
-    createMoveRemoveDragDesignerComponentAction
+    createMoveDragDesignerComponentAction
 } from '../action';
+import {componentsMap} from '../dic';
 
 class Div extends React.Component{
     constructor(props){
@@ -22,10 +23,9 @@ class Div extends React.Component{
         console.log("onDrop");
         e.stopPropagation();
         const dragDomId = e.dataTransfer.getData("dragDomId");
-        const targetDomId = e.target.getAttribute("id")
+        const targetDomId = e.target.getAttribute("id");
         
         this.props.moveComponent(dragDomId,targetDomId);
-        
     }
 
     render(){
@@ -59,7 +59,20 @@ class Div extends React.Component{
 
 const drawComponent = (componentCfg) => {
     console.log(' 开始绘制[div] ');
-    return <DivComponent key={componentCfg.id} id={componentCfg.id} data={componentCfg}></DivComponent>;
+    if(componentCfg.childrens && componentCfg.childrens.length > 0){
+        return (
+            <DivComponent key={componentCfg.id} id={componentCfg.id} data={componentCfg}>
+                {componentCfg.childrens.map((item)=>{
+                    let componentDic = componentsMap.get(item.componentId);
+                    //alert(item.componentId)
+                    return componentDic.drawMethod(item);
+                })}
+            </DivComponent>
+        );
+    }else{
+        return <DivComponent key={componentCfg.id} id={componentCfg.id} data={componentCfg}></DivComponent>;
+    }
+    
 }
 
 const mapStateToProps = (state,ownerProps) =>{
@@ -70,7 +83,7 @@ const mapStateToProps = (state,ownerProps) =>{
  const mapDispatchToProps = (dispatch,ownerProps) => {
      return({
          moveComponent : (dragDomId,targetDomId) => {
-             dispatch(createMoveRemoveDragDesignerComponentAction(dragDomId,targetDomId));
+             dispatch(createMoveDragDesignerComponentAction(dragDomId,targetDomId));
          }
      })
  }

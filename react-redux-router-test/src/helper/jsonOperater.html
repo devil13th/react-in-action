@@ -1,59 +1,59 @@
-/**
-扁平化数据
-data数据格式：
+<script>
 
-[
-	{
-		xx:xx,
-		xx:xx,
-		children:[
-			{
-				xxx:xxx,
-				xxx:xxx,
-				children:[...]
-			},
-		]
-	},
-	{
-		xx:xx,
-		xx:xx,
-		children:[
-			{
-				xxx:xxx,
-				xxx:xxx,
-				children:[...]
-			},
-		]
-	}
-]
-*/
-const lowerDimension = (data,childrenProName,ary = []) => {
-	data.map(item => {
-		ary.push(item);
-		if(item[childrenProName]){
-			lowerDimension(item[childrenProName],childrenProName,ary);
-		}		
-	})
-	return ary;
-}
+var jd = 
+
+[{
+	"id": "1",
+	"componentId": "div",
+	"cfg": {},
+	"key": "div_0b07d485-17b0-4246-8368-61c45d139987",
+	"childrens": []
+}, {
+	"id": "2",
+	"componentId": "div",
+	"cfg": {},
+	"key": "div_2d032515-31b9-429c-809d-74d96a8493b6",
+	"childrens": []
+}, {
+	"id": "3",
+	"componentId": "div",
+	"cfg": {},
+	"key": "div_3af76b1a-2376-4829-8533-91a1f059589b",
+	"childrens": [{
+		"id": "3.1",
+		"componentId": "div",
+		"cfg": {},
+		"key": "div_9f1ae001-8f75-458c-8403-f59c4aa98654",
+		"childrens": []
+	}]
+}, {
+	"id": "4",
+	"componentId": "div",
+	"cfg": {},
+	"key": "div_ad6a9664-f379-46cf-8576-57b62f148a9c",
+	"childrens": []
+}, {
+	"id": "5",
+	"componentId": "div",
+	"cfg": {},
+	"key": "div_eb510d8a-e784-4416-b137-8641b8fe7dcd",
+	"childrens": []
+}, {
+	"id": "6",
+	"componentId": "div",
+	"cfg": {},
+	"key": "div_06211cd0-1e70-4e5a-be7f-3c1c532e2830",
+	"childrens": [{
+		"id": "6.1",
+		"componentId": "div",
+		"cfg": {},
+		"key": "div_9f1ae001-8f75-458c-8403-f59c4aa98654",
+		"childrens": []
+	}]
+}]
 
 
-const uuid = () => {
-	var s = [];
-	var hexDigits = "0123456789abcdef";
-	for (var i = 0; i < 36; i++) {
-	  s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-	}
-	s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-	s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-	s[8] = s[13] = s[18] = s[23] = "-";
-   
-	var uuid = s.join("");
-	return uuid;
-}
-
-
-const jsonArrayUtil = {
+var jsonArrayUtil = {
 
 
 	/*
@@ -73,7 +73,10 @@ const jsonArrayUtil = {
 				return jsonData[i];
 			}else{
 				if(jsonData[i][childrenName] && jsonData[i][childrenName].length > 0){
-					return this.findObj(idName,key,jsonData[i][childrenName],childrenName);
+					var node = this.findObj(idName,key,jsonData[i][childrenName],childrenName);
+					if(node){
+						return node; 
+					}
 				}
 			}
 		}
@@ -132,23 +135,14 @@ const jsonArrayUtil = {
 
 	*/
 	findObjParent : function (idName,key,jsonData,childrenName){
-		//console.log("findObjParent....");
-		//console.log(jsonData);
-		//console.log(jsonData[childrenName]);
+		//console.log(jsonData[idName] +"|"+key);
 		if(jsonData[childrenName]){
 			for(var i = 0 , j = jsonData[childrenName].length ; i < j ; i++){
-				//alert("-------------")
-				//alert(i + " |\n" + jsonData[childrenName].length + " |\n" +  jsonData[childrenName][i][idName] +"  |\n   "+ key)
 				if(jsonData[childrenName][i][idName] === key){
-					//alert("xxxxx")
 					//console.log("匹配:" + jsonData[childrenName][i][idName])
 					return jsonData;
 				}else{
-					//console.log(jsonData[childrenName][i][childrenName])
 					if(jsonData[childrenName][i][childrenName] && jsonData[childrenName][i][childrenName].length > 0){
-						//alert("ddddd");
-						//console.log("***************");
-						//console.log(this);
 						return this.findObjParent(idName,key,jsonData[childrenName][i],childrenName)
 					}
 				}
@@ -168,30 +162,46 @@ const jsonArrayUtil = {
 
 	*/
 	deleteObj : function (idName,key,jsonData,childrenName){
-		//console.log("---------------------");
-		//console.log(jsonData)
-		//console.log(key)
-		
 		var parentObj = this.findObjParent(idName,key,jsonData,childrenName);
-		//console.log("--------------------")
-		//console.log(parentObj)
-		//alert(2);
 		var newChildren = parentObj[childrenName].filter(function(item){
-			return !(item[idName] == key);
+			return !(item[idName] === key);
 		})
 		parentObj[childrenName] = newChildren;
-		//console.log("====== deleteObj =======");
-		//console.log(jsonData);
-		
 	}
 
 
 }
 
 
-export{
-	lowerDimension as lowerDimension,
-	uuid as uuid,
-	jsonArrayUtil as jsonArrayUtil
 
+console.log("=== 查找某个节点 ===")
+var a = jsonArrayUtil.findObj("id","5",jd,"childrens");
+console.log(a)
+
+console.log("=== 新增某个节点 ===")
+var b = {
+	id:"1.1.1.1.1",
+	name:"name_1_1_1_1_1"
 }
+jsonArrayUtil.addObj("id","4",jd,"childrens",b);
+console.log(jd);
+
+console.log("=== 更新某个节点 ===")
+jsonArrayUtil.updateObj("id","5",jd,"childrens",{name:"ssssss"});
+console.log(jd);
+
+console.log("=== 查找某个节点的父节点 ===")
+var newJd = {
+	children:jd
+}
+var p = jsonArrayUtil.findObjParent("id","6.1",newJd,"childrens",null);
+console.log(p);
+
+console.log("=== 删除某节点 ===");
+var deleteJdTemp = {
+	children:jd
+}
+jsonArrayUtil.deleteObj("id","6.1",deleteJdTemp,"childrens")
+console.log(deleteJdTemp);
+
+</script>

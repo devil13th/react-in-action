@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout } from 'antd';
+import {Layout,Modal} from 'antd';
 import {connect} from 'react-redux';
 import {componentsMap} from './dic';
 import  {
@@ -20,6 +20,12 @@ class DesignArea extends React.Component{
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
+
+        this.handleOk = this.handleOk.bind(this);
+        
+        this.state = {
+            modalVisible :this.props.modalVisible
+        }
     }
 
     onDragEnter(e){
@@ -66,6 +72,15 @@ class DesignArea extends React.Component{
     }
 
 
+
+    handleOk = (e) => {
+        console.log(e);
+        this.props.hideModal();
+    }
+
+
+
+
     drawAllComponent(){
         return this.props.designerViewData.map((item) => {
             let componentDic = componentsMap.get(item.componentId);
@@ -77,6 +92,8 @@ class DesignArea extends React.Component{
 
     render(){
         const doms = this.drawAllComponent();
+        const modalVisible = this.props.modalVisible; 
+        const dataViewJsonStr = JSON.stringify(this.props.designerViewData);
         return(
             <Content style={{height:"100%"}}>
                 <div 
@@ -88,21 +105,39 @@ class DesignArea extends React.Component{
                 >
                     {doms}
                 </div>
+
+
+                <Modal
+                    title="DataViewData"
+                    visible={modalVisible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleOk}
+                    keyboard={true}
+                    mask={false}
+                    maskClosable={false}
+                >
+                    <p>{dataViewJsonStr}</p>
+                </Modal>
             </Content>
         )
     }
 }
 
 const mapStateToProps = (state,ownerProps) =>{
-   return({
-       designerViewData:state.designerViewData
-   })
+    return({
+        designerViewData:state.designerViewData,
+        modalVisible:state.modalVisible,
+        designerViewData:state.designerViewData
+    })
 }
 
 const mapDispatchToProps = (dispatch,ownerProps) => {
     return({
         addComponent : (dragComponentCfg) => {
             dispatch(createAddDragDesignerComponentAction(dragComponentCfg,"a"));
+        },
+        hideModal:() => {
+            dispatch({type:"SHOW_MODAL",value:false});
         }
     })
 }
