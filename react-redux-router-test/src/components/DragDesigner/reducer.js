@@ -16,7 +16,12 @@ const designerViewDataReducer = (state = designerViewDataInit ,action) =>{
         //添加组件
         case ADD_DRAG_DESIGNER_COMPONENT__ACTION : {
             const designerViewData = _.cloneDeep(state);
-            designerViewData.push(action.componentObj);
+            if(action.componentObj.isAddComponent){//将菜单中的组件移动到设计区的组件中
+                jsonArrayUtil.addObj("id",action.targetComponentId,designerViewData,"childrens",action.componentObj);
+            }else{//将菜单中的组件拖到设计区空白处
+                designerViewData.push(action.componentObj);
+            }
+            
             return designerViewData;
         }
         //移动组件

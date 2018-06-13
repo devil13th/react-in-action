@@ -68,12 +68,17 @@ const jsonArrayUtil = {
 
 	*/
 	findObj :function (idName,key,jsonData,childrenName){
+		
 		for(var i = 0 , j = jsonData.length ; i < j ; i++){
+			console.log("find node [" + idName + ":" + jsonData[i][idName] + "]" );
 			if(jsonData[i][idName] === key){
 				return jsonData[i];
 			}else{
 				if(jsonData[i][childrenName] && jsonData[i][childrenName].length > 0){
-					return this.findObj(idName,key,jsonData[i][childrenName],childrenName);
+					var node = this.findObj(idName,key,jsonData[i][childrenName],childrenName);
+					if(node){
+						return node; 
+					}
 				}
 			}
 		}
@@ -132,24 +137,19 @@ const jsonArrayUtil = {
 
 	*/
 	findObjParent : function (idName,key,jsonData,childrenName){
-		//console.log("findObjParent....");
-		//console.log(jsonData);
-		//console.log(jsonData[childrenName]);
+		//console.log(jsonData[idName] +"|"+key);
 		if(jsonData[childrenName]){
 			for(var i = 0 , j = jsonData[childrenName].length ; i < j ; i++){
-				//alert("-------------")
-				//alert(i + " |\n" + jsonData[childrenName].length + " |\n" +  jsonData[childrenName][i][idName] +"  |\n   "+ key)
+				console.log("find parent node [" + idName + ":" + jsonData[childrenName][i][idName] + "]" );
 				if(jsonData[childrenName][i][idName] === key){
-					//alert("xxxxx")
 					//console.log("匹配:" + jsonData[childrenName][i][idName])
 					return jsonData;
 				}else{
-					//console.log(jsonData[childrenName][i][childrenName])
 					if(jsonData[childrenName][i][childrenName] && jsonData[childrenName][i][childrenName].length > 0){
-						//alert("ddddd");
-						//console.log("***************");
-						//console.log(this);
-						return this.findObjParent(idName,key,jsonData[childrenName][i],childrenName)
+						var node = this.findObjParent(idName,key,jsonData[childrenName][i],childrenName)
+						if(node){
+							return node;
+						}
 					}
 				}
 			}
@@ -168,26 +168,14 @@ const jsonArrayUtil = {
 
 	*/
 	deleteObj : function (idName,key,jsonData,childrenName){
-		//console.log("---------------------");
-		//console.log(jsonData)
-		//console.log(key)
-		
 		var parentObj = this.findObjParent(idName,key,jsonData,childrenName);
-		//console.log("--------------------")
-		//console.log(parentObj)
-		//alert(2);
 		var newChildren = parentObj[childrenName].filter(function(item){
-			return !(item[idName] == key);
+			return !(item[idName] === key);
 		})
 		parentObj[childrenName] = newChildren;
-		//console.log("====== deleteObj =======");
-		//console.log(jsonData);
-		
 	}
 
-
 }
-
 
 export{
 	lowerDimension as lowerDimension,

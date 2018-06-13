@@ -11,3 +11,7 @@
 ref属性，参见
 > /src/components/tab/ThdTabSingle.js
 
+# css_module使用
+参见
+> /src/LayoutHeader.js  和 /cfg/webpack.config.dev.js
+

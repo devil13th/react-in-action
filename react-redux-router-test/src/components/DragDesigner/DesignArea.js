@@ -40,7 +40,7 @@ class DesignArea extends React.Component{
     }
 
     onDrop(e){
-        const componentId = e.dataTransfer.getData("dragObjId");
+        const componentId = e.dataTransfer.getData("dragDomId");
         const componentDic = componentsMap.get(componentId);
         const componentCfg = {
             id : componentDic.id + "_" + uuid(),//html的id
@@ -50,7 +50,7 @@ class DesignArea extends React.Component{
             childrens:[]
         }
         
-        console.log(componentCfg);
+        //console.log(componentCfg);
         this.props.addComponent(componentCfg);
 
         /*var dom = this.refs.targetDiv.getDOMNode();
@@ -82,7 +82,9 @@ class DesignArea extends React.Component{
 
 
     drawAllComponent(){
+        console.log("开始绘制设计区");
         return this.props.designerViewData.map((item) => {
+            //console.log(item);
             let componentDic = componentsMap.get(item.componentId);
             //console.log("============================",item.componentId);
             return componentDic.drawMethod(item);
@@ -95,13 +97,14 @@ class DesignArea extends React.Component{
         const modalVisible = this.props.modalVisible; 
         const dataViewJsonStr = JSON.stringify(this.props.designerViewData);
         return(
-            <Content style={{height:"100%"}}>
+            <Content style={{height:"100%",background:"#EEE",border:"5px solid #ddd"}}>
                 <div 
                     ref="targetDiv" 
-                    style={{height:"100%",background:"#EEE",border:"1px solid #aaa"}} 
+                    style={{height:"100%"}} 
                     onDrop={this.onDrop} 
                     onDragEnter={this.onDragEnter} 
                     onDragOver={this.onDragOver}
+                    style={{height:"100%",background:"#fff",border:"1px solid #999"}}
                 >
                     {doms}
                 </div>
@@ -134,7 +137,7 @@ const mapStateToProps = (state,ownerProps) =>{
 const mapDispatchToProps = (dispatch,ownerProps) => {
     return({
         addComponent : (dragComponentCfg) => {
-            dispatch(createAddDragDesignerComponentAction(dragComponentCfg,"a"));
+            dispatch(createAddDragDesignerComponentAction(dragComponentCfg,""));
         },
         hideModal:() => {
             dispatch({type:"SHOW_MODAL",value:false});

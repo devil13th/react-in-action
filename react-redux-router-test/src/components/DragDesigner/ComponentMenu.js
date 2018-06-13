@@ -37,19 +37,19 @@ class ComponentMenu extends React.Component{
 
     render(){
         return(
-            <Sider style={{height:"100%",background:'#fff'}}>
+            <Sider style={{height:"100%",background:'#fff',border:"1px solid #ddd",borderRight:"1px solid #666"}}>
                 <Collapse bordered={false} defaultActiveKey={['1']}>
                     <Panel header="基本控件" key="1">
                         {this.state.baseComponents.map(item => {
                             return (
-                                <ComponentMenuItem key={item.id} componentData={item}></ComponentMenuItem>
+                                <ComponentMenuItem id={item.id} key={item.id} componentData={item}></ComponentMenuItem>
                             )
                         })}
                     </Panel>
                     <Panel header="容器" key="2">
                         {this.state.containers.map(item => {
                             return (
-                                <ComponentMenuItem key={item.id} componentData={item}></ComponentMenuItem>
+                                <ComponentMenuItem id={item.id} key={item.id} componentData={item}></ComponentMenuItem>
                             )
                         })}
                     </Panel>

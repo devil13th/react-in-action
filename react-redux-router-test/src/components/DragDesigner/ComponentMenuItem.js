@@ -10,16 +10,17 @@ class ComponentMenuItem extends React.Component{
 
     onDragStart(e){
         console.log("开始拖动[" + this.props.componentData.id + "]");
-        e.dataTransfer.setData("dragObjId",this.props.componentData.id);
+        e.dataTransfer.setData("dragDomId",this.props.componentData.id);
     }
     
     render(){
         const componentData = this.props.componentData ;
-        const id = "componentMenuItem_" + componentData.id;
+        //const id = "componentMenuItem_" + componentData.id;
+        const id =  this.props.id;
         return(
             <div 
                 draggable="true" 
-                style={{textAlign:"left",cursor:"move",border:"1px solid #ccc",borderRadius:"2px",padding:"2px 5px 2px 2px"}} 
+                style={{textAlign:"left",margin:"1px",cursor:"move",border:"1px solid #ccc",borderRadius:"2px",padding:"2px 5px 2px 2px"}} 
                 data-componentdata={componentData} 
                 key={id}
                 id={id}

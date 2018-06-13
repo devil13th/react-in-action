@@ -7,12 +7,12 @@ const ADD_DRAG_DESIGNER_COMPONENT__ACTION = "ADD_DRAG_DESIGNER_COMPONENT__ACTION
  * @param {*} componentObj : 拖入的容器对象数据
  * @param {*} targetComponentKey : 目标对象key
  */
-const createAddDragDesignerComponentAction = (componentObj,targetComponentKey) => {
-    console.log(componentObj)
+const createAddDragDesignerComponentAction = (componentObj,targetComponentId) => {
+    //console.log(componentObj)
     return {
         type:ADD_DRAG_DESIGNER_COMPONENT__ACTION,
         componentObj,
-        targetComponentKey 
+        targetComponentId
     }
 }
 //删除节点
