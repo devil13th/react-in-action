@@ -1,4 +1,11 @@
+[toc]
 
+# webpack打包js
+
+
+
+配置如下
+```
 module.exports = {
   //mode:生产模式production(会压缩代码)  开发模式development(不会压缩代码)
   mode:"development", 
@@ -9,3 +16,4 @@ module.exports = {
     filename: './bundle.js' //默认dist目录下  
   }
 };
+```
