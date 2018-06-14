@@ -98,11 +98,7 @@ class ThdSideNav extends React.Component{
                     </p>
                     </Panel>
 
-                   
-
-                    
-                </Collapse>
-            
+                </Collapse>            
             </Sider>
         )
     }

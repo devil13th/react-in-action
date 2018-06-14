@@ -1,8 +1,7 @@
 import React from 'react';
 import {uuid} from '../../../helper';
 import {connect} from 'react-redux';
-import {CommonComponent} from './CommonComponent';
-import cssmodule from './component.css';
+import {CommonComponent} from './CommonComponent'
 //import {dragEvent,dropEvent} from '../componentUtil'
 import  {
     createAddDragDesignerComponentAction,
@@ -11,7 +10,7 @@ import  {
 } from '../action';
 import {componentsMap} from '../dic';
 
-class Div extends CommonComponent{
+class Div2 extends CommonComponent{
     constructor(props){
         super(props);
         //console.log(this.props.data);
@@ -36,7 +35,8 @@ class Div extends CommonComponent{
                 componentId : componentDic.id,//组件id
                 cfg:{}, //其他配置
                 key: componentDic.id + "_" + uuid(),
-                childrens:[],
+                childrens:[
+                ],
                 isAddComponent:true //是新增组件还是移动组件(是否是从左侧菜单拖入的)
             }
             this.props.addComponent(componentCfg,targetDomId);
@@ -61,8 +61,12 @@ class Div extends CommonComponent{
 
        
         const stl = {
-            border: this.mouseDragActive || this.mouseDragOverActive ? "1px dashed #000" : "1px dashed #aaa"
+            margin:"3px",
+            border: this.mouseDragActive || this.mouseDragOverActive ? "1px dashed #000" : "1px dashed #aaa",
+            padding:"5px"
         }
+
+
         const key = "div_" + uuid();
         return (
            
@@ -77,12 +81,12 @@ class Div extends CommonComponent{
                 onDragLeave = {this.onDragLeave}
                 onDrop = {this.onDrop}
 
-                className={cssmodule.component_div}
+                className="drogHover"
                 
                 style={stl}
                 id={this.props.id}
             >
-                {this.props.children}
+                2{this.props.children}
             </div>    
         )
     }
@@ -115,15 +119,15 @@ const mapDispatchToProps = (dispatch,ownerProps) => {
         moveComponent : (dragDomId,targetDomId) => {
             dispatch(createMoveDragDesignerComponentAction(dragDomId,targetDomId));
         },
-        addComponent : (dragComponentCfg,id) => {
+        addComponent : (dragComponentCfg,id) => {            
             dispatch(createAddDragDesignerComponentAction(dragComponentCfg,id));
         }
     })
 }
 
-const DivComponent = connect(mapStateToProps,mapDispatchToProps)(Div)
+const DivComponent = connect(mapStateToProps,mapDispatchToProps)(Div2)
 
 export {
-    DivComponent as Div,
+    DivComponent as Div2,
     drawComponent as drawComponent
 } ;

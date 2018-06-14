@@ -1,5 +1,6 @@
 import {drawComponent as drawDiv} from './dragComponent/Div';
-
+import {drawComponent as drawButton} from './dragComponent/Button';
+import {drawComponent as drawDiv2} from './dragComponent/Div2';
 //控件类型字典
 const DicComponentType = {
     BASECOMPONENT : "BASECOMPONENT", //基本控件
@@ -26,7 +27,26 @@ const DicComponents = {
             attributes:[],
             //组件事件
             events:[],
-            drawMethod : drawDiv    
+            //绘制函数
+            drawMethod : drawDiv
+        },
+        div2:{
+            //主键,唯一标志
+            id:"div2",
+            //组件分类
+            componentType:DicComponentType.CONTAINER,
+            //中文名称
+            name:"层",
+            //菜单图标
+            icon:"",
+            //预览图
+            previewImg:"",
+            //组件属性
+            attributes:[],
+            //组件事件
+            events:[],
+            //绘制函数
+            drawMethod : drawDiv2    
         }
     },
     containers:{
@@ -44,9 +64,9 @@ const DicComponents = {
             //组件属性
             attributes:[],
             //组件事件
-            events:[]
+            events:[],
             //绘制函数
-            
+            drawMethod : drawButton
         }
     }
 }
