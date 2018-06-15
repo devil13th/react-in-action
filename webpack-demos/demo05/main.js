@@ -1,7 +1,13 @@
-var img1 = document.createElement("img");
-img1.src = require("./small.png");
-document.body.appendChild(img1);
+import React from 'react';
+import ReactDOM  from 'react-dom';
 
-var img2 = document.createElement("img");
-img2.src = require("./big.png");
-document.body.appendChild(img2);
+import img1 from './images/big.png';
+import img2 from './images/small.png';
+
+ReactDOM.render(
+  <div>
+    <img src={img1}/>
+    <img src={img2}/>
+  </div>,
+  document.getElementById('example')
+);
