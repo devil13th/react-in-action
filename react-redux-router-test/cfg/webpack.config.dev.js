@@ -10,6 +10,16 @@ module.exports ={
   },
   mode:'development', // 生产模式production  开发模式development
   devServer: {
+    proxy: { //设置代理
+      '/proxy': {
+          target: 'http://127.0.0.1:8888/sbt',
+          changeOrigin: true,
+          pathRewrite: {
+              '^/proxy': '' //代理路径
+          }
+      }
+    },
+
     contentBase: __dirname+'/../public',//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转
     inline: true//实时刷新

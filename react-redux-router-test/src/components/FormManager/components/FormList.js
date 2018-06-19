@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Table,Pagination } from 'antd';
+import request from 'superagent';
 class FormList extends React.Component{
     constructor(props){
         super(props);
@@ -117,6 +118,29 @@ const dispatchToProps = (dispatch,ownProps) => {
                     type : "LOADING_FORMLIST",
                     loading:true,
                 });
+
+
+                request
+                .get('/data.json') //get方式请求 /data.text
+                .set('Content-Type', 'application/json') //设置Content-Type
+
+                .set('Accept', 'application/json') //接受的类型
+                
+                .query({class:"class-1"}) //发送的参数
+                //.query({ action: 'edit', city: 'London' }) // query string
+                //.use(prefix) // Prefixes *only* this request
+                //.use(nocache) // Prevents caching of *only* this request
+                .end((err, res) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(res);
+                        console.log(res.body)
+                        console.log(res.body.root.users)
+                    }
+                    
+                });
+
                 
             });
            
