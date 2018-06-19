@@ -7,6 +7,8 @@
 
 ## react-router
 
+## superagent - ajax
+
 ## 模块状态汇总 - makeRecuder 
 
 > 数据视图 - DataViewLayout

@@ -5,7 +5,7 @@ import {dataViewReducer} from '../components/DataView/modules/dataViewReducer'
 import {dataCollection2ListReducer,creatSaveFormDataAction} from '../components/Layout/TransferTree';
 import {saveFormDataReducer} from '../components/Layout/MyForm';
 import {designerViewDataReducer,modalVisibleReducer} from '../components/DragDesigner';
-
+import {formManagerReducer} from '../components/FormManager/modules/formManagerReducer'
 
 //reducers
 
@@ -40,5 +40,7 @@ export default combineReducers({
 
 
     designerViewData: designerViewDataReducer,
-    modalVisible:modalVisibleReducer
+    modalVisible:modalVisibleReducer,
+
+    formManagerReducer:formManagerReducer
 });

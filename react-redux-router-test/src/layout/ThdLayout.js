@@ -18,6 +18,7 @@ import {DataViewLayout} from '../components/DataView/components/DataViewLayout'
 import {LifecycleExample} from '../components/LifecycleExample'
 import {AdvanceComponent} from '../components/AdvanceCompent'
 import {DragDesigner} from '../components/DragDesigner'
+import {FormManager} from '../components/FormManager/containers/FormManager'
 const Panel = Collapse.Panel;
 const {  Sider, Content } = Layout;
 
@@ -58,6 +59,7 @@ class ThdLayout extends React.Component{
                             <Route path="/AdvanceComponent" name="AdvanceComponent" component={AdvanceComponent} ></Route>
 
                             <Route path="/DragDesigner" name="DragDesigner" component={DragDesigner} ></Route>
+                            <Route path="/FormManager" name="FormManager" component={FormManager} ></Route>
                            
                             
                         </Switch>

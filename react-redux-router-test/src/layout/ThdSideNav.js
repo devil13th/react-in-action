@@ -78,23 +78,18 @@ class ThdSideNav extends React.Component{
                     </Panel>
                     <Panel header="数据视图" key="5">
                     <p>
-                        <Link to="/DataViewLayout">DataViewLayout</Link>
+                        <Link to="/DataViewLayout">DataViewLayout</Link><br/>
+                        <Link to="/DragDesigner">DragDesigner</Link><br/>
+                        <Link to="/FormManager">FormManager</Link>
                     </p>
                     </Panel>
-                    <Panel header="设计视图" key="8">
-                    <p>
-                        <Link to="/DragDesigner">DragDesigner</Link>
-                    </p>
-                    </Panel>
-                    <Panel header="生命周期" key="6">
-                    <p>
-                        <Link to="/LifecycleExample">LifecycleExample</Link>
-                    </p>
-                    </Panel>
+                    
+                    
 
-                    <Panel header="高阶组件" key="7">
+                    <Panel header="教程相关" key="7">
                     <p>
-                        <Link to="/AdvanceComponent">AdvanceComponent</Link>
+                        <Link to="/LifecycleExample">生命周期</Link>
+                        <Link to="/AdvanceComponent">高级组件</Link>
                     </p>
                     </Panel>
 
