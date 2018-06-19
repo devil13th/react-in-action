@@ -1,10 +1,11 @@
 
 import React from 'react';
 import {Row,Col,Icon,Tree,Button,Popconfirm,message} from 'antd';
-import {lowerDimension,uuid} from '../../helper';
+import {lowerDimension,uuid} from '../../../helper/index';
 import {EditDataCollectionModal} from './EditDataCollectionModal';
 import {createDeleteDataCollectionAction} from './action';
 import {connect} from 'react-redux';
+
 const TreeNode = Tree.TreeNode;
 
 
@@ -132,7 +133,7 @@ class Transfer extends React.Component {
 
     //根据数据渲染树形目录节点
     renderTreeNodes(data){
-
+       
         return data.map((item) => {
             
             if (item.children ) {
@@ -222,18 +223,19 @@ class Transfer extends React.Component {
 
 
 const mapStateToProps = (state,props) => {
+    var moduleState = state.dataViewReducer;
     return {
         enityList : (function(){
             //关键字搜索结果
-            if(state.dataViewSearchKeyWord){
-                if(state.enityList && state.enityList.length > 0){
+            if(moduleState.dataViewSearchKeyWord){
+                if(moduleState.enityList && moduleState.enityList.length > 0){
                     const enityListFilterResult = []
-                    state.enityList.filter(item => {
+                    moduleState.enityList.filter(item => {
                         //匹配实体的name和title
                         if(
-                            item.name.toLowerCase().indexOf(state.dataViewSearchKeyWord.trim().toLowerCase()) != -1 
+                            item.name.toLowerCase().indexOf(moduleState.dataViewSearchKeyWord.trim().toLowerCase()) != -1 
                             ||
-                            item.title.toLowerCase().indexOf(state.dataViewSearchKeyWord.trim().toLowerCase()) != -1 
+                            item.title.toLowerCase().indexOf(moduleState.dataViewSearchKeyWord.trim().toLowerCase()) != -1 
                         ){
                             enityListFilterResult.push(item);
                         }
@@ -241,9 +243,9 @@ const mapStateToProps = (state,props) => {
                     return enityListFilterResult;
                 }
             }
-            return state.enityList ;
+            return moduleState.enityList ;
         })(),
-        dataCollectionList : state.dataCollectionList
+        dataCollectionList : moduleState.dataCollectionList
     }
 }
 

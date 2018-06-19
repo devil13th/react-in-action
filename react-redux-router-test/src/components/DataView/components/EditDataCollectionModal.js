@@ -2,10 +2,11 @@
 import React from 'react';
 import {Icon,Modal,Table,Button,Input,Row,Col,Popconfirm,message,Tooltip,Divider} from 'antd';
 import {connect} from 'react-redux';
-import {lowerDimension,uuid} from '../../helper';
+import {lowerDimension,uuid} from '../../../helper/index';
 import {createSaveDataCollectionAction} from './action';
 import {PropertiesForm} from './PropertiesForm';
 import _ from 'lodash';
+
 
 
 class EditDataCollectionModal extends React.Component {
@@ -300,8 +301,8 @@ class EditDataCollectionModal extends React.Component {
         
         //已选择的字段或属性
         const property_temp = _.cloneDeep(allNode[idx]);
-      
-       
+        
+        
         if(property_temp.type == "column"){//如果是字段
             if(changeObj.name){
                 property_temp.name=changeObj.name.value;
@@ -450,8 +451,9 @@ class EditDataCollectionModal extends React.Component {
 }
 
 const mapStateToProps = (state,props) => {
+    var moduleState = state.dataViewReducer;
     return {
-        dataCollectionList : state.dataCollectionList
+        dataCollectionList : moduleState.dataCollectionList
     }
 }
 const mapDispatchToProps = (dispatch,props) => {

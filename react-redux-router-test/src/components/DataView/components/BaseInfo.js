@@ -3,7 +3,7 @@ import { Row,Col,Form, Icon, Input, Button,message } from 'antd';
 import {connect} from 'react-redux';
 import style from  './style.css';
 import {creatSaveViewBaseInfoFormAction} from './action';
-import reducer from './reducer';
+
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -50,7 +50,7 @@ class BaseInfo extends React.Component {
         span: 12
       },
     };
-
+    
 
     return (
       <div>
@@ -190,8 +190,9 @@ const WrappedHorizontalLoginForm = Form.create({
 })(BaseInfo);
 
 const mapStateToProps = function(state,ownProps){
+  var moduleState = state.dataViewReducer;
   return {
-    formData : state.formData
+    formData : moduleState.dataViewBaseInfo
   }
 }
 const mapDispatchToProps = function(dispatch,ownProps){

@@ -1,8 +1,8 @@
 import React from 'react';
-import {uuid} from '../../../helper';
+import {uuid} from '../../../helper/index';
 import {connect} from 'react-redux';
-import {CommonComponent} from './CommonComponent';
-import cssmodule from './component.css';
+import {CommonComponent} from './CommonComponent'
+import {InitSetTableLayout} from './InitSetTableLayout'
 //import {dragEvent,dropEvent} from '../componentUtil'
 import  {
     createAddDragDesignerComponentAction,
@@ -21,28 +21,57 @@ class Div extends CommonComponent{
         this.onDrop = this.onDrop.bind(this);
     }
 
-    
+    static drawComponent = (componentCfg) => {
+        console.log(' 开始绘制[div] ');
+        if(componentCfg.childrens && componentCfg.childrens.length > 0){
+            return (
+                <DivComponent key={componentCfg.id} id={componentCfg.id} data={componentCfg}>
+                    {componentCfg.childrens.map((item)=>{
+                        let componentDic = componentsMap.get(item.componentId);
+                        return componentDic.componentClass.drawComponent(item);
+                    })}
+                </DivComponent>
+            );
+        }else{
+            return <DivComponent key={componentCfg.id} id={componentCfg.id} data={componentCfg}></DivComponent>;
+        }
+    }
 
+
+    static createInstanceData = (cfg) => {
+        console.log(' 创建[div]实例数据 ',cfg);
+        var id = "DIV_" + uuid();
+        return {
+            id:id,
+            componentId:"Div",
+            key:id,
+            cfg:{
+                style:{
+                    //width:400,
+                    //height:400
+                }
+            },
+            childrens:[],
+            drag : true,
+            drop : true
+        }    
+    }
     onDrop(e){
         console.log("onDrop");
         e.stopPropagation();
         const dragDomId = e.dataTransfer.getData("dragDomId");
         const targetDomId = e.target.getAttribute("id");
+
+
+
+
         if(componentsMap.get(dragDomId)){//拖动的是左侧菜单
             console.log("从菜单中拖入");
             const componentDic = componentsMap.get(dragDomId);
-            const componentCfg = {
-                id : componentDic.id + "_" + uuid(),//html的id
-                componentId : componentDic.id,//组件id
-                cfg:{}, //其他配置
-                key: componentDic.id + "_" + uuid(),
-                childrens:[],
-                isAddComponent:true //是新增组件还是移动组件(是否是从左侧菜单拖入的)
-            }
+            const componentCfg = componentDic.componentClass.createInstanceData();
             this.props.addComponent(componentCfg,targetDomId);
         }else{//拖动的是设计区内已加入的组件
             console.log("从设计区中移动");
-
             if(dragDomId != targetDomId){
                 this.props.moveComponent(dragDomId,targetDomId);
             }
@@ -58,51 +87,41 @@ class Div extends CommonComponent{
     }
 
     render(){
-
-       
+        //console.log("------------"); 
+        //console.log(this.props);
         const stl = {
-            border: this.mouseDragActive || this.mouseDragOverActive ? "1px dashed #000" : "1px dashed #aaa"
+            ...this.props.data.cfg.style,
+            margin:"3px",
+            border: this.mouseDragActive || this.mouseDragOverActive ? "1px dashed #000" : "1px dashed #aaa",
+            padding:"5px"
         }
+
+
         const key = "div_" + uuid();
         return (
            
             <div  
-                draggable={true}
-                onDragStart = {this.onDragStart}
-                onDrag = {this.onDrag}
-                onDragEnd = {this.onDragEnd}
+                draggable={this.props.data.drag}
+                onDragStart = {this.props.data.drag ? this.onDragStart : null}
+                onDrag = {this.props.data.drag ? this.onDrag : null}
+                onDragEnd = {this.props.data.drag ? this.onDragEnd : null}
 
-                onDragEnter = {this.onDragEnter}
-                onDragOver = {this.onDragOver}
-                onDragLeave = {this.onDragLeave}
-                onDrop = {this.onDrop}
+                onDragEnter = {this.props.data.drop ? this.onDragEnter : null}
 
-                className={cssmodule.component_div}
+                onDragOver = {this.props.data.drop ? this.onDragOver : null}
+                onDragLeave = {this.props.data.drop ? this.onDragLeave : null}
+                onDrop = {this.props.data.drop ? this.onDrop : null}
+
+                className="drogHover"
                 
                 style={stl}
                 id={this.props.id}
             >
+                {/*<InitSetTableLayout></InitSetTableLayout>*/}
                 {this.props.children}
             </div>    
         )
     }
-}
-
-const drawComponent = (componentCfg) => {
-    console.log(' 开始绘制[div] ');
-    if(componentCfg.childrens && componentCfg.childrens.length > 0){
-        return (
-            <DivComponent key={componentCfg.id} id={componentCfg.id} data={componentCfg}>
-                {componentCfg.childrens.map((item)=>{
-                    let componentDic = componentsMap.get(item.componentId);
-                    return componentDic.drawMethod(item);
-                })}
-            </DivComponent>
-        );
-    }else{
-        return <DivComponent key={componentCfg.id} id={componentCfg.id} data={componentCfg}></DivComponent>;
-    }
-    
 }
 
 const mapStateToProps = (state,ownerProps) =>{
@@ -124,6 +143,5 @@ const mapDispatchToProps = (dispatch,ownerProps) => {
 const DivComponent = connect(mapStateToProps,mapDispatchToProps)(Div)
 
 export {
-    DivComponent as Div,
-    drawComponent as drawComponent
+    DivComponent as Div
 } ;

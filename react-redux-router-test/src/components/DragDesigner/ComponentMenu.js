@@ -8,7 +8,7 @@ import {
 import {ComponentMenuItem} from './ComponentMenuItem';
 const Panel = Collapse.Panel;
 const {  Sider  } = Layout;
-import {drawComponent} from './componentUtil'
+
 
 class ComponentMenu extends React.Component{
     constructor(props){
@@ -20,11 +20,19 @@ class ComponentMenu extends React.Component{
             patternComponents:[]
         }
         Object.values(DicComponents.baseComponents).forEach(item => {
-            this.state.baseComponents.push(item);
+            if(item.visible){
+                this.state.baseComponents.push(item);
+            }
         })
-
         Object.values(DicComponents.containers).forEach(item => {
-            this.state.containers.push(item);
+            if(item.visible){
+                this.state.containers.push(item);
+            }
+        })
+        Object.values(DicComponents.patternComponents).forEach(item => {
+            if(item.visible){
+                this.state.patternComponents.push(item);
+            }
         })
 
         this.showViewData = this.showViewData.bind(this);
@@ -54,7 +62,11 @@ class ComponentMenu extends React.Component{
                         })}
                     </Panel>
                     <Panel header="模式控件" key="3">
-                        xxx
+                        {this.state.patternComponents.map(item => {
+                            return (
+                                <ComponentMenuItem id={item.id} key={item.id} componentData={item}></ComponentMenuItem>
+                            )
+                        })}
                     </Panel>
                     <Panel header="数据显示" key="4">
                         <Button type="primary" onClick={this.showViewData}>Primary</Button>

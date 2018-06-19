@@ -38,6 +38,17 @@ const lowerDimension = (data,childrenProName,ary = []) => {
 }
 
 
+
+//此函数功能为汇总模块内部的state,对外(对整体的store)公开成一个对象,避免store的state第一层键太多不易于管理的现象
+const makeReducer = (actionHandlers, initialState) => {
+	return (state = initialState, action) => {
+		const handler = actionHandlers[action.type];
+		return handler ? handler(state, action) : state;
+	};
+};
+  
+
+
 const uuid = () => {
 	var s = [];
 	var hexDigits = "0123456789abcdef";
@@ -55,7 +66,23 @@ const uuid = () => {
 
 const jsonArrayUtil = {
 
-
+	/*
+	为某个节点创建路径
+	@param idName : 属性名称
+	@param jsonData : json数组
+	@param childrenName : 对象的子对象数组的属性名称
+	*/
+	makePath :function (idName,jsonData,childrenName,path){
+		
+		for(var i = 0 , j = jsonData.length ; i < j ; i++){
+			console.log("makePath [" + idName + ":" + jsonData[i][idName] + "]" );
+			
+			jsonData[i]["__path__"] = path+"--"+jsonData[i][idName];
+			if(jsonData[i][childrenName] && jsonData[i][childrenName].length > 0){
+				this.makePath(idName, jsonData[i][childrenName],childrenName,jsonData[i]["__path__"]);
+			}
+		}
+	},
 	/*
 	查找某对象
 
@@ -70,7 +97,7 @@ const jsonArrayUtil = {
 	findObj :function (idName,key,jsonData,childrenName){
 		
 		for(var i = 0 , j = jsonData.length ; i < j ; i++){
-			console.log("find node [" + idName + ":" + jsonData[i][idName] + "]" );
+			//console.log("find node [" + idName + ":" + jsonData[i][idName] + "]" );
 			if(jsonData[i][idName] === key){
 				return jsonData[i];
 			}else{
@@ -173,13 +200,39 @@ const jsonArrayUtil = {
 			return !(item[idName] === key);
 		})
 		parentObj[childrenName] = newChildren;
-	}
+	},
+	/*
+	判断两个节点是否是父子关系(或者爷孙或更高)
 
+	@param idName : 属性名称
+	@param jsonData : json数组
+	@param childrenName : 对象的子对象数组的属性名称
+	@param key1 : 节点1key值
+	@param key2 : 节点2key值
+	
+	*/
+	hasParentRela : function (idName,jsonData,childrenName,key1,key2){
+		this.makePath(idName,jsonData,childrenName,"root");
+		//console.log(JSON.stringify(jsonData))
+		var node1 = this.findObj(idName,key1,jsonData,childrenName);
+		var node2 = this.findObj(idName,key2,jsonData,childrenName);
+		//alert(node1);
+		//alert(node2);
+		if(!node1 || !node2){
+			return false;
+		}else{
+			//console.log(node1.__path__)
+			//console.log(node2.__path__)
+			//alert(node2.__path__.indexOf(node1.__path__))
+			return node2.__path__.indexOf(node1.__path__) > -1
+		}
+	}
 }
 
 export{
 	lowerDimension as lowerDimension,
 	uuid as uuid,
-	jsonArrayUtil as jsonArrayUtil
+	jsonArrayUtil as jsonArrayUtil,
+	makeReducer as makeReducer
 
 }

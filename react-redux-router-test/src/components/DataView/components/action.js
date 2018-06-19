@@ -1,5 +1,15 @@
 // -------------------------------  数据视图 - 保存单个数据集 --------------------------
 const SAVE__DATA_VIEW_DATA_COLLECTION__ACTION = "SAVE__DATA_VIEW_DATA_COLLECTION__ACTION";
+// -------------------------------  数据视图 - 删除数据集 --------------------------
+const DELETE__DATA_VIEW_DATA_COLLECTION__ACTION = "DELETE__DATA_VIEW_DATA_COLLECTION__ACTION";
+// -------------------------------  数据视图 - 数据集数据集合初始化 --------------------------
+const DATA_COLLECTION_LIST_INIT = "DATA_COLLECTION_LIST_INIT";
+// -------------------------------  数据视图 - 保存基本信息表单 --------------------------
+const SAVE__DATA_VIEW_BASE_INFO_FORM__ACTION = "SAVE__DATA_VIEW_BASE_INFO_FORM__ACTION";
+// -------------------------------  数据视图 - 实体集合初始化 --------------------------
+const ENITY_LIST_INIT = "ENITY_LIST_INIT";
+// -------------------------------  数据视图 - 搜索数据集 --------------------------
+const SEARCH__DATA_VIEW_ENITY__ACTION = "SEARCH__DATA_VIEW_ENITY__ACTION";
 
 /**
  * 
@@ -14,10 +24,6 @@ const createSaveDataCollectionAction = (dataCollection,operateType) => {
   }
 }
 
-
-// -------------------------------  数据视图 - 删除数据集 --------------------------
-const DELETE__DATA_VIEW_DATA_COLLECTION__ACTION = "DELETE__DATA_VIEW_DATA_COLLECTION__ACTION";
-
 /**
  * 
  * @param {*} dataCollectionKey : 数据集key
@@ -29,15 +35,6 @@ const createDeleteDataCollectionAction = (dataCollectionKey) => {
   }
 }
 
-// -------------------------------  数据视图 - 数据集数据集合初始化 --------------------------
-const DATA_COLLECTION_LIST_INIT = "DATA_COLLECTION_LIST_INIT";
-
-
-
-// -------------------------------  数据视图 - 保存基本信息表单 --------------------------
-
-const SAVE__DATA_VIEW_BASE_INFO_FORM__ACTION = "SAVE__DATA_VIEW_BASE_INFO_FORM__ACTION";
-
 const creatSaveViewBaseInfoFormAction = (formData) => {
   return {
     type:SAVE__DATA_VIEW_BASE_INFO_FORM__ACTION,
@@ -45,9 +42,6 @@ const creatSaveViewBaseInfoFormAction = (formData) => {
   }
 }
 
-// -------------------------------  数据视图 - 实体集合初始化 --------------------------
-
-const ENITY_LIST_INIT = "ENITY_LIST_INIT";
 
 const createEnityListInitAction = (enityList) => {
   return {
@@ -55,10 +49,6 @@ const createEnityListInitAction = (enityList) => {
     enityList
   }
 }
-
-
-// -------------------------------  数据视图 - 搜索数据集 --------------------------
-const SEARCH__DATA_VIEW_ENITY__ACTION = "SEARCH__DATA_VIEW_ENITY__ACTION";
 
 /**
  * 

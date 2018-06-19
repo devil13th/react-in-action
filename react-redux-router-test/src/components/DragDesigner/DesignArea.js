@@ -1,15 +1,18 @@
 import React from 'react';
 import {Layout,Modal} from 'antd';
 import {connect} from 'react-redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 import {componentsMap} from './dic';
 import  {
     createAddDragDesignerComponentAction,
     createRemoveRemoveDragDesignerComponentAction,
-    createMoveRemoveDragDesignerComponentAction
+    createMoveRemoveDragDesignerComponentAction,
+    createMoveDragDesignerComponentAction
 } from './action';
 
 
-import {uuid} from '../../helper';
+
+import {uuid} from '../../helper/index';
 
 const {Content} = Layout;
 
@@ -41,17 +44,31 @@ class DesignArea extends React.Component{
 
     onDrop(e){
         const componentId = e.dataTransfer.getData("dragDomId");
+        //alert(componentId)
         const componentDic = componentsMap.get(componentId);
+
+        
+
+        /*
         const componentCfg = {
             id : componentDic.id + "_" + uuid(),//html的id
             componentId : componentDic.id,//组件id
             cfg:{}, //其他配置
             key: componentDic.id + "_" + uuid(),
             childrens:[]
+        }*/
+        let componentCfg = null;
+
+        if(componentDic){//从菜单区拖入的组件
+            componentCfg = componentDic.componentClass.createInstanceData();
+            this.props.addComponent(componentCfg);
+        }else{//从设计区拖入的已添加的组件
+           
+            this.props.moveComponent(componentId,null);
+           
         }
+      
         
-        //console.log(componentCfg);
-        this.props.addComponent(componentCfg);
 
         /*var dom = this.refs.targetDiv.getDOMNode();
 
@@ -85,9 +102,14 @@ class DesignArea extends React.Component{
         console.log("开始绘制设计区");
         return this.props.designerViewData.map((item) => {
             //console.log(item);
-            let componentDic = componentsMap.get(item.componentId);
+            //let componentDic = componentsMap.get(item.componentId);
             //console.log("============================",item.componentId);
-            return componentDic.drawMethod(item);
+            //return componentDic.drawMethod(item);
+
+            
+            let componentDic = componentsMap.get(item.componentId);
+            return componentDic.componentClass.drawComponent(item);
+
         })
     }
 
@@ -97,18 +119,22 @@ class DesignArea extends React.Component{
         const modalVisible = this.props.modalVisible; 
         const dataViewJsonStr = JSON.stringify(this.props.designerViewData);
         return(
-            <Content style={{height:"100%",background:"#EEE",border:"5px solid #ddd"}}>
-                <div 
-                    ref="targetDiv" 
-                    style={{height:"100%"}} 
-                    onDrop={this.onDrop} 
-                    onDragEnter={this.onDragEnter} 
-                    onDragOver={this.onDragOver}
-                    style={{height:"100%",background:"#fff",border:"1px solid #999"}}
+            <Content style={{height:"100%",background:"#EEE",border:"2px solid #ddd"}}>
+                <Scrollbars autoHide
+                 
+                    style={{width: "100%",height:"100%",boxSizing: 'content-box'}}
                 >
-                    {doms}
-                </div>
-
+                    <div 
+                        ref="targetDiv" 
+                        style={{height:"100%"}}
+                        onDrop={this.onDrop} 
+                        onDragEnter={this.onDragEnter} 
+                        onDragOver={this.onDragOver}
+                        style={{height:"100%",background:"#fff",border:"1px solid #999"}}
+                    >
+                        {doms}
+                    </div>
+                </Scrollbars>
 
                 <Modal
                     title="DataViewData"
@@ -138,6 +164,9 @@ const mapDispatchToProps = (dispatch,ownerProps) => {
     return({
         addComponent : (dragComponentCfg) => {
             dispatch(createAddDragDesignerComponentAction(dragComponentCfg,""));
+        },
+        moveComponent : (dragDomId,targetDomId) => {
+            dispatch(createMoveDragDesignerComponentAction(dragDomId,targetDomId));
         },
         hideModal:() => {
             dispatch({type:"SHOW_MODAL",value:false});

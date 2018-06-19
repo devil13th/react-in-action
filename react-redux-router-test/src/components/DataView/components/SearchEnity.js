@@ -44,6 +44,7 @@ class SearchEnity extends React.Component {
 
 
 const mapStateToProps = (state,props) => {
+    var moduleState = state.dataViewReducer;
     return {
         
     }

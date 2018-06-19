@@ -27,7 +27,7 @@ class ComponentMenuItem extends React.Component{
                 onDragStart={this.onDragStart}
             >
                 <Icon type="tag-o" style={{marginRight:"1em"}}/>
-                {componentData.name}({componentData.id})
+                {componentData.name}
             </div>
         )
     }

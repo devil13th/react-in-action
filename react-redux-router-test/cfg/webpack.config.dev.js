@@ -16,8 +16,18 @@ module.exports ={
   }
   ,
   module:{
-    rules:[
 
+
+
+    
+    
+    
+
+
+
+
+    rules:[
+     
       {
         test:/\.(js|jsx)$/,
         use: {
@@ -30,25 +40,6 @@ module.exports ={
         exclude:/node_modules/
       },
 
-      /*{
-        test: /\.(js|jsx|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include:  __dirname+'/../src',
-      },*/
-
-
-      //如果要打包css文件需要加如下内容
-     
       {
         test:/\.css$/,
         /*loaders:['style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]','css-loader']*/
@@ -71,7 +62,24 @@ module.exports ={
           { loader: 'css-loader', options: { importLoaders: 1 } },
           'less-loader'
         ]
+      },
+      //图片打包
+      {
+        test: /\.(png|gif|jpg|svg|jpeg)$/i, //匹配所有图片,后缀忽略大小写
+        //test: /\.(png|jpg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192, //byte为单位
+              outputPath:"img" //输出文件夹
+            }
+          }
+        ]
       }
+      
+
+   
 
     ]
   }
