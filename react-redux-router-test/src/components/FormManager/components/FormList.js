@@ -76,6 +76,17 @@ class FormList extends React.Component{
             title: '个性模板',
             dataIndex: 'customTemplate',
             key: 'customTemplate',
+            align:'center',
+            render: (text, record) => {
+                
+                if(text && "1"==text){
+                    return <a href="#">有</a>
+                }else{
+                    return 
+                }
+                   
+               
+            }
         }, {
             title: '修改时间',
             dataIndex: 'updateDate',
