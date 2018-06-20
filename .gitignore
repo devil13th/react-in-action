@@ -14,3 +14,5 @@ webpack-demos/demo07/dist/bundle.js
 webpack-demos/demo07/dist/index.html
 webpack-demos/demo01/dist/bundle.js
 webpack-demos/demo04/dist/bundle.js
+
+*.DS_Store

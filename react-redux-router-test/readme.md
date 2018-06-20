@@ -17,6 +17,8 @@
 > /src/reducers/index.js (引入上面的文件)
 
 
+![](mdpic/mxd.jpg)
+
 ## UI
 
 ###  react-custom-scrollbars
