@@ -13,8 +13,12 @@ module.exports ={
       '/proxy': {
           target: 'http://127.0.0.1:8000/devil13th',
           changeOrigin: true,
+          /*将路径中为 '/proxy'的位置替换成 http://127.0.0.1:8000/devil13th    
+             例如 /proxy/backlog/backlog!backlogInfoForm.do  
+             => 转换为 http://127.0.0.1:8000/devil13th/backlog/backlog!backlogInfoForm.do 
+          */
           pathRewrite: {
-              '^/proxy': ''
+              '^/proxy': ''  
           }
       }
     },

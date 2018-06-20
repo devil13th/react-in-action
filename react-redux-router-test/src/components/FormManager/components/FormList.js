@@ -2,27 +2,36 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Table,Pagination } from 'antd';
 import request from 'superagent';
+import {createQueryFormListFn} from '../modules/fun';
 class FormList extends React.Component{
     constructor(props){
         super(props);
         this.onSelectRow = this.onSelectRow.bind(this);
-        this.state = {
+        /*this.state = {
             selectedRowKeys : []
-        }
+        }*/
     }
 
     componentDidMount(){
-        this.props.initData();
+        this.props.queryFormData();
     }
 
+   
+
+    
+
     onSelectRow = (selectedRowKeys,selectedRows) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        this.setState({ selectedRowKeys:selectedRowKeys });
+        //console.log('selectedRowKeys changed: ', selectedRowKeys);
+        //this.setState({ selectedRowKeys:selectedRowKeys });
+        this.props.setSelectedFormId(selectedRowKeys[0]);
     }
 
     onRow = (record, index) => {
         return {
-            onClick: () => {this.setState({ selectedRowKeys:[record.id] });},       // 点击行
+            onClick: () => {
+                //this.setState({ selectedRowKeys:[record.id] });
+                this.props.setSelectedFormId(record.id);
+            },       // 点击行
             onMouseEnter: () => {},  // 鼠标移入行
         };
     }
@@ -41,7 +50,6 @@ class FormList extends React.Component{
             {"key":"9","id":"8","name":"name_8","title":"title_8","description":"description_8","author":"author_8","customTemplate":"customTemplate_8","updateDate":"updateDate_8","publishDate":"publishDate_8"},
             {"key":"10","id":"9","name":"name_9","title":"title_9","description":"description_9","author":"author_9","customTemplate":"customTemplate_9","updateDate":"updateDate_9","publishDate":"publishDate_9"}
         ]
-
 
 
         const columns = [{
@@ -79,21 +87,39 @@ class FormList extends React.Component{
         }];
 
         const rowSelection = {
-            selectedRowKeys:this.state.selectedRowKeys,
+            selectedRowKeys:[this.props.selectedFormId],
             type:'radio',
             onChange: this.onSelectRow,
         }
 
+        const _this = this;
+
         const pagination = {
             defaultCurrent : 1,
             size:"big",
-            pageSize:2
+            current:this.props.formData.currentPage,
+            pageSize:this.props.formData.pageSize,
+            total:this.props.formData.total,
+            showSizeChanger:true,
+            showQuickJumper:true,
+            showTotal: ()=>{ return "共" + _this.props.formData.total + "条记录"},
+            onChange:(page, pageSize)=>{
+               // alert(page + "|" + pageSize);
+                _this.props.queryFormData(page,pageSize,_this.props.formDataType);
+            },
+            onShowSizeChange:(current, size)=>{
+               // alert(current + "|" + size);
+                _this.props.queryFormData(current, size,_this.props.formDataType);
+            }
         }
+
+        
 
         return (
             <div>
-                <Table size="small" loading={this.props.loading} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={pagination} dataSource={dataSource} columns={columns} />
-               
+                {/*<Table size="small" loading={this.props.loading} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={pagination} dataSource={dataSource} columns={columns} />*/}
+                <Table loading={this.props.loading} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={pagination} dataSource={this.props.formData.rows} columns={columns} />
+                
             </div>
         )
     }
@@ -103,47 +129,32 @@ class FormList extends React.Component{
 const mapStateToProps = (state,ownProps) => {
     const moduleState = state.formManagerReducer;
     return{
-        loading: moduleState.formTableLoading,
-        formList : moduleState.formList
+        /*loading: moduleState.formTableLoading,
+        formData : moduleState.formData,
+        selectedFormId : moduleState.selectedFormId,
+       */
     }
 }
 
 const dispatchToProps = (dispatch,ownProps) => {
     return{
-        initData : function(){
-            dispatch(function(){
-                //alert("ajax");
-                
-                dispatch({
-                    type : "LOADING_FORMLIST",
-                    loading:true,
-                });
+        setSelectedFormId : function(selectedFormId){
+            dispatch({
+                type:"SET_SELECTED_FORM_ID",
+                selectedFormId
+            })
+        },
+        queryFormData : function(currentPage=1,pageSize=10,condition="SYSTEM"){
+            dispatch(
+                createQueryFormListFn(dispatch,currentPage,pageSize,condition)
+            );
+        },
 
-
-                request
-                .get('/data.json') //get方式请求 /data.text
-                .set('Content-Type', 'application/json') //设置Content-Type
-
-                .set('Accept', 'application/json') //接受的类型
-                
-                .query({class:"class-1"}) //发送的参数
-                //.query({ action: 'edit', city: 'London' }) // query string
-                //.use(prefix) // Prefixes *only* this request
-                //.use(nocache) // Prevents caching of *only* this request
-                .end((err, res) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(res);
-                        console.log(res.body)
-                        console.log(res.body.root.users)
-                    }
-                    
-                });
-
-                
+        setFormData : (data) =>{
+            dispatch({
+                type:"SET_FORM_DATA",
+                data
             });
-           
         }
     }
 }
