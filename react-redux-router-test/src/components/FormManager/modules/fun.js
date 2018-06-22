@@ -1,4 +1,5 @@
 import request from 'superagent';
+import {  message} from 'antd';
 function createQueryFormListFn(dispatch,currentPage=1,pageSize=10,condition){
     return () => {
        
@@ -19,6 +20,12 @@ function createQueryFormListFn(dispatch,currentPage=1,pageSize=10,condition){
         .end((err, res) => {
             if (err) {
                 //console.log(err);
+                message.error('网络错误');
+                 //停止loading
+                 dispatch({
+                    type : "LOADING_FORMLIST",
+                    loading:false,
+                });
             } else {
                 //console.log(res);
                 //console.log(res.body)

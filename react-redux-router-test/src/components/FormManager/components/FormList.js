@@ -17,9 +17,6 @@ class FormList extends React.Component{
     }
 
    
-
-    
-
     onSelectRow = (selectedRowKeys,selectedRows) => {
         //console.log('selectedRowKeys changed: ', selectedRowKeys);
         //this.setState({ selectedRowKeys:selectedRowKeys });
@@ -36,9 +33,10 @@ class FormList extends React.Component{
         };
     }
 
+  
 
     render(){
-        const dataSource = [
+        /*const dataSource = [
             {"key":"1","id":"0","name":"name_0","title":"title_0","description":"description_0","author":"author_0","customTemplate":"customTemplate_0","updateDate":"updateDate_0","publishDate":"publishDate_0"},
             {"key":"2","id":"1","name":"name_1","title":"title_1","description":"description_1","author":"author_1","customTemplate":"customTemplate_1","updateDate":"updateDate_1","publishDate":"publishDate_1"},
             {"key":"3","id":"2","name":"name_2","title":"title_2","description":"description_2","author":"author_2","customTemplate":"customTemplate_2","updateDate":"updateDate_2","publishDate":"publishDate_2"},
@@ -49,8 +47,9 @@ class FormList extends React.Component{
             {"key":"8","id":"7","name":"name_7","title":"title_7","description":"description_7","author":"author_7","customTemplate":"customTemplate_7","updateDate":"updateDate_7","publishDate":"publishDate_7"},
             {"key":"9","id":"8","name":"name_8","title":"title_8","description":"description_8","author":"author_8","customTemplate":"customTemplate_8","updateDate":"updateDate_8","publishDate":"publishDate_8"},
             {"key":"10","id":"9","name":"name_9","title":"title_9","description":"description_9","author":"author_9","customTemplate":"customTemplate_9","updateDate":"updateDate_9","publishDate":"publishDate_9"}
-        ]
+        ]*/
 
+        const _this = this;
 
         const columns = [{
             title: '表单ID',
@@ -78,14 +77,11 @@ class FormList extends React.Component{
             key: 'customTemplate',
             align:'center',
             render: (text, record) => {
-                
                 if(text && "1"==text){
-                    return <a href="#">有</a>
+                    return <a href="#" onClick={function(){_this.props.showCustomForm(record.id)}}>有</a>
                 }else{
                     return 
                 }
-                   
-               
             }
         }, {
             title: '修改时间',
@@ -103,7 +99,7 @@ class FormList extends React.Component{
             onChange: this.onSelectRow,
         }
 
-        const _this = this;
+        
 
         const pagination = {
             defaultCurrent : 1,
