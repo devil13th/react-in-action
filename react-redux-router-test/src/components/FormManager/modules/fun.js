@@ -10,9 +10,12 @@ function createQueryFormListFn(dispatch,currentPage=1,pageSize=10,condition){
     
         //ajax 获取表单管理列表数据
         request
-        .get(`/proxy/form/${currentPage}/${pageSize}?tp=${condition}`) //get方式请求 请求 //http://127.0.0.1:8888/sbt/form/
-        .set('Content-Type', 'application/json') //设置Content-Type
-        .set('Accept', 'application/json') //接受的类型
+        //.get(`/proxy/form/${currentPage}/${pageSize}?tp=${condition}`) //get方式请求 请求 //http://127.0.0.1:8888/sbt/form/
+
+        .get(`/proxy/api/form/querySystemVM?currentPage=${currentPage}&pageSize=${pageSize}&tp=${condition}`)
+
+        //.set('Content-Type', 'application/json') //设置Content-Type
+        //.set('Accept', 'application/json') //接受的类型
         //.query({type:condition}) //发送的参数
         //.query({ action: 'edit', city: 'London' }) // query string
         //.use(prefix) // Prefixes *only* this request
@@ -27,13 +30,13 @@ function createQueryFormListFn(dispatch,currentPage=1,pageSize=10,condition){
                     loading:false,
                 });
             } else {
-                //console.log(res);
-                //console.log(res.body)
-                
+                console.log("-------------------");
+                console.log(res)
+                var data = JSON.parse(res.text);
                 //设置表单管理数据
                 dispatch({
                     type:"SET_FORM_DATA",
-                    data:res.body
+                    data:data.result
                 });
                 
                 //停止loading

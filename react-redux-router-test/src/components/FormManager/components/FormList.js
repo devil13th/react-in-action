@@ -57,7 +57,7 @@ class FormList extends React.Component{
             key: 'id',
         }, {
             title: '名称',
-            dataIndex: 'name',
+            dataIndex: 'viewName',
             key: 'name',
         }, {
             title: '表单标题',
@@ -69,15 +69,15 @@ class FormList extends React.Component{
             key: 'description',
         }, {
             title: '作者',
-            dataIndex: 'author',
+            dataIndex: 'creator',
             key: 'author',
         }, {
             title: '个性模板',
-            dataIndex: 'customTemplate',
+            dataIndex: 'ct',
             key: 'customTemplate',
             align:'center',
             render: (text, record) => {
-                if(text && "1"==text){
+                if(text > 0){
                     return <a href="#" onClick={function(){_this.props.showCustomForm(record.id)}}>有</a>
                 }else{
                     return 
@@ -87,6 +87,10 @@ class FormList extends React.Component{
             title: '修改时间',
             dataIndex: 'updateDate',
             key: 'updateDate',
+            render: (text, record) => {
+                var d = new Date(text);
+                return <div>{d.getFullYear() + "-" + d.getMonth() + "-" +d.getDate()}</div>
+            }
         }, {
             title: '发布时间',
             dataIndex: 'publishDate',

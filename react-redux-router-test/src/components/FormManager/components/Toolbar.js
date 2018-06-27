@@ -122,7 +122,8 @@ const dispatchToProps = (dispatch,ownProps) => {
         deleteForm : (formId,currentPage,pageSize,condition) => {
             //ajax 获取表单管理列表数据
             request
-            .get(`/proxy/form/deleteForm/${formId}`) //get方式请求 请求 // http://127.0.0.1:8888/sbt/form/deleteForm/[formId]
+            //.get(`/proxy/form/deleteForm/${formId}`) //get方式请求 请求 // http://127.0.0.1:8888/sbt/form/deleteForm/[formId]
+            .get(`/proxy/api/form/deleteSystemVM?viewId=${formId}`)//http://127.0.0.1:8000/vh/api/form/deleteSystemVM?viewId=1
             .set('Content-Type', 'application/json') //设置Content-Type
             .set('Accept', 'application/json') //接受的类型
             .query({_r:Math.random()}) //发送的参数
@@ -150,7 +151,7 @@ const dispatchToProps = (dispatch,ownProps) => {
                         })
 
                     }else{
-                        message.error('操作失败:' + res.body.message);
+                        message.error('操作失败:' + res.body.result);
                     }
                 }
             });

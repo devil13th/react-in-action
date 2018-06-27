@@ -47,7 +47,7 @@ class CustomFormList extends React.Component{
             key: 'id',
         }, {
             title: '名称',
-            dataIndex: 'name',
+            dataIndex: 'viewName',
             key: 'name',
         }, {
             title: '表单标题',
@@ -59,7 +59,7 @@ class CustomFormList extends React.Component{
             key: 'description',
         }, {
             title: '作者',
-            dataIndex: 'author',
+            dataIndex: 'creator',
             key: 'author',
         }, {
             title: '个性模板',
@@ -80,6 +80,10 @@ class CustomFormList extends React.Component{
             title: '修改时间',
             dataIndex: 'updateDate',
             key: 'updateDate',
+            render: (text, record) => {
+                var d = new Date(text);
+                return <div>{d.getFullYear() + "-" + d.getMonth() + "-" +d.getDate()}</div>
+            }
         }, {
             title: '发布时间',
             dataIndex: 'publishDate',
@@ -115,13 +119,13 @@ class CustomFormList extends React.Component{
                     
                     <Button size="small">编辑</Button> &nbsp; 
                     <Popconfirm placement="bottomRight" title="确定删除选择的表单吗?" onConfirm={this.deleteForm}  okText="是" cancelText="否">
-                        <Button size="small" disabled={(this.state.selectedRowKeys.length > 0 &&  this.props.formData.rows.length > 0 )? false : true}>删除</Button> &nbsp; 
+                        <Button size="small" disabled={(this.state.selectedRowKeys.length > 0 &&  this.props.formData.length > 0 )? false : true}>删除</Button> &nbsp; 
                     </Popconfirm>
                     
                 </div>
                
                 
-                <Table size="small" loading={this.props.loading} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={false} dataSource={this.props.formData.rows} columns={columns} />
+                <Table size="small" loading={this.props.loading} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={false} dataSource={this.props.formData} columns={columns} />
                 
             </div>
         )

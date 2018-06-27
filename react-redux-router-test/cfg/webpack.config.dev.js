@@ -12,7 +12,8 @@ module.exports ={
   devServer: {
     proxy: { //设置代理
       '/proxy': {
-          target: 'http://127.0.0.1:8888/sbt',
+          //target: 'http://127.0.0.1:8888/sbt',
+          target:'http://127.0.0.1:8000/vh',
           changeOrigin: true,
           pathRewrite: {
               '^/proxy': '' //代理路径

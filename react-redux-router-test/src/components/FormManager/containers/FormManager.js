@@ -11,7 +11,7 @@ class FormManager extends React.Component{
             visible : false,
             customFormData : [],
             customFormCurrentPage:1,
-            sysformId:this.props.sysformId,
+            sysformId:this.props.selectedFormId,
             customFormloading:false
         }
         this.loadCustomFormData = this.loadCustomFormData.bind(this);
@@ -33,14 +33,15 @@ class FormManager extends React.Component{
 
     deleteForm = (formId) =>{
         const _this = this;
-      
+        
 
         this.setState({
             customFormloading:true
         })
 
         //alert(formId)
-        fetch(`/proxy/form/deleteForm/${formId}`,
+      
+        fetch(`/proxy/api/form/deleteVadpViewModelCustom?viewId=${formId}`,       
         {
             method: 'GET',
             headers: new Headers({
@@ -68,7 +69,8 @@ class FormManager extends React.Component{
                     customFormloading:false
                 })
             }
-            _this.loadCustomFormData(_this.state.sysformId);
+          
+            _this.loadCustomFormData(_this.props.selectedFormId);
         })
     }
 
@@ -78,12 +80,16 @@ class FormManager extends React.Component{
             customFormLoading : true
         })
         const _this = this;
-        fetch("/proxy/form/customFormList?formId=" +sysformId+ "&_r=" + Math.random(),{ 
+        //.get(`/proxy/api/form/queryDataByPage?currentPage=${currentPage}&pageSize=${pageSize}&tp=${condition}`)
+        //fetch("/proxy/form/customFormList?formId=" +sysformId+ "&_r=" + Math.random(),{ 
+        fetch(`/proxy/api/form/queryCustomVM?viewId=${sysformId}&_r=${ Math.random()}`,{ 
+
             method: 'GET',
             headers: new Headers({
                 'Accept': 'application/json' // 通过头指定，获取的数据类型是JSON
             })
         }).then(function(res){
+            
             if(res.status != "200"){
                 throw new Error("数据获取失败");
                 _this.setState({
@@ -97,7 +103,7 @@ class FormManager extends React.Component{
             console.log(data);
 
             _this.setState({
-                customFormData:data,
+                customFormData:data.result,
                 customFormloading:false
             })
         }).catch(function(e){
@@ -138,7 +144,7 @@ class FormManager extends React.Component{
                         formData={this.state.customFormData}
                         currentPage = {this.state.customFormCurrentPage}
                         deleteForm = {this.deleteForm}
-                        sysformId = {this.state.sysformId}
+                        sysformId = {this.state.selectedFormId}
                         loading={this.state.customFormloading}
                         //selectedFormIds={this.props.selectedCustomFormIds}
                         //loading={this.state.customFormLoading}
