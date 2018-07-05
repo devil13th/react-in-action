@@ -1,18 +1,27 @@
 import request from 'superagent';
 import {  message} from 'antd';
-function createQueryFormListFn(dispatch,currentPage=1,pageSize=10,condition){
+function createQueryFormListFn(dispatch,currentPage=1,pageSize=10,condition,sortedColumn,order){
+    
     return () => {
        
         dispatch({
             type : "LOADING_FORMLIST",
             loading:true,
         });
+
+
+        var url = `/proxy/api/form/queryVM?currentPage=${currentPage}&pageSize=${pageSize}&tp=${condition}`;
+
+        if(sortedColumn && order){
+            var sqlOrder = order.replace("end","");
+            url += `&sort=${sortedColumn}&order=${sqlOrder}`
+        }
     
         //ajax 获取表单管理列表数据
         request
         //.get(`/proxy/form/${currentPage}/${pageSize}?tp=${condition}`) //get方式请求 请求 //http://127.0.0.1:8888/sbt/form/
 
-        .get(`/proxy/api/form/querySystemVM?currentPage=${currentPage}&pageSize=${pageSize}&tp=${condition}`)
+        .get(url)
 
         //.set('Content-Type', 'application/json') //设置Content-Type
         //.set('Accept', 'application/json') //接受的类型

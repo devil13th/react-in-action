@@ -47,8 +47,8 @@ class Toolbar extends React.Component{
             <div style={{background:'#fff'}}>
                 <div style={{textAlign:'right'}}>
                     <RadioGroup size="small" value={this.props.formDataType} onChange={this.onChange}>
-                        <RadioButton  value="SYSTEM">系统表单</RadioButton >
-                        <RadioButton  value="CUSTOM">自定义表单</RadioButton >
+                        <RadioButton  value="1">系统表单</RadioButton >
+                        <RadioButton  value="0">自定义表单</RadioButton >
                     </RadioGroup>
 
                     <Divider type="vertical" />  

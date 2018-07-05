@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormList} from '../components/FormList';
 import {Toolbar} from '../components/Toolbar';
+import {SelectMainEntity} from '../components/SelectMainEntity';
 import {connect} from 'react-redux';
 import { Modal,message} from 'antd';
 import {CustomFormList} from '../components/CustomFormList'
@@ -12,10 +13,14 @@ class FormManager extends React.Component{
             customFormData : [],
             customFormCurrentPage:1,
             sysformId:this.props.selectedFormId,
-            customFormloading:false
+            customFormloading:false,
+            entityModalvisible:false,
+            selectedMainEntityKeys:[],
+            mainEntityData : []
         }
         this.loadCustomFormData = this.loadCustomFormData.bind(this);
         this.deleteForm = this.deleteForm.bind(this);
+        this.showSelectMainEntityModal = this.showSelectMainEntityModal.bind(this);
     }
 
     showCustomForm = (sysformId) => {
@@ -24,11 +29,50 @@ class FormManager extends React.Component{
         this.loadCustomFormData(sysformId);
     }
 
+    closeSelectMainEntityModal = () => {
+        this.setState({
+            selectedMainEntityKeys:[],
+            entityModalvisible :false
+        })
+
+    }
+
     closeCustomForm = () => {
         this.setState({visible:false});
     }
 
+    showSelectMainEntityModal = (id) => {
 
+
+        
+        var _this = this;
+        
+        _this.setState({
+            entityModalvisible:true,
+            mainEntityData:null
+        })
+
+        //  http://127.0.0.1:8000/vh/api/form/queryAllVadpDomainModel
+        //  /proxy/api/form/queryAllVadpDomainModel
+        fetch('/proxy/api/form/queryAllVadpDomainModel', { // 在URL中写上传递的参数
+            method: 'GET'
+        })
+        .then((res)=>{
+            return res.text();
+        })
+        .then((res)=>{
+            //console.log(res);
+            //alert(res)
+            var data = JSON.parse(res);
+            
+            _this.setState({
+                mainEntityData : data
+            })
+        })
+
+
+        
+    }
 
 
     deleteForm = (formId) =>{
@@ -116,6 +160,21 @@ class FormManager extends React.Component{
         })
     }
 
+
+    onSelectedMainEntityKeys = (record, selected, selectedRows, nativeEvent) => {
+        //console.log(record)
+        //console.log(selected)
+        //console.log(selectedRows)
+        this.setState({
+            selectedMainEntityKeys :[record.key]
+        })
+    }
+
+    setMainEntity = () => {
+        alert(this.state.selectedMainEntityKeys[0])
+        this.closeSelectMainEntityModal();
+    }
+
     render(){
         return  (
             <div  style={{background:'#fff'}}>
@@ -128,6 +187,7 @@ class FormManager extends React.Component{
                     selectedFormId={this.props.selectedFormId}
                     loading={this.props.loading}
                     showCustomForm={this.showCustomForm}
+                    onSelectMainEntityModal={this.showSelectMainEntityModal}
                 >
                 </FormList>
 
@@ -136,7 +196,6 @@ class FormManager extends React.Component{
                     visible={this.state.visible}
                     onCancel={this.closeCustomForm}
                     footer={false}
-                   
                     width="80%"
                 >
                 
@@ -151,6 +210,26 @@ class FormManager extends React.Component{
 
                     >
                     </CustomFormList>
+                    
+                </Modal>
+
+
+                <Modal
+                    title="设置主实体"
+                    visible={this.state.entityModalvisible}
+                    onCancel={this.closeSelectMainEntityModal}
+                    onOk={this.setMainEntity}
+                    okText="确定"
+                    cancelText="取消"
+                    width="80%"
+                >
+                
+                    <SelectMainEntity
+                        onSelectedMainEntityKeys = {this.onSelectedMainEntityKeys}
+                        selectedMainEntityKeys={this.state.selectedMainEntityKeys}
+                        data = {this.state.mainEntityData}
+                    >
+                    </SelectMainEntity>
                     
                 </Modal>
             </div>

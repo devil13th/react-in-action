@@ -56,7 +56,7 @@ const initialState = {
         currentPage:1,
         pageSize:10
     },//form列表数据
-    formDataType:"SYSTEM",//form列表数据查询条件-类型
+    formDataType:"1",//form列表数据查询条件-类型
     selectedFormId:null,//选择的form
 
 }

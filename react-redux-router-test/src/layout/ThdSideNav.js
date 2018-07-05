@@ -88,7 +88,7 @@ class ThdSideNav extends React.Component{
 
                     <Panel header="教程相关" key="7">
                     <p>
-                        <Link to="/LifecycleExample">生命周期</Link>
+                        <Link to="/LifecycleExample">生命周期</Link><br/>
                         <Link to="/AdvanceComponent">高级组件</Link>
                     </p>
                     </Panel>

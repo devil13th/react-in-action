@@ -10,6 +10,7 @@ module.exports ={
   },
   mode:'development', // 生产模式production  开发模式development
   devServer: {
+    public: '192.168.16.152:8080',
     proxy: { //设置代理
       '/proxy': {
           //target: 'http://127.0.0.1:8888/sbt',

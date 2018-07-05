@@ -5,11 +5,16 @@ import request from 'superagent';
 import {createQueryFormListFn} from '../modules/fun';
 class FormList extends React.Component{
     constructor(props){
+        
         super(props);
         this.onSelectRow = this.onSelectRow.bind(this);
-        /*this.state = {
-            selectedRowKeys : []
-        }*/
+        this.onChange = this.onChange.bind(this);
+        this.state = {
+            sortedInfo: {
+                order: 'descend',
+                columnKey: 'id',
+            }
+        }
     }
 
     componentDidMount(){
@@ -33,6 +38,27 @@ class FormList extends React.Component{
         };
     }
 
+    onChange = (pagination, filters, sorter) => {
+        console.log("-----------------------");
+        console.log(sorter)
+
+        this.setState({
+            sortedInfo: {
+                order: sorter.order,
+                columnKey: sorter.field,
+            }
+        })
+
+        
+        this.props.queryFormData(
+            pagination.current,
+            pagination.pageSize,
+            this.props.formDataType,
+            this.state.sortedInfo.columnKey,
+            this.state.sortedInfo.order
+        );
+
+    }
   
 
     render(){
@@ -50,23 +76,38 @@ class FormList extends React.Component{
         ]*/
 
         const _this = this;
-
+        let { sortedInfo, filteredInfo } = this.state;
+        sortedInfo = sortedInfo || {};
         const columns = [{
             title: '表单ID',
             dataIndex: 'id',
             key: 'id',
+            sorter: true
         }, {
             title: '名称',
             dataIndex: 'viewName',
             key: 'name',
+            sorter: true
         }, {
             title: '表单标题',
             dataIndex: 'title',
             key: 'title',
+            sorter: true
         }, {
             title: '描述',
             dataIndex: 'description',
             key: 'description',
+        }, {
+            title: '主实体',
+            dataIndex: 'entityName',
+            key: 'entityName', 
+            render: (text, record) => {
+                if(text){
+                    return <a href="#" onClick={function(){_this.props.onSelectMainEntityModal(record.id)}}>{text}</a>
+                }else{
+                    return <a href="#" onClick={function(){_this.props.onSelectMainEntityModal(record.id)}}>设置</a>
+                }
+            }
         }, {
             title: '作者',
             dataIndex: 'creator',
@@ -74,7 +115,8 @@ class FormList extends React.Component{
         }, {
             title: '个性模板',
             dataIndex: 'ct',
-            key: 'customTemplate',
+            key: 'ct',
+            sorter: true,
             align:'center',
             render: (text, record) => {
                 if(text > 0){
@@ -87,6 +129,7 @@ class FormList extends React.Component{
             title: '修改时间',
             dataIndex: 'updateDate',
             key: 'updateDate',
+            sorter: true,
             render: (text, record) => {
                 var d = new Date(text);
                 return <div>{d.getFullYear() + "-" + d.getMonth() + "-" +d.getDate()}</div>
@@ -95,6 +138,7 @@ class FormList extends React.Component{
             title: '发布时间',
             dataIndex: 'publishDate',
             key: 'publishDate',
+            sorter: true
         }];
 
         const rowSelection = {
@@ -111,25 +155,27 @@ class FormList extends React.Component{
             current:this.props.formData.currentPage,
             pageSize:this.props.formData.pageSize,
             total:this.props.formData.total,
-            showSizeChanger:true,
+            showSizeChanger:true, 
             showQuickJumper:true,
-            showTotal: ()=>{ return "共" + _this.props.formData.total + "条记录"},
+            showTotal: ()=>{ return "共" + _this.props.formData.total + "条记录"}
+            /*
             onChange:(page, pageSize)=>{
+                alert("FormList onPageChange()")
                // alert(page + "|" + pageSize);
                 _this.props.queryFormData(page,pageSize,_this.props.formDataType);
             },
             onShowSizeChange:(current, size)=>{
+                alert("FormList onShowSizeChange()")
                // alert(current + "|" + size);
                 _this.props.queryFormData(current, size,_this.props.formDataType);
-            }
+            }*/
         }
 
-        
 
         return (
             <div>
                 {/*<Table size="small" loading={this.props.loading} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={pagination} dataSource={dataSource} columns={columns} />*/}
-                <Table loading={this.props.loading} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={pagination} dataSource={this.props.formData.rows} columns={columns} />
+                <Table loading={this.props.loading} onChange={this.onChange} onRow={this.onRow} rowSelection={rowSelection} rowKey="id" pagination={pagination} dataSource={this.props.formData.rows} columns={columns} />
                 
             </div>
         )
@@ -155,9 +201,9 @@ const dispatchToProps = (dispatch,ownProps) => {
                 selectedFormId
             })
         },
-        queryFormData : function(currentPage=1,pageSize=10,condition="SYSTEM"){
+        queryFormData : function(currentPage=1,pageSize=10,condition="1",sortedColumn,order){
             dispatch(
-                createQueryFormListFn(dispatch,currentPage,pageSize,condition)
+                createQueryFormListFn(dispatch,currentPage,pageSize,condition,sortedColumn,order)
             );
         },
 
