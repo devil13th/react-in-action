@@ -5,6 +5,7 @@ import {SelectMainEntity} from '../components/SelectMainEntity';
 import {connect} from 'react-redux';
 import { Modal,message} from 'antd';
 import {CustomFormList} from '../components/CustomFormList'
+import {createQueryFormListFn} from '../modules/fun';
 class FormManager extends React.Component{
     constructor(props){
         super(props);
@@ -13,14 +14,29 @@ class FormManager extends React.Component{
             customFormData : [],
             customFormCurrentPage:1,
             sysformId:this.props.selectedFormId,
-            customFormloading:false,
-            entityModalvisible:false,
+            customFormloading:false,//选择主实体模态窗口中表单是否loading状态
+            entityModalvisible:false,//选择主实体模态窗口是否显示
             selectedMainEntityKeys:[],
-            mainEntityData : []
+            mainEntityData : [],
+            entityModalConfirmLoading:false, //选择主实体模态窗口的确定按钮是否是loading状态
+            selectedFormId : "",//选择的表单id
+            formListTableStatus : {}//系统表单分页排序信息
         }
         this.loadCustomFormData = this.loadCustomFormData.bind(this);
         this.deleteForm = this.deleteForm.bind(this);
         this.showSelectMainEntityModal = this.showSelectMainEntityModal.bind(this);
+    }
+
+    formListOnchange = (pagination,sorter) => {
+        this.setState({
+            formListTableStatus:{
+               currentPage: pagination.current,
+               pageSize: pagination.pageSize,
+               columnKey: sorter.field,
+               order:sorter.order
+            }
+        })
+
     }
 
     showCustomForm = (sysformId) => {
@@ -49,7 +65,8 @@ class FormManager extends React.Component{
         
         _this.setState({
             entityModalvisible:true,
-            mainEntityData:null
+            mainEntityData:null,
+            selectedFormId:id
         })
 
         //  http://127.0.0.1:8000/vh/api/form/queryAllVadpDomainModel
@@ -170,9 +187,84 @@ class FormManager extends React.Component{
         })
     }
 
+    //设置主实体
     setMainEntity = () => {
-        alert(this.state.selectedMainEntityKeys[0])
-        this.closeSelectMainEntityModal();
+       // alert(this.state.selectedMainEntityKeys[0])
+        console.log(this.refs.formList)
+
+        var _this = this;
+        if(this.state.selectedMainEntityKeys[0]){
+
+            //获取已选择的主实体
+            var selectedEntity = this.state.mainEntityData.find(function(obj){
+                return obj.id ==  _this.state.selectedMainEntityKeys[0]
+            })
+            //console.log(selectedEntity);
+            this.setState({
+                entityModalConfirmLoading:true
+            })
+
+
+
+
+
+            
+            var entityName = selectedEntity.name;
+            var formId = this.state.selectedFormId;
+            var _this = this;
+            //http://127.0.0.1:8000/vh/api/form/setMainEntity?formId=10&entityName=ssssss
+            fetch(`/proxy/api/form/setMainEntity?formId=${formId}&entityName=${entityName}&_r=${ Math.random()}`,{ 
+                method: 'GET',
+            }).then(function(res){
+                
+                if(res.status != "200"){
+                    throw new Error("数据获取失败");
+                    _this.setState({
+                        entityModalConfirmLoading:false,
+                        entityModalvisible:false
+                    })
+                }
+                return res.text();
+            }).then(function(data){
+                //alert(data)
+                data = JSON.parse(data);
+                console.log(data);
+                if(data.status == "SUCCESS"){
+                    message.success("操作成功");
+                    _this.setState({
+                        entityModalConfirmLoading:false,
+                        entityModalvisible:false
+                    })
+
+                    //刷新列表
+                    _this.props.queryFormData(
+                        _this.state.formListTableStatus.currentPage,
+                        _this.state.formListTableStatus.pageSize,
+                        _this.props.formDataType,
+                        _this.state.formListTableStatus.columnKey,
+                        _this.state.formListTableStatus.order,
+                    );
+
+                }else{
+                    message.error("操作失败");
+                    _this.setState({
+                        entityModalConfirmLoading:false
+                    })
+                }
+            
+            }).catch(function(e){
+                message.error(e.message);
+                //获取数据失败后关闭模态窗口
+                _this.setState({
+                    entityModalConfirmLoading:false
+                })
+            })
+
+
+            this.closeSelectMainEntityModal();
+        }else{
+            message.error("请选择主实体");
+        }
     }
 
     render(){
@@ -188,6 +280,7 @@ class FormManager extends React.Component{
                     loading={this.props.loading}
                     showCustomForm={this.showCustomForm}
                     onSelectMainEntityModal={this.showSelectMainEntityModal}
+                    onChange = {this.formListOnchange}
                 >
                 </FormList>
 
@@ -219,6 +312,7 @@ class FormManager extends React.Component{
                     visible={this.state.entityModalvisible}
                     onCancel={this.closeSelectMainEntityModal}
                     onOk={this.setMainEntity}
+                    confirmLoading = {this.state.entityModalConfirmLoading}
                     okText="确定"
                     cancelText="取消"
                     width="80%"
@@ -249,7 +343,12 @@ const mapStateToProps = (state,ownProps) => {
 
 const dispatchToProps = (dispatch,ownProps) => {
     return{
-        
+        queryFormData : function(currentPage=1,pageSize=10,condition="1",sortedColumn,order){
+            dispatch(
+                //formDataType
+                createQueryFormListFn(dispatch,currentPage,pageSize,condition,sortedColumn,order)
+            );
+        }
     }
 }
 

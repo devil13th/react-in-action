@@ -17,6 +17,17 @@ class FormList extends React.Component{
         }
     }
 
+    querySelfData = () => {
+        this.props.queryFormData(
+            this.props.formData.currentPage,
+            this.props.formData.pageSize,
+            this.props.formDataType,
+            this.state.sortedInfo.columnKey,
+            this.state.sortedInfo.order
+        );
+
+    }
+
     componentDidMount(){
         this.props.queryFormData();
     }
@@ -49,6 +60,8 @@ class FormList extends React.Component{
             }
         })
 
+        //将页数和排序传递到父组件
+        this.props.onChange(pagination,sorter);
         
         this.props.queryFormData(
             pagination.current,
