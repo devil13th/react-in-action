@@ -19,7 +19,17 @@ module.exports ={
           pathRewrite: {
               '^/proxy': '' //代理路径
           }
-      }
+      },
+
+      '/jobengine': {
+        target:'http://192.168.248.92:8430/jobengine',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/jobengine': '' //代理路径
+        }
+    }
+
+      
     },
 
     contentBase: __dirname+'/../public',//本地服务器所加载的页面所在的目录

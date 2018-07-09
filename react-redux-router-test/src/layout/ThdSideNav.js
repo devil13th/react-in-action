@@ -83,6 +83,14 @@ class ThdSideNav extends React.Component{
                         <Link to="/FormManager">FormManager</Link>
                     </p>
                     </Panel>
+
+                    <Panel header="定时任务" key="8">
+                    <p>
+                        <Link to="/TaskScheduling">TaskScheduling</Link><br/>
+                    </p>
+                    </Panel>
+                    
+
                     
                     
 

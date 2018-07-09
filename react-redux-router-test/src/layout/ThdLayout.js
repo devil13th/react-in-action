@@ -19,6 +19,7 @@ import {LifecycleExample} from '../components/LifecycleExample'
 import {AdvanceComponent} from '../components/AdvanceCompent'
 import {DragDesigner} from '../components/DragDesigner'
 import {FormManager} from '../components/FormManager/containers/FormManager'
+import {TaskScheduling} from '../components/TaskScheduling/containers/TaskScheduling'
 const Panel = Collapse.Panel;
 const {  Sider, Content } = Layout;
 
@@ -60,7 +61,10 @@ class ThdLayout extends React.Component{
 
                             <Route path="/DragDesigner" name="DragDesigner" component={DragDesigner} ></Route>
                             <Route path="/FormManager" name="FormManager" component={FormManager} ></Route>
-                           
+                            
+                            <Route path="/TaskScheduling" name="TaskScheduling" component={TaskScheduling} ></Route>
+                            
+                            
                             
                         </Switch>
                     </Content>
