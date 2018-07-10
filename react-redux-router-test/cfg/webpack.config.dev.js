@@ -10,27 +10,31 @@ module.exports ={
   },
   mode:'development', // 生产模式production  开发模式development
   devServer: {
-    public: '192.168.16.152:8080',
+    public: '127.0.0.1:8080',
+
     proxy: { //设置代理
-      '/proxy': {
-          //target: 'http://127.0.0.1:8888/sbt',
-          target:'http://127.0.0.1:8000/vh',
+        '/proxy': {
+            //target: 'http://127.0.0.1:8888/sbt',
+            target:'http://127.0.0.1:8000/vh',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/proxy': '' //代理路径
+            }
+        },
+
+        '/jobengine': {
+          target:'http://192.168.248.92:8430/jobengine',
           changeOrigin: true,
           pathRewrite: {
-              '^/proxy': '' //代理路径
+              '^/jobengine': '' //代理路径
           }
-      },
-
-      '/jobengine': {
-        target:'http://192.168.248.92:8430/jobengine',
-        changeOrigin: true,
-        pathRewrite: {
-            '^/jobengine': '' //代理路径
-        }
-    }
+      }
 
       
     },
+
+    open: true,// 自动打开浏览器
+    //hot: true,// 开启热更新  
 
     contentBase: __dirname+'/../public',//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转

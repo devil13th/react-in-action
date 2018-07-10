@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Alert ,Tabs, Button, Table, Icon, Divider } from 'antd';
+import { ButtonGroup,Tooltip,Spin, Alert ,Tabs, Button, Table, Icon, Divider } from 'antd';
 const TabPane = Tabs.TabPane;
 
 
@@ -53,6 +53,26 @@ class TaskSchedulingTaskManagerTable extends React.Component{
             title: 'status',
             dataIndex: 'status',
             key: 'status',
+            render: (text, record) => {
+                if(text == -1){
+                    return <span>未启动</span>
+                }
+                if(text == 0){
+                    return <span>已启动</span>
+                }
+            }
+        },{
+            title: '管理',
+            dataIndex: 'action',
+            render: (text, record) => {
+                const jobName = record.jobName;
+                const _this = this;
+                return(
+                    <span>
+                        <Button type="primary" size="small" icon="edit" onClick={function(){_this.props.editTask(jobName)}}/>
+                    </span>
+                )
+            }
         }];
 
 
@@ -73,6 +93,13 @@ class TaskSchedulingTaskManagerTable extends React.Component{
             <div>
                 <Tabs>
                     <TabPane tab="任务管理" key="1">
+                        <div style={{padding:5,textAlign:"right"}}>
+                            <Tooltip title="新增任务">
+                                <Button type="primary" size="small" onClick={this.props.addTask}>
+                                    <Icon type="plus" />新增任务
+                                </Button>
+                            </Tooltip>
+                        </div>
                         <Table 
                             size="small"
                             columns={columns} 

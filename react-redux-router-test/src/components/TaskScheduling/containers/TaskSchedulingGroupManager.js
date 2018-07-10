@@ -32,7 +32,8 @@ class TaskSchedulingGroupManager extends React.Component{
             method: 'POST',// 指定是POST请求
             headers:{
                 Accept: 'application/json, text/javascript, */*; q=0.01',
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                
             },
             body: JSON.stringify({
                 filters:[],
@@ -46,8 +47,16 @@ class TaskSchedulingGroupManager extends React.Component{
         .then((res)=>{
             const data = JSON.parse(res);
             
+
+            var dataWapper =  data.entity.map((item,index) => {
+                item.key = item.groupID;
+                return item;
+            })
+            console.log(dataWapper)
+
+
             this.setState({
-                groupData : data.entity,
+                groupData : dataWapper,
                 groupDataLoading:false,
                 groupDataPage:{
                     total : data.total,
