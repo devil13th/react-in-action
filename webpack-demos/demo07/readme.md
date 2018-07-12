@@ -36,7 +36,7 @@ new HtmlWebpackPlugin({
 head：表示将js文件插入在head标签内，这里是字符串head。
 false：表示不插入生成的js文件，也不插入css文件。因为其他三个可选项css文件都是插入在head标签内的。
 ## minify
-　　minify的作用是对生成的html文件进行压缩，其值是一个object或者false。默认是false，表示不对html文件进行压缩。如果赋值为object，用于对压缩方式进行配置，器配置项可以参考html-minifier 
+　　minify的作用是对生成的html文件进行压缩，其值是一个object或者false。默认是false，表示不对html文件进行压缩。如果赋值为object，用于对压缩方式进行配置，器配置项可以参考[html-minifier](https://github.com/kangax/html-minifier#options-quick-reference)
 。
 
 ## hash
