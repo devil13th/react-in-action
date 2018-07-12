@@ -19,3 +19,24 @@ ReactDOM.render(
     <Demo>Split Chunks</Demo>,
     document.getElementById('example')
 );
+/*
+
+function aaa(){
+
+    alert("2");
+    for(var i = 0 , j = 4 ; i < j ; i++){
+        alert(i)
+    }
+}
+
+var a = {
+    c:1,
+    b:2
+}
+
+var b = {...a,c:4}
+
+const d = (x) => {
+
+    console.log(x)
+}*/
