@@ -2,7 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {TaskSchedulingTaskManagerTable} from '../components/TaskSchedulingTaskManagerTable';
 import {TaskSchedulingTaskManagerForm} from '../components/TaskSchedulingTaskManagerForm';
+import {TaskSchedulingTaskManagerSearch} from '../components/TaskSchedulingTaskManagerSearch';
 import {message,Modal} from 'antd';
+import {serverCfg} from '../modules/ServerCfg';
 class TaskSchedulingTaskManager extends React.Component{
     constructor(props){
         super(props);
@@ -43,10 +45,88 @@ class TaskSchedulingTaskManager extends React.Component{
         })
     }
 
+    //开始任务
+    startTask = (jobName) => {
+        this.operateTask(jobName,"startjob");
+    }
+
+    //停止任务
+    stopTask = (jobName) => {
+        this.operateTask(jobName,"stopjob");
+    }
+
+    //执行任务
+    runTask = (jobName) => {
+        this.operateTask(jobName,"runjob");
+    }
+
+    
+    //开始/结束/执行 任务公共请求  state:startjob/stopjob/runTask
+    operateTask = (jobName,state) => {
+       
+        fetch(`${serverCfg.getServerAddr()}jobengine/${state}/${jobName}?_r=${Math.random()}`, {
+            method: 'GET',
+            headers:{
+                Accept: 'application/json, text/javascript, */*; q=0.01',
+                'Content-Type':'application/json'
+            }
+        })
+        .then((res)=>{
+            return res.text();
+        })
+        .then((res)=>{
+           
+            if(res == "true"){
+                message.info('操作成功');
+                this.queryTaskData();
+            }else{
+                const data = JSON.parse(res);
+                message.error(data.message);
+            }
+            
+        })
+
+
+    }
+
+
+    delTask = (jobName) => {
+
+        
+        fetch(`${serverCfg.getServerAddr()}jobengine/deljob`, {
+            method: 'POST',// 指定是POST请求
+            headers:{
+                Accept: 'application/json, text/javascript, */*; q=0.01',
+                'Content-Type':'application/json'
+            },
+            body:"[\"" + jobName + "\"]"// 这里是请求参数
+        })
+        .then((res)=>{
+            return res.text();
+        })
+        .then((res)=>{
+           
+            if(res == "true"){
+                message.info('操作成功');
+                this.queryTaskData();
+            }else{
+                const data = JSON.parse(res);
+                message.error(data.message);
+            }
+            
+        })
+
+    }
+
+
+
+
     //编辑任务
     editTask = (jobName) =>{
         //alert(jobName);
-        fetch(`http://127.0.0.1:8080/jobengine/getjobinfo/${jobName}?_r=${Math.random()}`, {
+
+        
+        fetch(`${serverCfg.getServerAddr()}jobengine/getjobinfo/${jobName}?_r=${Math.random()}`, {
             method: 'GET',// 指定是POST请求
             headers:{
                 Accept: 'application/json, text/javascript, */*; q=0.01',
@@ -90,7 +170,7 @@ class TaskSchedulingTaskManager extends React.Component{
         };
         //alert(operate)
 
-        fetch(`http://127.0.0.1:8080/jobengine/${operate}`, {
+        fetch(`${serverCfg.getServerAddr()}jobengine/${operate}`, {
             method: 'POST',// 指定是POST请求
             headers:{
                 Accept: 'application/json, text/javascript, */*; q=0.01',
@@ -144,24 +224,42 @@ class TaskSchedulingTaskManager extends React.Component{
 
     
 
-    loadTaskData = (current,pageSize) => {
+
+
+    queryTaskData = (condition) => {
+        this.loadTaskData(this.state.taskDataPage.current,this.state.taskDataPage.pageSize,condition);
+    }
+
+    loadTaskData = (current,pageSize,condition) => {
         //alert("loadTaskData")
         const _this = this;
         const currentTemp = current;
         const pageSizeTemp = pageSize;
-        fetch('http://127.0.0.1:8080/jobengine/getalljob', {
+
+        let queryConditionAndPageSort = {
+            filters:[],
+            pageNo:current,
+            pageSize:pageSize
+        }
+        if(condition){
+            queryConditionAndPageSort = {...queryConditionAndPageSort,...condition}
+        }
+
+        this.setState({
+            taskDataLoading:true
+        })
+
+        
+
+        fetch(serverCfg.getServerAddr() + 'jobengine/getalljob', {
             method: 'POST',// 指定是POST请求
             headers:{
                 'Accept': 'application/json',
                 'Content-Type':'application/json',
             },
-            body: JSON.stringify({
-                filters:[],
-                pageNo:current,
-                pageSize:pageSize,
-              })// 这里是请求参数
+            body: JSON.stringify(queryConditionAndPageSort)// 这里是请求参数
         })
-        .then((res)=>{            
+        .then((res)=>{
             return res.text()
         })
         .then((res)=>{
@@ -188,6 +286,10 @@ class TaskSchedulingTaskManager extends React.Component{
     render(){
         return (
             <div>
+                <TaskSchedulingTaskManagerSearch
+                    onSearch={this.queryTaskData}
+                >
+                </TaskSchedulingTaskManagerSearch>
                 <TaskSchedulingTaskManagerTable
                     loading={this.state.taskDataLoading}
                     data = {this.state.taskData}
@@ -195,12 +297,16 @@ class TaskSchedulingTaskManager extends React.Component{
                     page = {this.state.taskDataPage}
                     addTask = {this.addTask}
                     editTask={this.editTask}
+                    startTask={this.startTask}
+                    stopTask={this.stopTask}
+                    runTask={this.runTask}
+                    delTask={this.delTask}
                 >
                 </TaskSchedulingTaskManagerTable>
 
 
                 <Modal
-                    title="新增任务"
+                    title="任务信息"
                     visible={this.state.addTaskModalVisible}
                     onOk={this.okAddTaskModal}
                     onCancel={this.cancelAddTaskModal}

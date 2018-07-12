@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {TaskSchedulingTaskExecutionTable} from '../components/TaskSchedulingTaskExecutionTable';
+import {serverCfg} from '../modules/ServerCfg';
 class TaskSchedulingTaskExecution extends React.Component{
     constructor(props){
         super(props);
@@ -27,7 +28,7 @@ class TaskSchedulingTaskExecution extends React.Component{
         const _this = this;
         const currentTemp = current;
         const pageSizeTemp = pageSize;
-        fetch('http://127.0.0.1:8080/jobengine/getalljoblog', {
+        fetch(`${serverCfg.getServerAddr()}jobengine/getalljoblog`, {
             method: 'post',// 指定是POST请求
             headers:{
                 'Accept': 'application/json',

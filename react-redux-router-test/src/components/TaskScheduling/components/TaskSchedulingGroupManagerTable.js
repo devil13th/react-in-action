@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Alert ,Tabs, Button, Table, Icon, Divider } from 'antd';
+import { Spin, Alert ,Tabs, Button, Table, Icon, Divider ,Tooltip,Popconfirm} from 'antd';
 const TabPane = Tabs.TabPane;
 class TaskSchedulingGroupManagerTable extends React.Component{
     constructor(props){
@@ -9,7 +9,7 @@ class TaskSchedulingGroupManagerTable extends React.Component{
         }
     }
 
-   
+    
 
     render(){
 
@@ -18,25 +18,50 @@ class TaskSchedulingGroupManagerTable extends React.Component{
         const columns = [{
             title: '组名称',
             dataIndex: 'groupName',
-            key: 'groupName'
+            key: 'groupName',
+            width:'40%'
         }, {
             title: '组描述',
             dataIndex: 'groupDesc',
             key: 'groupDesc',
+            width:'40%'
         }, {
-            title: 'Action',
+            title: '管理',
             key: 'action',
-            render: (text, record) => (
-              <span>
-                <a href="javascript:;">Action</a>
-                <Divider type="vertical" />
-                <a href="javascript:;">Delete</a>
-                <Divider type="vertical" />
-                <a href="javascript:;" className="ant-dropdown-link">
-                  More actions <Icon type="down" />
-                </a>
-              </span>
-            ),
+            width:'20%',
+            render: (text, record) => {
+                const groupName = record.groupName;
+                const _this = this;
+
+                const operators = [];
+
+                operators.push(
+                    <Tooltip title="编辑" key={"edit_" + groupName}>
+                        <Button size="small" icon="edit" onClick={function(){_this.props.editGroup(record.groupName,record.groupDesc,record.groupID)}}/>
+                    </Tooltip>
+                )
+
+                operators.push(
+                    <Tooltip title="删除" key={"sc" + groupName}>
+                        <Popconfirm title="确定删除此任务吗?" onConfirm={function(){_this.props.deleteGroup(groupName)}}  okText="删除" cancelText="取消">
+                            <Button  size="small" icon="delete" />
+                        </Popconfirm>
+                    </Tooltip>
+                )
+                return(
+                    <span>
+                    <Button.Group size="small">
+                        {
+                            operators.map(function(item){
+                                return item;
+                            })
+                        }
+                    </Button.Group>
+                        
+                        
+                    </span>
+                )
+            },
         }];
 
         
@@ -71,6 +96,13 @@ class TaskSchedulingGroupManagerTable extends React.Component{
             <div>
                 <Tabs>
                     <TabPane tab="Job组管理" key="1">
+                        <div style={{padding:5,textAlign:"right"}}>
+                            <Tooltip title="新增组">
+                                <Button type="primary" size="small" onClick={this.props.addGroup}>
+                                    <Icon type="plus" />新增组
+                                </Button>
+                            </Tooltip>
+                        </div>
                         <Table 
                             size="small"
                             columns={columns} 

@@ -9,6 +9,10 @@ import {TaskSchedulingTaskExecution} from './TaskSchedulingTaskExecution'
 
 import {Route,Switch} from 'react-router-dom'
 const {  Sider, Content } = Layout;
+
+
+
+
 class TaskScheduling extends React.Component{
     render(){
         return (
@@ -16,7 +20,7 @@ class TaskScheduling extends React.Component{
                 <TaskSchedulingNav></TaskSchedulingNav>
                 <Content style={{padding:"15px 46px"}}>
                     <Switch>
-                        <Route exact path="/TaskScheduling" name="TaskSchedulingTaskManager" component={TaskSchedulingTaskManager} ></Route>
+                        <Route exact path="/TaskScheduling" name="TaskSchedulingGroupManager" component={TaskSchedulingGroupManager} ></Route>
                         <Route path="/TaskScheduling/TaskSchedulingGroupManager" name="TaskSchedulingGroupManager" component={TaskSchedulingGroupManager} ></Route>
                         <Route path="/TaskScheduling/TaskSchedulingTaskManager" name="TaskSchedulingTaskManager" component={TaskSchedulingTaskManager} ></Route>
                         <Route path="/TaskScheduling/TaskSchedulingTaskExecution" name="TaskSchedulingTaskExecution" component={TaskSchedulingTaskExecution} ></Route>

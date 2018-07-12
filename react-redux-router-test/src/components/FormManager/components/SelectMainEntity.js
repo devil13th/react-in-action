@@ -9,8 +9,6 @@ class SelectMainEntity extends React.Component{
        
     }
 
-
-
     
     componentDidMount(){
         /*alert(1)

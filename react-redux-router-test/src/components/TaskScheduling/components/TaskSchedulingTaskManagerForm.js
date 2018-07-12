@@ -82,12 +82,12 @@ class TaskSchedulingTaskManagerForm extends React.Component{
         
         const taskInfo = this.props.taskInfo;
         //alert(taskInfo.jobName)
-        console.log("render () ------------- ")
-        console.log(taskInfo)
+        //console.log("render () ------------- ")
+        //console.log(taskInfo)
         return(
             
             <div>
-                <Form  onSubmit={this.handleSubmit} className="login-form">
+                <Form  onSubmit={this.handleSubmit}>
 
                     <Row>
                         <Col span={12}>

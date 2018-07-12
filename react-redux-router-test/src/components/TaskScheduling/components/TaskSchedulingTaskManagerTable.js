@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonGroup,Tooltip,Spin, Alert ,Tabs, Button, Table, Icon, Divider } from 'antd';
+import { ButtonGroup,Tooltip,Spin, Alert ,Tabs, Button, Table, Icon, Divider,Popconfirm } from 'antd';
 const TabPane = Tabs.TabPane;
 
 
@@ -30,29 +30,32 @@ class TaskSchedulingTaskManagerTable extends React.Component{
     render(){
         var _this = this;
 
-
-
-
         const columns = [{
-            title: 'jobName',
+            title: 'job名称',
             dataIndex: 'jobName',
-            key: 'jobName'
+            key: 'jobName',
+            width:'25%'
         },{
-            title: 'jobDesc',
-            dataIndex: 'jobDesc',
-            key: 'jobDesc',
-        },{
-            title: 'cronTabDesc',
+            title: '定时表达式',
             dataIndex: 'cronTabDesc',
             key: 'cronTabDesc',
+            width:'15%'
         },{
-            title: 'lastRunTime',
+            title: '上次执行时间',
             dataIndex: 'lastRunTime',
             key: 'lastRunTime',
+            width:'20%',
+            align:'center',
+            render : function(text, record){
+                let d = new Date(text);
+                return <span>{d.format("yyyy-MM-dd hh:mm:ss")}</span>
+            }
         },{
-            title: 'status',
+            title: '状态',
             dataIndex: 'status',
             key: 'status',
+            width:'10%',
+            align:'center',
             render: (text, record) => {
                 if(text == -1){
                     return <span>未启动</span>
@@ -64,12 +67,74 @@ class TaskSchedulingTaskManagerTable extends React.Component{
         },{
             title: '管理',
             dataIndex: 'action',
+            width:'25%',
+            align:'center',
             render: (text, record) => {
                 const jobName = record.jobName;
                 const _this = this;
+
+                const operators = [];
+
+                operators.push(
+                    <Tooltip mouseLeaveDelay={0} title="编辑" key={"edit_" + record.jobName}>
+                        <Button   size="small" icon="edit" onClick={function(){_this.props.editTask(jobName)}}/>
+                    </Tooltip>
+                )
+
+                
+                operators.push(
+                    <Tooltip mouseLeaveDelay={0}  title="预警设置" key={"yjsz" + record.jobName}>
+                        <Button size="small" icon="bell"/>
+                    </Tooltip>
+                )
+
+                if(record.status == -1){
+                    operators.push(
+                        <Tooltip mouseLeaveDelay={0}  title="启动" key={"qd" + record.jobName}>
+                            <Popconfirm title="确定启动此任务吗?" onConfirm={function(){_this.props.startTask(jobName)}}  okText="启动" cancelText="取消">
+                                <Button size="small"  icon="play-circle-o"/>
+                            </Popconfirm>
+                        </Tooltip>
+                    )
+                }else{
+                    operators.push(
+                        <Tooltip mouseLeaveDelay={0}  title="停止" key={"tz" + record.jobName}>
+                            <Popconfirm title="确定启动此任务吗?" onConfirm={function(){_this.props.stopTask(jobName)}}  okText="停止" cancelText="取消">
+                                <Button size="small" icon="pause-circle-o" />
+                            </Popconfirm>
+                        </Tooltip>
+                    )
+                }
+                operators.push(
+                    <Tooltip mouseLeaveDelay={0}  title="立即执行" key={"ljzx" + record.jobName}>
+                        <Popconfirm title="确定启动此任务吗?" onConfirm={function(){_this.props.runTask(jobName)}}  okText="执行" cancelText="取消">
+                            <Button size="small" icon="caret-right" />
+                        </Popconfirm>
+                    </Tooltip>
+                )
+                operators.push(
+                    <Tooltip mouseLeaveDelay={0}  title="执行记录" key={"zxjl" + record.jobName}>
+                        <Button size="small" icon="menu-unfold" onClick={function(){_this.startTask(jobName)}}/>
+                    </Tooltip>
+                )
+                operators.push(
+                    <Tooltip mouseLeaveDelay={0}  title="删除" key={"sc" + record.jobName}>
+                    <Popconfirm title="确定删除此任务吗?" onConfirm={function(){_this.props.delTask(jobName)}}  okText="删除" cancelText="取消">
+                        <Button  size="small" icon="delete" />
+                    </Popconfirm>
+                    </Tooltip>
+                )
                 return(
                     <span>
-                        <Button type="primary" size="small" icon="edit" onClick={function(){_this.props.editTask(jobName)}}/>
+                    <Button.Group size="small">
+                        {
+                            operators.map(function(item){
+                                return item;
+                            })
+                        }
+                    </Button.Group>
+                        
+                        
                     </span>
                 )
             }

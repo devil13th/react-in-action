@@ -4,22 +4,23 @@ const TabPane = Tabs.TabPane;
 
 
 Date.prototype.format = function(fmt){ 
-  var o = {   
-    "M+" : this.getMonth()+1,                 //月份   
-    "d+" : this.getDate(),                    //日
-    "h+" : this.getHours(),                   //小时   
-    "m+" : this.getMinutes(),                 //分   
-    "s+" : this.getSeconds(),                 //秒   
-    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
-    "S"  : this.getMilliseconds()             //毫秒   
-  };   
-  if(/(y+)/.test(fmt))   
-    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
-  for(var k in o)   
-    if(new RegExp("("+ k +")").test(fmt))   
-  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
-  return fmt;   
+    var o = {   
+        "M+" : this.getMonth()+1,                 //月份   
+        "d+" : this.getDate(),                    //日
+        "h+" : this.getHours(),                   //小时   
+        "m+" : this.getMinutes(),                 //分   
+        "s+" : this.getSeconds(),                 //秒   
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+        "S"  : this.getMilliseconds()             //毫秒   
+    };   
+    if(/(y+)/.test(fmt))   
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+    for(var k in o)   
+        if(new RegExp("("+ k +")").test(fmt))   
+    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+    return fmt;
 }; 
+    
 
 
 
@@ -29,25 +30,20 @@ class TaskSchedulingTaskExecutionTable extends React.Component{
     }
     render(){
         var _this = this;
-
-
-
         const columns = [{
-            title: 'jobName',
+            title: 'job名称',
             dataIndex: 'jobName',
             key: 'jobName'
         }, {
-            title: 'groupName',
-            dataIndex: 'groupName',
-            key: 'groupName',
-        }, {
-            title: 'cronTabDesc',
+            title: '定时表达式',
             dataIndex: 'cronTabDesc',
             key: 'cronTabDesc',
+            align:'center'
         }, {
             title: '状态',
             dataIndex: 'status',
             key: 'status',
+            align:'center',
             render : function(text, record){
                 let showText = "";
                 if(text === 0){
@@ -66,25 +62,24 @@ class TaskSchedulingTaskExecutionTable extends React.Component{
                 )
             }
         }, {
-            title: 'begin_time',
+            title: '上次执行时间',
             dataIndex: 'begin_time',
             key: 'begin_time',
+            align:'center',
             render : function(text, record){
                 let d = new Date(text);
                 return <span>{d.format("yyyy-MM-dd hh:mm:ss")}</span>
             }
         }, {
-            title: 'end_time',
-            dataIndex: 'end_time',
-            key: 'end_time',
-            render : function(text, record){
-                let d = new Date(text);
-                return <span>{d.format("yyyy-MM-dd hh:mm:ss")}</span>
-            }
+            title: '上次执行时长(ms)',
+            dataIndex: 'durationTime',
+            key: 'durationTime',
+            align:'center'
         }, {
-            title: 'errorFlag',
+            title: '是否抛出例外',
             dataIndex: 'errorFlag',
             key: 'errorFlag',
+            align:'center',
             render : function(text, record){
                 let showText = "";
                 if(text === 0){
@@ -92,7 +87,6 @@ class TaskSchedulingTaskExecutionTable extends React.Component{
                 }else{
                     showText = '是'
                 }
-
                 return (
                     <span>
                         {showText}
@@ -100,7 +94,7 @@ class TaskSchedulingTaskExecutionTable extends React.Component{
                 )
             }
         }, {
-            title: 'errorMsg',
+            title: '例外描述',
             dataIndex: 'errorMsg',
             key: 'errorMsg',
         }];
