@@ -12,12 +12,14 @@
   "license": "MIT",
   "repository": "ruanyf/webpack-demos",
   "dependencies": {
+    
     "jquery": "^3.3.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
     "antd": "^3.6.5",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
