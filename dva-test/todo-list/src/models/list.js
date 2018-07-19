@@ -27,7 +27,8 @@ export default {
     },
   },
   reducers: {
-    add2(state, { payload: name }) {
+	// state   action=>{type,payload}
+    add2(state, { payload: name }) { 
       console.log("============ b1 =============");
       console.log(state); //本模块的state   state.lists
       let id = state.reduce(
