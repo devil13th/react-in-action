@@ -18,3 +18,7 @@ webpack-demos/demo04/dist/bundle.js
 *.DS_Store
 /test
 .DS_Store
+.DS_Store
+react-redux-router-test/public/bundle.js
+react-redux-router-test/public/bundle.js.map
+webpack-demos/.DS_Store
