@@ -1,18 +1,14 @@
 {
-  "name": "react-redux-router-test",
+  "name": "react-out-reference",
   "version": "1.0.0",
-  "description": "react16 router4 redux4 antd ",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --config cfg/webpack.config.dev.js",
-    "server": "webpack-dev-server --config ./cfg/webpack.config.dev.js --host 0.0.0.0"
+    "start": "webpack-dev-server",
+    "build": "webpack"
+
   },
-  "keywords": [
-    "react",
-    "router",
-    "redux"
-  ],
-  "author": "devil13th",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "antd": "^3.5.0",
@@ -37,20 +33,17 @@
     "babel-preset-stage-3": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-plugin-compat": "^2.4.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jsx-a11y": "^6.1.0",
-    "eslint-plugin-react": "^7.10.0",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "react-custom-scrollbars": "^4.2.1",
     "style-loader": "^0.21.0",
     "superagent": "^3.8.3",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^4.6.0",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^2.1.2",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.4",
+    "babel-preset-env": "^1.7.0"
   }
 }
