@@ -4,6 +4,7 @@ import './index.css';
 
 import listModel from './models/list';
 import addModel from './models/add';
+import testModel from './models/test';
 import router from './router';
 import createLoading from 'dva-loading';
 
@@ -16,6 +17,7 @@ const app = dva({
 
 app.model(listModel);
 app.model(addModel);
+app.model(testModel);
 
 // 2. Plugins
 // app.use({});
