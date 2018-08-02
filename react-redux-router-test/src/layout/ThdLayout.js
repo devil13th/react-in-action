@@ -22,6 +22,8 @@ import {FormManager} from '../components/FormManager/containers/FormManager'
 import {TaskScheduling} from '../components/TaskScheduling/containers/TaskScheduling'
 import {TaskSchedulingGroupManager} from '../components/TaskScheduling/containers/TaskSchedulingGroupManager'
 import {TaskSchedulingTaskExecution} from '../components/TaskScheduling/containers/TaskSchedulingTaskExecution'
+import {TaskSchedulingTaskManager} from '../components/TaskScheduling/containers/TaskSchedulingTaskManager'
+
 
 const Panel = Collapse.Panel;
 const {  Sider, Content } = Layout;
@@ -68,7 +70,9 @@ class ThdLayout extends React.Component{
                             <Route path="/TaskScheduling" name="TaskScheduling" component={TaskScheduling} ></Route>
                             <Route path="/s" name="TaskSchedulingTaskExecution" component={TaskSchedulingTaskExecution} ></Route>
                             
-                            
+                            <Route path="/TaskSchedulingGroupManager" name="TaskSchedulingGroupManager" component={TaskSchedulingGroupManager} ></Route>
+                            <Route path="/TaskSchedulingTaskManager" name="TaskSchedulingTaskManager" component={TaskSchedulingTaskManager} ></Route>
+                            <Route path="/TaskSchedulingTaskExecution" name="TaskSchedulingTaskExecution" component={TaskSchedulingTaskExecution} ></Route>
                         </Switch>
                     </Content>
                 </Layout>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { ButtonGroup,Tooltip,Spin, Alert ,Tabs, Button, Table, Icon, Divider,Popconfirm } from 'antd';
+import { Modal,ButtonGroup,Tooltip,Spin, Alert ,Tabs, Button, Table, Icon, Divider,Popconfirm } from 'antd';
+
 const TabPane = Tabs.TabPane;
 
 
@@ -26,6 +27,7 @@ Date.prototype.format = function(fmt){
 class TaskSchedulingTaskManagerTable extends React.Component{
     constructor(props){
         super(props)
+
     }
     render(){
         var _this = this;
@@ -71,6 +73,7 @@ class TaskSchedulingTaskManagerTable extends React.Component{
             align:'center',
             render: (text, record) => {
                 const jobName = record.jobName;
+                const groupName = record.groupName;
                 const _this = this;
 
                 const operators = [];
@@ -83,7 +86,7 @@ class TaskSchedulingTaskManagerTable extends React.Component{
 
                 
                 operators.push(
-                    <Tooltip mouseLeaveDelay={0}  title="预警设置" key={"yjsz" + record.jobName}>
+                    <Tooltip mouseLeaveDelay={0}  title="预警设置" key={"yjsz" + record.jobName} onClick={function(){_this.props.showAlertSetting(jobName,groupName)}}>
                         <Button size="small" icon="bell"/>
                     </Tooltip>
                 )
@@ -176,6 +179,9 @@ class TaskSchedulingTaskManagerTable extends React.Component{
                         </Table> 
                     </TabPane>
                 </Tabs>
+
+                
+
             </div>
         )
     }

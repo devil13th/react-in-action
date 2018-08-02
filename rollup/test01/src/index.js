@@ -12,3 +12,5 @@ var z = {...a,d:5}
 alert(d)
 alert(x)
 alert(z)
+
+export { a as a};

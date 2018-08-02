@@ -3,6 +3,9 @@ import {connect} from 'react-redux';
 import {TaskSchedulingTaskManagerTable} from '../components/TaskSchedulingTaskManagerTable';
 import {TaskSchedulingTaskManagerForm} from '../components/TaskSchedulingTaskManagerForm';
 import {TaskSchedulingTaskManagerSearch} from '../components/TaskSchedulingTaskManagerSearch';
+import {AlertSetting} from '../components/AlertSetting';
+
+
 import {message,Modal} from 'antd';
 import {serverCfg} from '../modules/ServerCfg';
 class TaskSchedulingTaskManager extends React.Component{
@@ -18,7 +21,19 @@ class TaskSchedulingTaskManager extends React.Component{
             //新增任务模态窗口
             addTaskModalVisible:false,
             //任务信息-用于编辑任务
-            taskInfo:{}
+            taskInfo:{},
+            alertSettingModalVisible:false,
+            emailData:[],
+            telData:[],
+            timeThreshold : "",
+            exceptionToGo : false,
+            jobStartFlag:false,
+            jobEndFlag:false,
+            mailDefaultValue:[],
+            telDefaultValue:[],
+            selectedJobName:"",
+            selectedJobGroup:""
+         
         }
        
     }
@@ -264,6 +279,7 @@ class TaskSchedulingTaskManager extends React.Component{
         })
         .then((res)=>{
             const data = JSON.parse(res);
+            //console.log(data)
             var dataWapper =  data.entity.map((item,index) => {
                 item.key = item.jobID;
                 return item;
@@ -283,6 +299,272 @@ class TaskSchedulingTaskManager extends React.Component{
         })
     }
 
+
+    showAlertSetting = (jobName,groupName) => {
+        //获取email
+
+        //获取tel
+
+        //获取选中的
+
+        let mailList = [];
+        let telList = [];
+        let mailDefaultValue = [];
+        let telDefaultValue = [];
+
+        fetch(`${serverCfg.getServerAddr()}jobengine/getmaillist/${jobName}?_=${Math.random()}`, {
+            method: 'GET',// 指定是GET请求
+            headers:{
+                Accept: 'application/json, text/javascript, */*; q=0.01',
+                'Content-Type':'application/json;charset=UTF-8'
+            }
+        })
+        .then((res)=>{
+            return res.text();
+        })
+        .then((res)=>{            
+            const data = JSON.parse(res);
+            
+
+
+            mailList = data.entity
+
+
+            fetch(`${serverCfg.getServerAddr()}jobengine/getphonelist/${jobName}?_=${Math.random()}`, {
+                method: 'GET',// 指定是GET请求
+                headers:{
+                    Accept: 'application/json, text/javascript, */*; q=0.01',
+                    'Content-Type':'application/json;charset=UTF-8'
+                }
+            })
+            .then((res)=>{             
+                return res.text();
+            })
+            .then((res)=>{            
+                const data = JSON.parse(res);
+                //console.log(data);
+                telList = data.entity
+                fetch(`${serverCfg.getServerAddr()}jobengine/getclientnotification`, {
+                    method: 'POST',// 指定是GET请求
+                    headers:{
+                        Accept: 'application/json, text/javascript, */*; q=0.01',
+                        'Content-Type':'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify({
+                        jobName: jobName, 
+                        groupName
+                    })
+                })
+                .then((res)=>{
+                    return res.text();
+                })
+                .then((res)=>{
+                    const data = JSON.parse(res); 
+                    data.entity.mailList.map((item) => {
+                        mailDefaultValue.push(item.mail_id)
+                    })
+                    data.entity.phoneList.map((item) => {
+                        telDefaultValue.push(item.phone_id)
+                    })
+                    mailList = mailList.concat(data.entity.mailList);
+                    telList = telList.concat(data.entity.phoneList);
+                    /*
+                    console.log("---------------");
+                    console.log(mailList);
+                    console.log(telList);
+                    console.log(mailDefaultValue);
+                    console.log(telDefaultValue);
+                    */
+                   
+                    var stateTemp = {     
+                        alertSettingModalVisible:true,                   
+                        emailData:mailList,
+                        telData:telList,
+                        mailDefaultValue,
+                        telDefaultValue,
+                        selectedJobName:jobName,
+                        selectedJobGroup:groupName,
+                    }
+
+                    if(data && data.entity && data.entity.notification){                  
+                        stateTemp = {
+                            ...stateTemp,
+                            timeThreshold : data.entity.notification.timeThreshold ,
+                            exceptionToGo : data.entity.notification.exceptionToGo == 1 ? true : false,
+                            jobStartFlag : data.entity.notification.jobStartFlag == 1 ? true : false,
+                            jobEndFlag : data.entity.notification.jobEndFlag == 1 ? true : false,
+                        }
+                    }else{
+                        stateTemp = {
+                            ...stateTemp,
+                            timeThreshold : "",
+                            exceptionToGo : false,
+                            jobStartFlag :  false,
+                            jobEndFlag : false,
+                        }
+                    }
+                    console.log(stateTemp)                    
+                    this.setState(stateTemp)                    
+                })
+            })
+        })
+        /*this.setState({
+            alertSettingModalVisible:true
+        })*/
+    }
+
+    hideAlertSetting = () => {
+    
+        this.setState({
+            alertSettingModalVisible:false,
+            emailData:[],
+            telData:[],
+            timeThreshold : "",
+            exceptionToGo : false,
+            jobStartFlag:false,
+            jobEndFlag:false,
+            mailDefaultValue:[],
+            telDefaultValue:[],
+            selectedJobName:"",
+            selectedJobGroup:""
+        })
+    }
+
+
+    saveAlertSetting = () => {
+        //console.log(this.state)
+        const _this = this;
+        const mailListTemp = [];
+        const telListTemp = [];
+        
+        const mailIdsStr = "||" + this.state.mailDefaultValue.join("||") + "||";
+        const telIdsStr = "||" + this.state.telDefaultValue.join("||") + "||";
+        //console.log(mailIdsStr);
+        //console.log(telIdsStr);
+
+        this.state.emailData.map((item) => {
+            if(mailIdsStr.indexOf("||" + item.mail_id + "||") > -1 ){
+                item.flag=1;
+                mailListTemp.push(item);
+            }
+        })
+
+        this.state.telData.map((item) => {
+            if(telIdsStr.indexOf("||" + item.phone_id + "||") > -1 ){
+                item.flag=1;
+                telListTemp.push(item);
+            }
+        })
+        //console.log(mailListTemp);
+        //console.log(telListTemp);
+
+
+        let obj = {
+            notification: {
+                jobName: this.state.selectedJobName,
+                groupName: this.state.selectedJobGroup,
+                timeThreshold: this.state.timeThreshold,
+                exceptionToGo: this.state.exceptionToGo ? 1 : 0,
+                jobStartFlag: this.state.jobStartFlag ? 1 : 0,
+                jobEndFlag: this.state.jobEndFlag ? 1 : 0
+            },
+            mailList:mailListTemp,
+            phoneList:telListTemp,
+        }
+
+        console.log(JSON.stringify(obj))
+
+
+        fetch(`${serverCfg.getServerAddr()}jobengine/updateclientnotification`, {
+            method: 'POST',// 指定是POST请求
+            headers:{
+                Accept: 'application/json, text/javascript, */*; q=0.01',
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(obj)// 这里是请求参数
+        })
+        .then((res)=>{
+            if(200!=res.status){
+                throw new Error("操作失败");
+            }
+           
+            return res.text();
+        })
+        .then((res)=>{
+            const data = JSON.parse(res);
+            //alert(data.success)
+            if(true === data.success){
+                message.info("操作成功");
+
+
+                this.setState({
+                    alertSettingModalVisible:false,
+                    emailData:[],
+                    telData:[],
+                    timeThreshold : "",
+                    exceptionToGo : false,
+                    jobStartFlag:false,
+                    jobEndFlag:false,
+                    mailDefaultValue:[],
+                    telDefaultValue:[],
+                    selectedJobName:"",
+                    selectedJobGroup:""
+                })
+
+
+            }else{
+                throw new Error("操作失败");
+            }
+           
+            
+        }).catch(function (e) { 
+            message.error(e.message);
+        });
+
+    }
+
+    setTimeThreshold = (e) => {
+        this.setState({
+            timeThreshold:e.target.value
+        })
+    }
+
+    setExceptionToGo = (e) => {
+        this.setState({
+            exceptionToGo:e.target.checked
+        })
+    }
+
+    setJobStartFlag = (e) => {
+        this.setState({
+            jobStartFlag:e.target.checked
+        })
+    }
+
+    setJobEndFlag = (e) => {
+        this.setState({
+            jobEndFlag:e.target.checked
+        })
+    }
+
+    setSelectedMailData = (value, options) => {
+        //console.log(value);
+        //console.log(options);
+        this.setState({
+            mailDefaultValue:value
+        })
+        
+    }
+
+    setSelectedTelData = (value, options) => {
+        //console.log(value);
+        //console.log(options);
+        this.setState({
+            telDefaultValue:value
+        })
+    }
+
+
     render(){
         return (
             <div>
@@ -301,6 +583,7 @@ class TaskSchedulingTaskManager extends React.Component{
                     stopTask={this.stopTask}
                     runTask={this.runTask}
                     delTask={this.delTask}
+                    showAlertSetting={this.showAlertSetting}
                 >
                 </TaskSchedulingTaskManagerTable>
 
@@ -322,6 +605,45 @@ class TaskSchedulingTaskManager extends React.Component{
                     >
                     </TaskSchedulingTaskManagerForm>
                 </Modal>
+
+
+
+                <Modal
+                    title="预警设置"
+                    width="80%"
+                    visible={this.state.alertSettingModalVisible}
+                    onOk={this.saveAlertSetting}
+                    onCancel={this.hideAlertSetting}
+                    destroyOnClose={true}
+                >
+                    <AlertSetting
+                        emailData = {this.state.emailData}
+                        mailDefaultValue = {this.state.mailDefaultValue}
+                        onMailChange = {this.setSelectedMailData}
+
+                        telData = {this.state.telData}
+                        telDefaultValue={this.state.telDefaultValue}
+                        onTelChange = {this.setSelectedTelData}
+                        
+                        timeThreshold = {this.state.timeThreshold}
+                        onTimeThresholdChange = {this.setTimeThreshold}
+
+                        exceptionToGo = {this.state.exceptionToGo}
+                        onExceptionToGoChange = {this.setExceptionToGo}
+
+                        jobStartFlag = {this.state.jobStartFlag}
+                        onJobStartFlagChange = {this.setJobStartFlag}
+
+                        jobEndFlag = {this.state.jobEndFlag}
+                        onJobEndFlagChange = {this.setJobEndFlag}
+
+                        
+                        saveAlertSetting={this.saveAlertSetting}
+
+                    >
+                    </AlertSetting>
+                </Modal>
+
             </div>
         )
     }

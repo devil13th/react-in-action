@@ -13,6 +13,7 @@ function IndexPage() {
         <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>    
         <li><a href="/#/list">[ TODO LIST EXAMPLE ]</a> </li>
         <li><a href="/#/test">[ Test ]</a> </li>
+        <li><a href="/#/sysUser">[ 用户管理 CRUD 例子 ]</a> </li>
       </ul>
     </div>
   );

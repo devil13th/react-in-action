@@ -92,12 +92,13 @@ class ThdSideNav extends React.Component{
 
                     <Panel header="定时任务xxx" key="18">
                     <p>
-                        <Link to="/s">TaskScheduling</Link><br/>
+                        <Link to="/TaskSchedulingGroupManager">TaskSchedulingGroupManager</Link><br/>
+                        <Link to="/TaskSchedulingTaskManager">TaskSchedulingTaskManager</Link><br/>
+                        <Link to="/TaskSchedulingTaskExecution">TaskSchedulingTaskExecution</Link><br/>
                     </p>
                     </Panel>
                     
-                    
-                    
+
                     
 
                     <Panel header="教程相关" key="7">
