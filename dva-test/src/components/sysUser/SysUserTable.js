@@ -10,9 +10,13 @@ class SysUserTable extends React.Component{
     }
 
     onChange = (pagination, filters, sorter) => {
-        console.log(pagination);
-        console.log(filters);
-        console.log(sorter);
+        //console.log(pagination);
+        //console.log(filters);
+        //console.log(sorter);
+        this.props.onChange({
+            current:pagination.current,
+            pageSize:pagination.pageSize
+        })
     }
 
 
@@ -56,12 +60,12 @@ class SysUserTable extends React.Component{
                 onChange={this.onChange}
                 showHeader={true}
                 pagination={{
-                    current:5,
-                    pageSize:10,
+                    current:this.props.current,
+                    pageSize:this.props.pageSize,
                     showSizeChanger:true,
                     showQuickJumper:true,
                     pageSizeOptions:['10','20','30','40','50','60','100'],
-                    total:100,
+                    total:this.props.total,
                     showTotal:function(total, range){ return "总条目数:" + total}
                 }}
             />

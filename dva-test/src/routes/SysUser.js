@@ -13,7 +13,14 @@ class SysUser extends React.Component{
     componentDidMount(){
         this.dispatch({
             type:"sysUser/getUserData",
-            payload:{a:1,b:3}
+            payload:{current:1,pageSize:10}
+        });
+    }
+
+    queryAllData = (payload) => {
+        this.dispatch({
+            type:"sysUser/getUserData",
+            payload
         });
     }
 
@@ -21,6 +28,10 @@ class SysUser extends React.Component{
         return(
             <SysUserTable
                 dataSource = {this.props.sysUser.dataSource} 
+                current = {this.props.sysUser.current}
+                pageSize = {this.props.sysUser.pageSize}
+                total = {this.props.sysUser.total}
+                onChange={this.queryAllData}
             >
             </SysUserTable>
         )

@@ -1,5 +1,8 @@
 import _ from 'lodash';
 import {message} from 'antd';
+import request from '../utils/request';
+
+import {fetchQuerySysUser} from '../services/api'
 export default {
   namespace: 'sysUser',
   // 初始化state 也可以在index.js中进行初始化(如果属性名相同会覆盖模块state的初始化内容),
@@ -9,43 +12,21 @@ export default {
   effects: {
     *getUserData({ payload }, { call, put, select }) {
 
-      let obj = {
-        "sortColumn":"user_name",
-        "sortOrder":"desc",
-        "pageSize":10,
-        "current":1
-      }
-
-      function *aa(obj){
-        alert(1)
-        yield put({type:"mergeStage",payload:{
-          dataSource:obj
-        }})
-      }
+      const result = yield call(fetchQuerySysUser,payload)
       
-      fetch(
-        "http://127.0.0.1:8000/ajaxserver/SysUser/queryAll",
-        {
-          method:'POST',
-          headers:{
-            'Access-Control-Allow-Origin': '*',
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'aa':'1234'
-          },
-          body:JSON.stringify(obj)
-        }
-      ).then(function(res){
-        return res.text();
-      }).then(function(res){
-        let result = JSON.parse(res);
-        if(result.status=="SUCCESS"){
-          console.log(result.result.result)
-          yield aa(result.result.result)
-        }else{
-          message.info("请求失败");
+      //console.log(result)
+
+      yield put({
+        type:"mergeState",
+        payload:{
+          dataSource:result.result.result,
+          current:result.result.current,
+          pageSize:result.result.pageSize,
+          total:result.result.total
         }
       })
+
+
       //从全局状态中选择数据
       /*
       const st = yield select(state => {return state}); //state 是全部的state并不是 state.lists 
@@ -61,9 +42,8 @@ export default {
     },
   },
   reducers: {
-    mergeStage(state, { payload}) {
-      alert(2)
-      console.log(payload);
+    mergeState(state, { payload}) {
+      //console.log(payload);
       return {...state,...payload}
     }
   }
