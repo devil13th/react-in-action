@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <title>fetch</title>
+        <style>
+            .stl{
+                width:100px;
+                height:100px;
+                border:1px solid red;
+            }
+        </style>
+    </head>
+<body> 
+
+<h1>XmlHttpRequest 例子</h1>
+
+<input type="button" onclick="ajaxTest('devil13th')" value="ajax"/>
+
+<input type="button" onclick="promiseTest('devil13th')" value="promise"/>
+
+<input type="button" onclick="fetchTest('devil13th')" value="fetch"/>
+
+<input type="button" onclick="generatorTest('devil13th')" value="generator"/>
+
+<input type="button" onclick="asyncTest('devil13th')" value="async"/>
+
+
+
+<script>
+// ====================================  原生xhr ==================================//
+function ajaxTest(name){
+    var client = new XMLHttpRequest();
+	client.open("GET","http://127.0.0.1:8000/ajaxserver/SimpleRequest/dataForGet?name=" + name);
+	client.onreadystatechange = handler;
+	client.send();
+	function handler(){ //回调函数
+		if(this.readyState !== 4){
+			return;
+		}   
+		if(this.status === 200){
+			console.log(this.response);
+			console.log(this.response.toString());
+		}else{
+			console.log("err")
+		}
+	};
+}
+
+
+// ====================================  使用Promise ==================================//
+var createPromiseAjax = function(name){
+	var promiseObj =  new Promise(function(resolve,reject){
+		var client = new XMLHttpRequest();
+		client.open("GET","http://127.0.0.1:8000/ajaxserver/SimpleRequest/dataForGet?name=" + name);
+		client.onreadystatechange = handler;
+		client.send();
+		function handler(){ //回调函数
+			if(this.readyState !== 4){
+				return;
+			}   
+			if(this.status === 200){
+				console.log(this.response);
+				resolve(this.response.toString());
+			}else{
+				reject("err")
+			}
+		};
+	})
+
+	return promiseObj;
+}
+
+//promise入口函数
+function promiseTest(name){
+	createPromiseAjax(name).then(function(res){
+		console.log("回调函数处理：" + res);
+	})
+}
+
+
+
+// ====================================  使用fetch ==================================//
+
+//fetch入口函数 
+//fetch函数本身是Promise
+function fetchTest(name){
+	fetch(
+		"http://127.0.0.1:8000/ajaxserver/SimpleRequest/dataForGet?name=" + name,
+        {
+         	'method':'GET',
+         	headers:{
+	         	'Access-Control-Allow-Origin': '*',
+	            'Accept': 'application/json',
+	            'Content-Type': 'application/json',
+	            'aa':'1234'
+         	}
+        }
+    ).then(function(res){
+		return res.text();
+	}).then(function(res){
+    	console.log(res);
+    })
+}
+
+
+
+// ====================================  使用generator ==================================//
+
+//generator方式入口
+function generatorTest(name){
+	function request(name){
+		var client = new XMLHttpRequest();
+		client.open("GET","http://127.0.0.1:8000/ajaxserver/SimpleRequest/dataForGet?name=" + name);
+		client.onreadystatechange = handler;
+		client.send();
+		
+		function handler(){ //回调函数
+			if(this.readyState !== 4){
+				return;
+			}   
+			if(this.status === 200){
+				var result = this.response.toString();
+				generatorObj.next(result);
+			}else{
+				reject("err")
+			}
+		};
+	}
+	function* createGeneratorObj(name){
+		var result = yield request(name)
+		console.log("generator结果:" + result);
+	}
+	var generatorObj = createGeneratorObj(name);
+	generatorObj.next();
+}
+
+
+
+// ====================================  使用async/await函数 ==================================//
+function asyncRequest(name){
+	var fc = fetch(
+		"http://127.0.0.1:8000/ajaxserver/SimpleRequest/dataForGet?name=" + name,
+        {
+         	'method':'GET',
+         	headers:{
+	         	'Access-Control-Allow-Origin': '*',
+	            'Accept': 'application/json',
+	            'Content-Type': 'application/json',
+	            'aa':'1234'
+         	}
+        }
+    )
+	return fc;
+}
+
+
+async function asyncFun(name){
+	var result = await asyncRequest(name);  //await 后面的asyncRequest()返回的是一个Promise对象
+	return result;
+}
+
+// async 方式入口函数
+function asyncTest(name){
+	var fnResult = asyncFun(name);
+	fnResult.then(function(res){
+		console.log(res)
+		return res.text()
+	}).then(function(res){
+		console.log(res)
+	})
+}
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
