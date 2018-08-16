@@ -11,10 +11,11 @@
     "antd": "^3.7.1",
     "babel-plugin-import": "^1.1.1",
     "babel-runtime": "^6.9.2",
-    "dva": "^1.2.1",
+    "dva": "^2.4.0",
     "dva-loading": "^2.0.3",
     "react": "^15.4.0",
-    "react-dom": "^15.4.0"
+    "react-dom": "^15.4.0",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

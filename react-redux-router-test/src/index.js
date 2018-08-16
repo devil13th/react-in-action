@@ -10,7 +10,7 @@ ReactDOM.render(
     <Provider store={store}>
         <div style={{height:"100%"}}>
             <App></App>
-             <DevTools />
+            <DevTools />
         </div>
     </Provider>
     ,document.getElementById("app")

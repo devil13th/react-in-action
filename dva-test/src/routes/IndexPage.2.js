@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'dva';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
+import styles from './IndexPage.css';
 
 
 import List from '../routes/List';
 import Test from '../routes/Test';
-import {Home} from '../components/Home';
 import SysUserRouter from '../routes/SysUserRouter';
-import { routerRedux, Route,Link } from 'dva/router';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -36,17 +36,6 @@ class IndexPage extends React.Component {
                 >
                     <div className="logo" />
                     <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    
-                        <SubMenu
-                            key="sub1"
-                            title={<span><Icon type="user" /><span>DVA例子</span></span>}
-                        >
-                            <Menu.Item key="31"><Link to='/'>Index</Link></Menu.Item>
-                            <Menu.Item key="3"><Link to='/list'>TODO LIST EXAMPLE</Link></Menu.Item>
-                            <Menu.Item key="4"><Link to='/test'>Test</Link></Menu.Item>
-                            <Menu.Item key="5"><Link to='/sysUser'>用户管理 CRUD 例子</Link></Menu.Item>
-                        </SubMenu>
-
                         <Menu.Item key="1">
                             <Icon type="pie-chart" />
                             <span>Option 1</span>
@@ -55,7 +44,14 @@ class IndexPage extends React.Component {
                             <Icon type="desktop" />
                             <span>Option 2</span>
                         </Menu.Item>
-                        
+                        <SubMenu
+                            key="sub1"
+                            title={<span><Icon type="user" /><span>User</span></span>}
+                        >
+                            <Menu.Item key="3">Tom</Menu.Item>
+                            <Menu.Item key="4">Bill</Menu.Item>
+                            <Menu.Item key="5">Alex</Menu.Item>
+                        </SubMenu>
                         <SubMenu
                             key="sub2"
                             title={<span><Icon type="team" /><span>Team</span></span>}
@@ -77,19 +73,23 @@ class IndexPage extends React.Component {
                             <Breadcrumb.Item>Bill</Breadcrumb.Item>
                         </Breadcrumb>
                         <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                            <div>
-                                <Route path="/" component={Home} exact />
-                                <Route path="/list" component={List} />
-                                <Route path="/test" component={Test} />
-                                <Route path="/sysUser" component={SysUserRouter} />
-                            </div>
 
-                            
+                            <div className={styles.normal}>
+                                <h1 className={styles.title}>Yay! Welcome to dva!</h1>
+                                <div className={styles.welcome} />
+                                <ul className={styles.list}>
+                                    <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
+                                    <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
+                                    <li><a href="/#/list">[ TODO LIST EXAMPLE ]</a> </li>
+                                    <li><a href="/#/test">[ Test ]</a> </li>
+                                    <li><a href="/#/sysUser">[ 用户管理 CRUD 例子 ]</a> </li>
+                                </ul>
+                            </div>
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
                         Ant Design ©2018 Created by Ant UED
-                    </Footer>
+</Footer>
                 </Layout>
             </Layout>
         );

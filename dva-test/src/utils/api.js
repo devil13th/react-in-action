@@ -3,6 +3,8 @@ if (window.REACT_APP_CONFIG) {
   API = window.REACT_APP_CONFIG.sso_api;
 }
 
+
+
 function headers() {
   const token = localStorage.getItem('token');
 
@@ -33,6 +35,7 @@ function parseResponse(response) {
 }
 
 function queryString(params) {
+  console.log(params)
   const query = Object.keys(params)
     .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
     .join('&');
@@ -45,9 +48,7 @@ export default {
     // params.token = localStorage.getItem('token');
     return fetch(`${url}${queryString(params)}`, {
       method: 'GET',
-      headers: headers(),
-
-      credentials: 'include',
+      headers: headers()
     })
       .then(parseResponse);
   },
@@ -55,6 +56,7 @@ export default {
   post(url, data) {
     // data.token = localStorage.getItem('token');
     const body = JSON.stringify(data);
+    console.log("data:" + body);
     //console.log(body);
     return fetch(`${url}`, {
       method: 'POST',
@@ -82,7 +84,6 @@ export default {
     return fetch(`${API}/${url}`, {
       method: 'PATCH',
       headers: headers(),
-
       credentials: 'include',
       body,
     })
@@ -90,10 +91,8 @@ export default {
   },
 
   delete(url) {
-    return fetch(`${API}/${url}`, {
-      method: 'DELETE',
-      headers: headers(),
-      credentials: 'include',
+    return fetch(`${url}`, {
+      method: 'DELETE'
     })
       .then(parseResponse);
   },

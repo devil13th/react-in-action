@@ -14,3 +14,4 @@ alert(x)
 alert(z)
 
 export { a as a};
+alert(1)

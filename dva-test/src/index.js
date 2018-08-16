@@ -5,12 +5,20 @@ import './index.css';
 import listModel from './models/list';
 import addModel from './models/add';
 import testModel from './models/test';
-import sysUserModel from './models/sysUser';
+import sysUserModel from './models/sysUserModel';
 import router from './router';
 import createLoading from 'dva-loading';
 
+import { createLogger } from 'redux-logger'
+
+const loggerMiddleware = createLogger();
+
+
 // 1. Initialize
 const app = dva({
+  //中间件
+  //onAction:[createLogger()],
+  //extraReducers: { form: formReducer }
   initialState: {
     inputs: { input: 'devil13th' }
   },

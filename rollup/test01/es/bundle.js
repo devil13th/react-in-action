@@ -24,6 +24,7 @@ var z = _extends({}, a, { d: 5
 });alert(d);
 alert(x);
 alert(z);
+alert(1);
 
 export { a };
 //# sourceMappingURL=bundle.js.map

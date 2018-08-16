@@ -1,15 +1,15 @@
 import React from 'react';
-import {Button} from 'antd';
+import { Button } from 'antd';
 
 
-class Bton extends React.Component{
-  constructor(props){
+class Bton extends React.Component {
+  constructor(props) {
     super(props);
   }
 
-  render(){
-    return(
-      <Button 
+  render() {
+    return (
+      <Button
         size={this.props.btonSize}
         type={this.props.btonType}
         onClick={this.props.onBtonClick}
@@ -19,4 +19,4 @@ class Bton extends React.Component{
 }
 
 
-export {Bton as Bton}
+export { Bton as Bton }
