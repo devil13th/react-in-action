@@ -1,3 +1,8 @@
+[TOC]
+
+# 代码示例
+
+```
 //拷贝首页，并添加js引用 、压缩、替换文本等功能
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 //该插件功能是打包前先清空目标文件夹
@@ -133,3 +138,67 @@ module.exports = {
 
 
 }
+```
+
+
+
+# package.json
+
+```
+{
+  "private": true,
+  "scripts": {
+    "build": "webpack --config cfg/webpack.config.dev.js",
+    "start": "webpack-dev-server --config ./cfg/webpack.config.dev.js"
+  },
+  "engines": {
+    "install-node": "6.9.2"
+  },
+  "dependencies": {
+    "antd": "^3.7.1",
+    "babel-plugin-import": "^1.1.1",
+    "babel-runtime": "^6.9.2",
+    "dva": "^2.4.0",
+    "dva-loading": "^2.0.3",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "redux-logger": "^3.0.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-dva-hmr": "^0.3.2",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^0.28.11",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "expect": "^1.20.2",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": "^0.12.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "open-browser-webpack-plugin": "0.0.5",
+    "redbox-react": "^1.3.2",
+    "roadhog": "^0.5.2",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "webpack": "^4.6.0",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-server": "^3.1.4"
+  }
+}
+
+```
+

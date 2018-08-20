@@ -1,0 +1,9 @@
+{
+  "name": "webpack-pack-test02",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "license": "MIT"
+}

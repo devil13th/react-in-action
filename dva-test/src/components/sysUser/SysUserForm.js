@@ -19,6 +19,7 @@ class SysUserForm extends React.Component{
 
                 if(this.props.sysUserInfo && this.props.sysUserInfo.userId){//编辑
                     console.log("edit")
+                    console.log(values)
                     this.props.updateSysUserInfo({...values,userId:this.props.sysUserInfo.userId});
                 }else{//新增
                     console.log("add")
