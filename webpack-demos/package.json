@@ -12,6 +12,7 @@
   "license": "MIT",
   "repository": "ruanyf/webpack-demos",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "jquery": "^3.3.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
