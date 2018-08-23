@@ -1,15 +1,13 @@
 import api from '../utils/api';
 
 
-
-
 var FetchUrl = {
-  QUERY_ALL : "http://127.0.0.1:8000/ajaxserver/SysUser/queryAll",
-  SAVE_USER : "http://127.0.0.1:8000/ajaxserver/SysUser/saveSysUser",
-  DELETE_USER: "http://127.0.0.1:8000/ajaxserver/SysUser/deleteSysUser",
-  GET_USER:"http://127.0.0.1:8000/ajaxserver/SysUser/queryById",
-  UPDATE_USER:"http://127.0.0.1:8000/ajaxserver/SysUser/updateSysUser",
-  QUERY_ORG:"http://127.0.0.1:8000/ajaxserver/SysUser/queryOrgForSelect",
+  QUERY_ALL : "/SysUser/queryAll",
+  SAVE_USER : "/SysUser/saveSysUser",
+  DELETE_USER: "/SysUser/deleteSysUser",
+  GET_USER:"/SysUser/queryById",
+  UPDATE_USER:"/SysUser/updateSysUser",
+  QUERY_ORG:"/SysUser/queryOrgForSelect",
 
   
 }

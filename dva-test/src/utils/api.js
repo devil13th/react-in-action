@@ -1,9 +1,11 @@
-let API = '';
-if (window.REACT_APP_CONFIG) {
-  API = window.REACT_APP_CONFIG.sso_api;
+
+
+let serverUrl = "/"
+if(window.APP_CFG.serverUrl){
+  serverUrl = window.APP_CFG.serverUrl
 }
 
-
+alert(window.APP_CFG)
 
 function headers() {
   const token = localStorage.getItem('token');
@@ -46,7 +48,7 @@ export default {
   fetch(url, params = {}) {
     
     // params.token = localStorage.getItem('token');
-    return fetch(`${url}${queryString(params)}`, {
+    return fetch(`${serverUrl}${url}${queryString(params)}`, {
       method: 'GET',
       headers: headers()
     })
@@ -58,7 +60,7 @@ export default {
     const body = JSON.stringify(data);
     console.log("data:" + body);
     //console.log(body);
-    return fetch(`${url}`, {
+    return fetch(`${serverUrl}${url}`, {
       method: 'POST',
       headers: headers(),
       //credentials: 'include',
@@ -68,7 +70,7 @@ export default {
   },
 
   postForm(url, formData) {
-    return fetch(`${API}/${url}`, {
+    return fetch(`${serverUrl}/${url}`, {
       method: 'POST',
       headers: formHeaders(),
       credentials: 'include',
@@ -81,7 +83,7 @@ export default {
     // data.token = localStorage.getItem('token');
     const body = JSON.stringify(data);
 
-    return fetch(`${API}/${url}`, {
+    return fetch(`${serverUrl}/${url}`, {
       method: 'PATCH',
       headers: headers(),
       credentials: 'include',
@@ -91,7 +93,7 @@ export default {
   },
 
   delete(url) {
-    return fetch(`${url}`, {
+    return fetch(`${serverUrl}${url}`, {
       method: 'DELETE'
     })
       .then(parseResponse);

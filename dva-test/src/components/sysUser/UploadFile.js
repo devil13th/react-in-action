@@ -12,7 +12,7 @@ const props = {
         userName:"devil13th",
         orgId:"2"
     },
-    action: 'http://127.0.0.1:8000/ajaxserver/fileUploadSubmit',
+    action: 'http://127.0.0.1:8080/ajaxserver/fileUploadSubmit',
     onChange(info) {
         console.log(info);
         const status = info.file.status;
