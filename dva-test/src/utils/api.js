@@ -5,7 +5,7 @@ if(window.APP_CFG.serverUrl){
   serverUrl = window.APP_CFG.serverUrl
 }
 
-alert(window.APP_CFG)
+
 
 function headers() {
   const token = localStorage.getItem('token');
