@@ -134,6 +134,9 @@ class SysUserRouter extends React.Component{
 
         const queryLoading = this.props.loading.effects['sysUser/getUserData'];
         const saveLoading = this.props.loading.effects['sysUser/saveUserInfo'];
+        const updateUserInfo = this.props.loading.effects['sysUser/updateUserInfo'];
+        const editLoading = this.props.loading.effects['sysUser/queryUser'];
+
         const operations = [];
         operations.push(
             <Button key="xzBton" type="primary" icon="plus" onClick={this.openSysUserFormModal}>新增用户</Button>
@@ -178,11 +181,12 @@ class SysUserRouter extends React.Component{
                     current = {this.props.sysUser.current}
                     pageSize = {this.props.sysUser.pageSize}
                     total = {this.props.sysUser.total}
-                    loading={queryLoading}
                     deleteUser={this.deleteUser}
                     editUser={this.editUser}
                     onChange={this.queryAllData}
                     uploadImgs={this.uploadImgs}
+                    loading={queryLoading}
+                    editLoading={editLoading}
 
                 >
                 </SysUserTable>
@@ -191,7 +195,7 @@ class SysUserRouter extends React.Component{
                     visible={this.props.sysUser.SysUserFormModalVisible}
                     onCloseModal={this.closeSysUserFormModal}
                     saveSysUserInfoTemp={this.saveSysUserInfoTemp}
-                    saveLoading={saveLoading}
+                    saveLoading={saveLoading || updateUserInfo}
                     sysUserInfo={this.props.sysUser.sysUserInfo}
                     updateSysUserInfo={this.updateSysUserInfo}
                     searchOrg={this.searchOrg}
