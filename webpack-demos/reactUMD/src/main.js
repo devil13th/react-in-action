@@ -6,12 +6,13 @@ class MyApp extends React.Component{
 
     render(){
         return (
-            <h1>   
-                Split Code
-            </h1>
+            <div>
+                111
+            </div>
         )
     }
 }
 
+alert(Button)
 
 ReactDOM.render(<MyApp/>,document.getElementById("app"));
