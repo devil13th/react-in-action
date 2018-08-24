@@ -1,6 +1,3 @@
-class Car {
-    
-}
 
 const cc = (name) => {
     return "hello " + name;
@@ -16,4 +13,4 @@ const dd = (name) => {
 //const Car =1 ;
 
 
-export { cc as cc,dd as dd,Car as Car}
+export { cc as cc,dd as dd}

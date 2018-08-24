@@ -1,8 +1,8 @@
-import {cc,dd,Car} from './import';
+import {cc,dd} from './import';
 
 const x = dd(" word ");
 const d = cc(" word ");
-const c = new Car("xx");
+
 
 
 var a = {a:3,b:4}

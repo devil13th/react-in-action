@@ -52,7 +52,7 @@ export default {
     ],
     plugins: [
         babel({
-            exclude: 'node_modules/**', // only transpile our source code
+            exclude: 'node_modules/**', //排除node_module下的所有文件  only transpile our source code 
             runtimeHelpers: true
         }),
         //uglify()
