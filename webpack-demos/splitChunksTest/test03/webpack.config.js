@@ -9,102 +9,95 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 //生成分析报告
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const path = require('path')
+
+
+const webpack = require('webpack');
+const path = require('path');
+
+
 
 const PATHS = {
-  app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, ''),
+  src: path.join(__dirname, 'src'),
+  dist: path.join(__dirname, 'dist'),
+  assets:path.join(__dirname,'assets')
 };
+
+console.log(PATHS);
 
 
 module.exports = {
   devtool:'eval-source-map',
-  
-  
-  //打包后的文件路径 (webpack4默认dist目录下)
-  /*output: {
-    filename: 'bundle.js' //默认dist目录下  
-  },*/
+
+
+  entry: {
+    app: PATHS.src + '/main.js',
+  },
+
   output: {
-    path: PATHS.build+'/dist',
-    filename: '[name].js',
-    chunkFilename:'[name].js'
+    path: PATHS.dist,
+    publicPath: "",
+    chunkFilename: "[name].js",
+    filename: "[name].js"
   },
-  //入口文件路径
-  //entry: './main.js',
-  entry:{
-    
-    index1: ['./index1.js'],
-    index2: ['./index2.js'],
-    index3: ['./index3.js'],
-  },
+
+  
+
   optimization: {
-    minimize: false,
-    
-    splitChunks: {
-        minChunks:2,
-        //maxSize:160,//每个块的最大大小(单位是比特)
-        minSize:10,//每个块的最小大小(单位是比特)
-    }
-  },
-
-
-
-
-/*
-  //入口文件路径
-  //entry: './main.js',
-  entry:{
-    
-    vendor: [
-        'react',
-        'react-dom',
-        'antd',
-    ],
-    
-
-    index: ['./main.js'],
-  },
-  optimization: {
-    minimize: false,
+    runtimeChunk: {
+        name: "manifest"
+    },
     splitChunks: {
         cacheGroups: {
             vendor: {
-                chunks: 'initial',
-                name: 'vendor1',
-                test: 'vendor',
-                enforce: true
+                test: /[\\/]node_modules[\\/]/,
+                name: "vendors",
+                priority: -20,
+                chunks: "all"
             }
         }
     }
-  },
-*/
-
+  } ,
 
 
   //mode:生产模式production(会压缩代码)  开发模式development(不会压缩代码)
   mode:"development", 
   devServer:{
-    contentBase:__dirname + "/dist/",
+    contentBase:PATHS.dist,
     port:8080,
     compress:true,// 服务器压缩
+    public: '127.0.0.1:8080',
     open:true,// 自动打开浏览器
     inline: true,//实时刷新
     //hot:true//热更新
+    proxy: { //设置代理 
+      '/proxy': {
+        //target: 'http://127.0.0.1:8888/sbt',
+        target: 'http://127.0.0.1:8000/vh',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/proxy': '' //代理路径
+        }
+      },
+      '/jobengine': {
+        target: 'http://192.168.248.92:8430/jobengine',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/jobengine': '' //代理路径
+        }
+      }
+    },
   },
   
   
-
-
   plugins: [
     //清理文件夹
     new CleanWebpackPlugin('dist') ,
     //拷贝模板并添加js引用 替换模板变量
     new HtmlWebpackPlugin({
-      filename:'./index.html', //通过模板生成的文件名
-      template:'./index.html',//模板路径
+      filename:PATHS.dist + '/index.html', //通过模板生成的文件名
+      template:PATHS.assets + '/index.html',//模板路径
       inject:true, //是否自动在模板文件添加 自动生成的js文件链接的位置 允许插件修改哪些内容，true/'head'/'body'/false,
-      title:'这个是WebPack Demo',
+      title:'第三方库分离打包',
       sss:"hello world !",
 
       //minify属性详解：https://github.com/kangax/html-minifier#options-quick-reference
@@ -114,6 +107,9 @@ module.exports = {
         minifyJS:true,//是否压缩直接出现在页面中的js
       }
     }),
+
+
+
     //拷贝静态资源
     /*new CopyWebpackPlugin([
       // to 默认的是dist文件夹是根目录
@@ -149,7 +145,10 @@ module.exports = {
       //  在这里查看更多选项：https：  //github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
       statsOptions: null,
       logLevel: 'info'// 日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
-    })
+    }),
+
+
+   
   ],
 
 
