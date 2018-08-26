@@ -13,5 +13,5 @@ class MyApp extends React.Component{
     }
 }
 
-
+alert(antd)
 ReactDOM.render(<MyApp/>,document.getElementById("app"));
