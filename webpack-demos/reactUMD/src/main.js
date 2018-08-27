@@ -14,9 +14,5 @@ class MyApp extends React.Component{
 }
 
 
-alert(Button)
-
-
-alert(antd)
 
 ReactDOM.render(<MyApp/>,document.getElementById("app"));
