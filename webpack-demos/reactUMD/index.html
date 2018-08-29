@@ -1,19 +1,35 @@
+
+<!DOCTYPE html>
 <html>
-    <head>
-        <title><%= htmlWebpackPlugin.options.title %></title>
-        <link rel="stylesheet" href="assets/antd.css" />
 
-        <script src="assets/polyfill.js"></script>
-        <script src="assets/react.development.js"></script>
-        <script src="assets/react-dom.development.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>Antd</title>
+  <script src="assets/react.production.min.js"></script>
+  <script src="assets/react-dom.production.min.js"></script>
+  <script src="assets/babel.min.js"></script>
+  <script src="assets/moment.min.js"></script>
+  <link rel="stylesheet" href="assets//antd.min.css" />
+  <script src="assets//antd.min.js"></script>
+</head>
 
+<body>
+  <div id="message1">xx</div>
+  <script type="text/babel">
+  ReactDOM.render(
+  <div>
+    <antd.Button type="primary">Primary</antd.Button>
+    <antd.Button>Default</antd.Button>
+    <antd.Button type="dashed">Dashed</antd.Button>
+    <antd.Button type="danger">Danger</antd.Button>
+    <antd.Input placeholder="Basic usage" />
+    <antd.Switch defaultChecked />
+    <antd.TimePicker defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+  </div>
+, document.getElementById('message1'));
+  
+  </script>
+</body>
 
-        <script src="bundle.js"></script>
-    </head>
-    <body>
-        <div id="app"></div>
-        <div id="app2"></div>
-
-       
-    </body>
 </html>

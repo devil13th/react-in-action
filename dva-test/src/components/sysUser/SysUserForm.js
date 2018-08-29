@@ -15,12 +15,18 @@ class SysUserForm extends React.Component{
     handleOk = () => {
         const {form} = this.props;
         form.validateFields((err, values) => {
+            console.log(values);
             if (!err) {
 
                 if(this.props.sysUserInfo && this.props.sysUserInfo.userId){//编辑
                     console.log("edit")
-                    console.log(values)
-                    this.props.updateSysUserInfo({...values,userId:this.props.sysUserInfo.userId});
+                    
+                    //alert(values.userBirthday.format('x'));
+                    this.props.updateSysUserInfo({
+                        ...values,
+                        userId:this.props.sysUserInfo.userId,
+                        userBirthday:values.userBirthday.format('x')
+                    });
                 }else{//新增
                     console.log("add")
                     this.props.saveSysUserInfoTemp(values);
