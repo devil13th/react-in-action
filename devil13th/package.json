@@ -4,8 +4,8 @@
   "description": "react project for devil13th some function",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config cfg/webpack.config.dev.js",
-    "start": "webpack-dev-server --config ./cfg/webpack.config.dev.js"
+    "build": "webpack --config ./webpack.config.dev.js",
+    "start": "webpack-dev-server --config ./webpack.config.dev.js"
   },
   "keywords": [
     "react",

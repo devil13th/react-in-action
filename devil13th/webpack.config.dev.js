@@ -5,15 +5,24 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 //文件拷贝功能
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-// __dirname是node.js的全局变量，它指向当前执行脚本所在的目录。
+// __dirname是node.js的全局变量，它指向当前执行脚本所在的目录
+console.log("----------- 当前目录 ----------------" );
+console.log( __dirname );
+
+var path = require("path");
+var projectRoot = path.resolve(".");
+console.log(". = %s", path.resolve("."));
+console.log("__dirname = %s", path.resolve(__dirname));
+console.log(path.resolve(__dirname, 'dist'));
+console.log(path.resolve('./', 'dist'));
 module.exports = {
   //devtool: 'cheap-module-source-map',
   //devtool:false,
   devtool: 'eval-source-map',
-  entry: [__dirname + '/../src/index.js'],
+  entry: [__dirname + '/src/index.js'],
 
   output: {
-    path: __dirname + '/../dist',
+    path: __dirname + '/dist',
     filename: 'bundle.js'
   },
   mode: 'development', // 生产模式production  开发模式development
@@ -22,7 +31,7 @@ module.exports = {
     port: "8001",
     open: true,// 自动打开浏览器
     //hot: true,// 开启热更新
-    contentBase: __dirname + '/../dist',//本地服务器所加载的页面所在的目录
+    contentBase: __dirname + '/dist',//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转
     inline: true,//实时刷新
     proxy: { //设置代理 
@@ -101,6 +110,7 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin( path.resolve('./', 'dist')),
     new HtmlWebpackPlugin({
       filename: './index.html', //通过模板生成的文件名
       template: './index.html',//模板路径
@@ -115,17 +125,13 @@ module.exports = {
         minifyJS: true,//是否压缩直接出现在页面中的js
       }
     }),
-    new CleanWebpackPlugin('dist'),
+    
    
-    new CopyWebpackPlugin([{
-          from: __dirname + '/../public/img',
-          to: __dirname + '/../dist/img'
-      },{
-        from: __dirname + '/../public/antd.css',
-        to: __dirname + '/../dist'
-      },{
-        from: __dirname + '/../public/style.css',
-        to: __dirname + '/../dist'
+    new CopyWebpackPlugin([
+      
+      {
+        from: __dirname + '/public/antd.css',
+        to: __dirname + '/dist'
       }
     ])
 

@@ -1,5 +1,8 @@
 ﻿//整个应用的入口文件
+
+//兼容低版本浏览器
 import "babel-polyfill";
+//dva 框架
 import dva from 'dva';
 //首页router
 import router from './router';
@@ -11,6 +14,7 @@ import { createLogger } from 'redux-logger'
 //各个模块的model
 import appModel from './models/appModel';
 
+import './styles/style.css';
 //创建日志中间件
 const loggerMiddleware = createLogger();
 
