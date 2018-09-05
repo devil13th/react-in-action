@@ -15,6 +15,8 @@ import { createLogger } from 'redux-logger'
 import appModel from './models/appModel';
 
 import './styles/style.css';
+
+
 //创建日志中间件
 const loggerMiddleware = createLogger();
 

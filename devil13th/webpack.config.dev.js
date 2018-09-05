@@ -130,7 +130,7 @@ module.exports = {
     new CopyWebpackPlugin([
       
       {
-        from: __dirname + '/public/antd.css',
+        from: __dirname + '/src/styles/antd.css',
         to: __dirname + '/dist'
       }
     ])
