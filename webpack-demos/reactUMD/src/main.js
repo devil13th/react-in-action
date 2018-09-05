@@ -6,8 +6,10 @@ class MyApp extends React.Component{
 
     render(){
         return (
+
             <div>
-                111
+                <h1>Hello React</h1>
+                <Button type="primary">Primary</Button>
             </div>
         )
     }

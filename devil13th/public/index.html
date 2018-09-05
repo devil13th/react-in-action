@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <link rel="stylesheet" href="antd.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="root"></div>
+<script>
+window.APP_CFG = {
+  serverUrl : "http://127.0.0.1:8080/ajaxserver"
+}
+</script>
+<script src="bundle.js"></script>
+
+</body>
+</html>
