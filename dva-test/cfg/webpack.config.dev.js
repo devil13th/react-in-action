@@ -18,8 +18,8 @@ module.exports = {
   },
   mode: 'development', // 生产模式production  开发模式development
   devServer: {
-    public: '127.0.0.1:8001',
-    port: "8001",
+    public: '127.0.0.1:8002',
+    port: "8002",
     open: true,// 自动打开浏览器
     //hot: true,// 开启热更新
     contentBase: __dirname + '/../dist',//本地服务器所加载的页面所在的目录

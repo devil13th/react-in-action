@@ -6,20 +6,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
   <title>Antd</title>
+  <script src="assets/polyfill.js"></script>
   <script src="assets/react.production.min.js"></script>
   <script src="assets/react-dom.production.min.js"></script>
   <script src="assets/babel.min.js"></script>
-  <script src="assets/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <link rel="stylesheet" href="assets/antd.min.css" />
-  <script src="assets/antd.min.js"></script>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/3.9.1/antd-with-locales.min.js"></script>
 </head>
 
 <body>
+<pre>
+polyfill.js:兼容IE9
+react.production.min.js:umd格式的react
+babel.min.js：用于解析react语法
+antd-with-locales.min.js ： umd格式的antd (来自于cdnjs,与antd官网的不是同一个JS)
+</pre>
+
+
+
+
   <div id="message1">xx</div>
   <script type="text/babel">
+
+function onck(){
+  alert("Hello User")
+}
   ReactDOM.render(
   <div>
-    <Button type="primary">Primary</Button>
+    <h1> Hello UMD </h1>
+    <antd.Button type="primary" onClick={onck}>Click Me </antd.Button>
   </div>
 , document.getElementById('message1'));
   

@@ -4,12 +4,16 @@ class MyApp extends React.Component{
         super(props);
     }
 
+    onck = () => {
+        alert("Hello User")
+    }
+
     render(){
         return (
 
             <div>
                 <h1>Hello React</h1>
-                <Button type="primary">Primary</Button>
+                <antd.Button type="primary" onClick={this.onck}>Primary</antd.Button>
             </div>
         )
     }
