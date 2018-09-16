@@ -1,7 +1,7 @@
 //配置整个应用的路由
 import React from 'react';
 
-import AppRouter from './routes/appRouter';
+import index from './routes/Index';
 
 import { routerRedux, Route } from 'dva/router';
 
@@ -14,7 +14,7 @@ function RouterConfig({ history }) {
   return (
     <ConnectedRouter history={history}>
       <div>
-        <Route path="/" component={AppRouter} />
+        <Route path="/" component={index} />
       </div>
     </ConnectedRouter>
   );
