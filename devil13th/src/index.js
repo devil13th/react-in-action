@@ -12,7 +12,7 @@ import createLoading from 'dva-loading';
 import { createLogger } from 'redux-logger'
 
 //各个模块的model
-import appModel from './models/appModel';
+import IndexModel from './models/IndexModel';
 
 import './styles/style.css';
 
@@ -33,7 +33,7 @@ const app = dva({
   });
   
 
-  app.model(appModel);
+  app.model(IndexModel);
   
   // 2. Plugins
   // app.use({});
