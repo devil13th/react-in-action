@@ -35,7 +35,21 @@ module. exports ={
         },
        //use:['react-tools'],
         exclude:/node_modules/
-      }
+      },
+      {
+        test: /\.css$/,
+        /*loaders:['style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]','css-loader']*/
+        use: [
+          { loader: "style-loader" },
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          }
+        ]
+      },
         　　
     ]
   },
