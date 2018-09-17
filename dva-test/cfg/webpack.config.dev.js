@@ -117,10 +117,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin('dist'),
    
-    new CopyWebpackPlugin([{
-          from: __dirname + '/../public/img',
-          to: __dirname + '/../dist/img'
-      },{
+    new CopyWebpackPlugin([
+      {
         from: __dirname + '/../public/antd.css',
         to: __dirname + '/../dist'
       },{
