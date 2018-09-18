@@ -16,7 +16,8 @@ class Home extends Component {
         <div>
             <h1>home page </h1> 
             <pre>
-                1.路由嵌套，URL为"/home/home0"的时候可看到Home0Header,Route标签只要URL和其path只要一致
+                1.路由嵌套，URL为"<Link className={a.blue} to="/home/home0">/home/home0</Link >"的时候可看到Home0Header,Route标签只要URL和其path只要一致
+
                 2.NavLink标签 是用于匹配URL如果一直则有样式".active" 而Link标签没有
             </pre>
             <Route path='/home/home0' component={Home0Header} />
