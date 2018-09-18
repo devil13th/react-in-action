@@ -51,7 +51,6 @@ class Content extends React.Component{
                         </Menu>
                     </Sider>
                     <AntdContent style={{ padding: '0 24px', minHeight: 280 }}>
-                    content
                         <img src={img} height="320"/>
                     </AntdContent>
                 </Layout>
