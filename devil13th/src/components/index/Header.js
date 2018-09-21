@@ -40,10 +40,15 @@ class Header extends React.Component{
                             <Link to="/"><Icon type="home" /> Index</Link>
                         </Menu.Item>
                         <Menu.Item key="Antd" title="Antd">
-                            
                             <Link to="/antd"><Icon type="home" /> Antd</Link>
                         </Menu.Item>
                         
+                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />dva Example</span>}>
+                            <Menu.Item key="SysUser">
+                                <Link to="/SysUserRouter"><Icon type="user" /> User Manage </Link>
+                            </Menu.Item>
+                        </SubMenu>
+
                         
                         <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />React Example</span>}>
                             <Menu.Item key="setting:a">Option</Menu.Item>

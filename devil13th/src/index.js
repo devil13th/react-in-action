@@ -13,6 +13,7 @@ import { createLogger } from 'redux-logger'
 
 //各个模块的model
 import IndexModel from './models/IndexModel';
+import SysUserModel from './models/SysUserModel'
 
 import './styles/style.css';
 
@@ -34,6 +35,7 @@ const app = dva({
   
 
   app.model(IndexModel);
+  app.model(SysUserModel);
   
   // 2. Plugins
   // app.use({});

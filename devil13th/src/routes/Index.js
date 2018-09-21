@@ -9,7 +9,7 @@ import ContentIndex from '../components/index/ContentIndex';
 import Footer from '../components/index/Footer';
 
 import AntdRouter from '../routes/AntdRouter'
-
+import SysUserRouter from '../routes/SysUserRouter'
 
 import AntdIndex from '../components/antd/AntdIndex'
 //加载图片 //加载图片  使用方法 -> <img src={img_yay_src}/>
@@ -58,6 +58,8 @@ class Index extends React.Component {
                             <Switch>
                                 <Route exact path="/" component={ContentIndex} />
                                 <Route exact path="/antd" component={AntdIndex} />
+                                <Route exact path="/SysUserRouter" component={SysUserRouter} />
+                                
                                 <Route path="/antd/x2" component={AntdIndex2} />
                                 <Route path="/antd/x3" component={AntdIndex3} />
                             </Switch>
