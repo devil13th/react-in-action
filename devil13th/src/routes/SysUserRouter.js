@@ -132,8 +132,8 @@ class SysUserRouter extends React.Component{
         Table 组件会自己控制加载样式。dva-loading 在这里的作用只是提供异步加载的状态，
         具体加载样式由对应组件自己提供。
         */
-
-        const queryLoading = this.props.loading.effects['sysUser/getUserData'];
+       
+        const queryLoading = this.props.loading.effects['sysUser/getUserData'] || this.props.loading.effects['sysUser/queryUser'];
         const saveLoading = this.props.loading.effects['sysUser/saveUserInfo'];
         const updateUserInfo = this.props.loading.effects['sysUser/updateUserInfo'];
         const editLoading = this.props.loading.effects['sysUser/queryUser'];

@@ -96,7 +96,11 @@ class SysUserTable extends React.Component{
                         <ButtonGroup size="small">
                             
                             <Tooltip placement="bottom" title="编辑">
-                                <Button icon="edit" loading={_this.props.editLoading} type="primary" onClick={function(){_this.props.editUser(record.userId)}}></Button>
+                            {/*
+                             <Button icon="edit" loading={_this.props.editLoading} type="primary" onClick={function(){_this.props.editUser(record.userId)}}></Button>
+                            */}
+                            <Button icon="edit"  type="primary" onClick={function(){_this.props.editUser(record.userId)}}></Button>
+                            
                             </Tooltip>
 
                             <Tooltip placement="bottom" title="上传头像">
