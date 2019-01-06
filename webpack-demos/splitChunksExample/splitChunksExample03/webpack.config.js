@@ -30,10 +30,10 @@ module.exports = {
       }
     }
   },
-  
+  //不要进行打包的组件
   externals: {
     jquery: 'jQuery',
-    lodash: 'lodash'
+    //lodash: 'lodash'
   },
   
   //打包后的文件路径 (webpack4默认dist目录下)
