@@ -1,7 +1,7 @@
 
 module.exports = {
   //mode:生产模式production(会压缩代码)  开发模式development(不会压缩代码)
-  mode:"development", 
+  mode:"production", 
   //单个入口文件
   entry: './main.js',
   //多个入口文件路径
