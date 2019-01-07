@@ -27,14 +27,32 @@ module.exports = {
   },
   mode: 'development', // 生产模式production  开发模式development
   devServer: {
-    public: '127.0.0.1:8001',
-    port: "8001",
+    public: '127.0.0.1:7999',
+    port: "7999",
     open: true,// 自动打开浏览器
     //hot: true,// 开启热更新
     contentBase: __dirname + '/dist',//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转
     inline: true,//实时刷新
     proxy: { //设置代理 
+      
+      /**
+       * 凡是/ctx开头的请求均转到http://127.0.0.1:8080/
+       * pathRewrite 将/ctx替换成/thd-ajaxserver
+       * 
+       * 例如:  /ctx/user/name
+       * 将代理为 http://127.0.0.1:8080/ctx/user/name
+       * pathRewrite属性将 /ctx替换为/thd-ajaxserver  
+       * 最终的请求地址为 http://127.0.0.1:8080/thd-ajaxserver/user/name
+       */
+      '/ctx': {
+        //target: 'http://127.0.0.1:8888/thd-ajaxserver',
+        target: 'http://127.0.0.1:8080/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ctx': '/thd-ajaxserver' // 重写请求，比如我们源访问的包含/ctx，那么请求会将/ctx替换为"thd-ajaxserver"  并在前面加入target属性值
+        }
+      },
       '/proxy': {
         //target: 'http://127.0.0.1:8888/sbt',
         target: 'http://127.0.0.1:8000/vh',

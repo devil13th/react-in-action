@@ -46,7 +46,7 @@ function queryString(params) {
 
 export default {
   fetch(url, params = {}) {
-    
+    //alert(`${serverUrl}${url}${queryString(params)}`)
     // params.token = localStorage.getItem('token');
     return fetch(`${serverUrl}${url}${queryString(params)}`, {
       method: 'GET',

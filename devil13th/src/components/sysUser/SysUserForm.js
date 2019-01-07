@@ -41,6 +41,19 @@ class SysUserForm extends React.Component{
 
     }
 
+
+	//自定义校验规则
+    validatename =(rule, value, callback)=>{
+        if(value == '' || value == null ){
+            callback('请填写名称');
+        }else{
+            callback();
+        }
+    };
+
+
+
+
     componentDidMount = () => {
         this.props.searchOrg("");
     }
@@ -102,14 +115,9 @@ class SysUserForm extends React.Component{
                         {
                             getFieldDecorator('userName', {
                                 initialValue:sysUser.userName,
-                                rules: [
-                                    {
-                                        required: true, message: 'Please input your name!',
-                                    },
-                                    {
-                                        max: 20, message: '最小长度为20!',
-                                    }
-                                ],
+                                rules: [{
+									validator: this.validatename
+								}],
                             })(
                                 <Input autoComplete={false}/>
                             )
