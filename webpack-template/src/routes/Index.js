@@ -35,7 +35,6 @@ class Index extends React.Component {
 
 
     render() {
-        alert(5)
         return (
             <HashRouter>
                 <Layout>

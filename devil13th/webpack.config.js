@@ -26,10 +26,11 @@ console.log(path.resolve('./', 'dist'));
 
 module.exports = {
   //mode:生产模式production(会压缩代码)  开发模式development(不会压缩代码)
-  mode:"production", 
+  //mode:"production", 
+  mode:"development",
 
-  devtool: false,
-  //devtool: 'eval-source-map',
+  //devtool: false,
+  devtool: 'eval-source-map',
 
   //单个入口文件
   entry: {
@@ -92,7 +93,7 @@ module.exports = {
         target: 'http://127.0.0.1:8080/',
         changeOrigin: true,
         pathRewrite: {
-          '^/ctx': '/thd-ajaxserver' // 重写请求，比如我们源访问的包含/ctx，那么请求会将/ctx替换为"thd-ajaxserver"  并在前面加入target属性值
+          '^/ctx': '/thd' // 重写请求，比如我们源访问的包含/ctx，那么请求会将/ctx替换为"thd"  并在前面加入target属性值
         }
       },
       '/proxy': {
@@ -182,7 +183,7 @@ module.exports = {
       filename:'./index.html', //通过模板生成的文件名
       template:'./index.html',//模板路径
       inject:true, //是否自动在模板文件添加 自动生成的js文件链接的位置 允许插件修改哪些内容，true/'head'/'body'/false,
-      title:'这个是WebPack SplitChunk Demo',
+      title:'Devil13th - React',
       sss:"我是 webpack 配置文件中配置的变量,在HtmlWebpackPlugin插件中进行配置 hello world !",
 
       //minify属性详解：https://github.com/kangax/html-minifier#options-quick-reference

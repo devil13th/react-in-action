@@ -6,7 +6,7 @@ import REQUEST_URL from '../constant/sysVar';
 
 //查询用户
 export async function fetchQuerySysUser(params) {
-  return rpc.post(REQUEST_URL.QUERY_ALL, params);
+  return rpc.fetch(REQUEST_URL.QUERY_ALL, params);
 }
 
 //保存用户
