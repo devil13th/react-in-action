@@ -160,7 +160,6 @@ export default {
 
         //获取用户列表信息
         *getUserData({ payload }, { call, put, select }) {
-            debugger;
             //如果没有分页等信息 则从store中获取
             if (!payload) {
                 payload = yield select((state) => {

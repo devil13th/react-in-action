@@ -30,7 +30,8 @@ function formHeaders() {
 
 function parseResponse(response) {
   return response.json().then((json) => {
-    //console.log(json)
+    console.log("--------- result ---------")
+    console.log(json)
     //alert(json.status)
     return json;
   });

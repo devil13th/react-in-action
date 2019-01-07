@@ -15,7 +15,8 @@ class SysUserRouter extends React.Component{
         //从props对象中获取dispatch属性
         const {dispatch} = this.props;
         this.dispatch = dispatch;
-        console.log(this.props.loading)
+        console.log(this.props.loading);
+        
     }
 
     componentDidMount(){

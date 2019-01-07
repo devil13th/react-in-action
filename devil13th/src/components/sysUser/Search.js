@@ -28,7 +28,7 @@ class Search extends React.Component {
                                 label="姓名"
                             >
                                 {getFieldDecorator('userName')(
-                                    <Input style={{ width: 150 }} maxLength="100" autoComplete="off" />
+                                    <Input style={{ width: 150 }} maxLength={100} autoComplete="off" />
                                 )}
                             </FormItem>
                             <FormItem
