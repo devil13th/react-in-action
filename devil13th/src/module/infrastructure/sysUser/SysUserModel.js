@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { message } from 'antd';
-import request from '../utils/request';
+import request from '../../../utils/request';
 
 import {
     fetchQuerySysUser,
@@ -9,10 +9,10 @@ import {
     fetchGetSysUser,
     fetchUpdateSysUser,
     fetchQuerySysOrgData
-} from '../services/SysUserService'
+} from '../../../services/SysUserService'
 export default {
 
-    namespace: 'sysUser',
+    namespace: 'sysUserModel',
     // 初始化state 也可以在index.js中进行初始化(如果属性名相同会覆盖模块state的初始化内容),
     state: {
         dataSource: [], // 列表数据
@@ -107,7 +107,7 @@ export default {
                     }
                 })
             } else {
-                message.error("更新失败:" + result.message);
+                message.error("更新失败:" + result.errMessage);
             }
 
             //重新查询列表数据
@@ -149,7 +149,8 @@ export default {
                 type: "mergeState",
                 payload: {
                     sysUserInfo: result.result,
-                    SysUserFormModalVisible: true
+                    SysUserFormModalVisible: true,
+                    operateType:"edit"
                 }
             });
         },
@@ -164,9 +165,9 @@ export default {
             if (!payload) {
                 payload = yield select((state) => {
                     return {
-                        current: state.sysUser.current,
-                        pageSize: state.sysUser.pageSize,
-                        conditions: state.sysUser.queryCondition
+                        current: state.sysUserModel.current,
+                        pageSize: state.sysUserModel.pageSize,
+                        queryParams: JSON.stringify(state.sysUserModel.queryCondition)
                     }
                 });
             }

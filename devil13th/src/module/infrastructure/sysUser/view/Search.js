@@ -12,14 +12,14 @@ class Search extends React.Component {
 
     onSearch = () => {
         const condition = this.props.form.getFieldsValue();
-        //console.log(condition);
+        console.log(condition);
         this.props.onSearch(condition);
     }
 
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div style={{ paddingBottom: 8 }}>
+            <div >
                 <Row>
                     <Col span={20}>
                         <Form layout="inline" onSubmit={this.onSearch} >

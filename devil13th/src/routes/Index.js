@@ -9,8 +9,7 @@ import ContentIndex from '../components/index/ContentIndex';
 import Footer from '../components/index/Footer';
 
 import AntdRouter from '../routes/AntdRouter'
-import SysUserRouter from '../routes/SysUserRouter'
-
+import SysUserRouter from '../module/infrastructure/sysUser/SysUserRouter'
 import AntdIndex from '../components/antd/AntdIndex'
 //加载图片 //加载图片  使用方法 -> <img src={img_yay_src}/>
 import img_yay_src from '../imgs/yay.jpg';

@@ -1,5 +1,4 @@
 
-
 let serverUrl = "/"
 if(window.APP_CFG.serverUrl){
   serverUrl = window.APP_CFG.serverUrl
@@ -32,8 +31,12 @@ function parseResponse(response) {
   return response.json().then((json) => {
     console.log("--------- result ---------")
     console.log(json)
-    //alert(json.status)
     return json;
+    /*if(json.status == "FAILURE"){
+      alert("请求失败:" + json.errMessage);
+    }else{
+      return json;
+    }*/
   });
 }
 
@@ -63,6 +66,20 @@ export default {
     //console.log(body);
     return fetch(`${serverUrl}${url}`, {
       method: 'POST',
+      headers: headers(),
+      //credentials: 'include',
+      body,
+    })
+      .then(parseResponse);
+  },
+
+  put(url, data) {
+    // data.token = localStorage.getItem('token');
+    const body = JSON.stringify(data);
+    console.log("data:" + body);
+    //console.log(body);
+    return fetch(`${serverUrl}${url}`, {
+      method: 'PUT',
       headers: headers(),
       //credentials: 'include',
       body,

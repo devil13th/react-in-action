@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button ,Form,Input,DatePicker,message} from 'antd';
+import { Modal, Button ,Form,Input,DatePicker,message,Icon, InputNumber} from 'antd';
 import moment from 'moment';
 import { Select } from 'antd';
 
@@ -95,19 +95,66 @@ class SysUserForm extends React.Component{
         
         return(
             <Modal
-                title={this.props.modalTitle || "用户信息"}
+                icon="book"
+                title={this.props.modalTitle || <span><Icon type="desktop" />&nbsp;&nbsp;用户信息</span>}
                 visible={this.props.visible}
                 onOk={this.handleOk}
                 onCancel={this.props.onCloseModal}
                 defaultActiveFirstOption={false}
-                width={800}
+                width={1200}
                 destroyOnClose={true}
                 confirmLoading={this.props.saveLoading}
                 maskClosable={false}
+                style={{top:10}}
             >
 
                 
-                <Form onSubmit={this.handleSubmit}>
+                <Form onSubmit={this.handleSubmit} layout="vertical">
+                    <FormItem
+                        {...formItemLayout}
+                        label="标识"
+                    >
+                        {
+                            getFieldDecorator('userId', {
+                                initialValue:sysUser.userId,
+                                rules: [{
+									validator: this.validatename
+								}],
+                            })(
+                                <Input autoComplete="off"/>
+                            )
+                        }
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="账号"
+                    >
+                        {
+                            getFieldDecorator('userAccount', {
+                                initialValue:sysUser.userAccount,
+                                rules: [{
+									validator: this.validatename
+								}],
+                            })(
+                                <Input autoComplete="off"/>
+                            )
+                        }
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="密码"
+                    >
+                        {
+                            getFieldDecorator('userPassword', {
+                                initialValue:sysUser.userPassword,
+                                rules: [{
+									validator: this.validatename
+								}],
+                            })(
+                                <Input autoComplete="off"/>
+                            )
+                        }
+                    </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="姓名"
@@ -119,7 +166,7 @@ class SysUserForm extends React.Component{
 									validator: this.validatename
 								}],
                             })(
-                                <Input autoComplete={false}/>
+                                <Input autoComplete="off"/>
                             )
                         }
                     </FormItem>
@@ -139,7 +186,7 @@ class SysUserForm extends React.Component{
                                     }
                                 ],
                             })(
-                                <Input autoComplete={false}/>
+                                <Input autoComplete="off"/>
                             )
                         }
                     </FormItem>
@@ -159,7 +206,7 @@ class SysUserForm extends React.Component{
                                     }
                                 ],
                             })(
-                                <Input autoComplete={false}/>
+                                <Input autoComplete="off"/>
                             )
                         }
                     </FormItem>
@@ -183,7 +230,7 @@ class SysUserForm extends React.Component{
 
                     
 
-                    <FormItem
+                    <FormItem 
                         {...formItemLayout}
                         label="组织机构"
                     >

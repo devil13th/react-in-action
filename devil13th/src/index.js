@@ -13,7 +13,7 @@ import { createLogger } from 'redux-logger'
 
 //各个模块的model
 import IndexModel from './models/IndexModel';
-import SysUserModel from './models/SysUserModel'
+import SysUserModel from './module/infrastructure/sysUser/SysUserModel';
 
 import './styles/style.css';
 

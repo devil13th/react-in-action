@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
-import {SysUserTable} from '../components/sysUser/SysUserTable'
-import {Search} from '../components/sysUser/Search'
-import {SysUserForm} from '../components/sysUser/SysUserForm';
-import {UploadFile} from '../components/sysUser/UploadFile';
-import { Tabs, Icon ,Button,Tooltip,Popconfirm} from 'antd';
-import stl from '../styles/SysUser.css';
+import {SysUserTable} from './view/SysUserTable'
+import {Search} from './view/Search'
+import {SysUserForm} from './view/SysUserForm';
+import {UploadFile} from './view/UploadFile';
+import { Tabs, Icon ,Button,Tooltip,Popconfirm,Breadcrumb,Divider} from 'antd';
+import stl from './style.css';
 const TabPane = Tabs.TabPane;
 const ButtonGroup = Button.Group;
 
@@ -21,25 +21,25 @@ class SysUserRouter extends React.Component{
 
     componentDidMount(){
         this.dispatch({
-            type:"sysUser/getUserData",
+            type:"sysUserModel/getUserData",
             payload:{current:1,pageSize:10}
         });
     }
 
     queryAllData = (payload) => {
         /*this.dispatch({
-            type:"sysUser/getUserData",
+            type:"sysUserModel/getUserData",
             payload
         });*/
         this.dispatch({
-            type:"sysUser/setPageInfo",
+            type:"sysUserModel/setPageInfo",
             payload
         });
     }
 
     closeSysUserFormModal = () =>{
         this.dispatch({
-            type:"sysUser/mergeState",
+            type:"sysUserModel/mergeState",
             payload:{
                 SysUserFormModalVisible : false
             }
@@ -48,7 +48,7 @@ class SysUserRouter extends React.Component{
 
     closeUploadModal = () =>{
         this.dispatch({
-            type:"sysUser/mergeState",
+            type:"sysUserModel/mergeState",
             payload:{
                 uploadModalVisible : false
             }
@@ -57,7 +57,7 @@ class SysUserRouter extends React.Component{
 
     uploadImgs = (id) => {
         this.dispatch({
-            type:"sysUser/mergeState",
+            type:"sysUserModel/mergeState",
             payload:{
                 uploadModalVisible : true
             }
@@ -66,10 +66,11 @@ class SysUserRouter extends React.Component{
 
     openSysUserFormModal = () =>{
         this.dispatch({
-            type:"sysUser/mergeState",
+            type:"sysUserModel/mergeState",
             payload:{
                 SysUserFormModalVisible : true,
-                sysUserInfo:{}
+                sysUserInfo:{},
+                operateType:"save"
             }
         });
     }
@@ -78,15 +79,23 @@ class SysUserRouter extends React.Component{
 
     saveSysUserInfoTemp = (sysUserInfo) => {
         console.log(sysUserInfo)
-        this.props.dispatch({
-            type:"sysUser/saveUserInfo",
-            payload:sysUserInfo
-        })
+
+        if(this.props.sysUserModel.operateType == "save"){
+            this.props.dispatch({
+                type:"sysUserModel/saveUserInfo",
+                payload:sysUserInfo
+            })
+        }else{
+            this.props.dispatch({
+                type:"sysUserModel/updateUserInfo",
+                payload:sysUserInfo
+            })
+        }
     }
 
     onSearch = (queryCondition) => {
         this.props.dispatch({
-            type:"sysUser/setQueryCondition",
+            type:"sysUserModel/setQueryCondition",
             payload:{
                 queryCondition
             }
@@ -95,14 +104,14 @@ class SysUserRouter extends React.Component{
 
     deleteUser = (id) => {
         this.props.dispatch({
-            type:"sysUser/deleteUser",
+            type:"sysUserModel/deleteUser",
             payload:id
         })
     }
 
     editUser = (id) => {
         this.props.dispatch({
-            type:"sysUser/queryUser",
+            type:"sysUserModel/queryUser",
             payload:id
         })
         
@@ -112,7 +121,7 @@ class SysUserRouter extends React.Component{
 
     updateSysUserInfo = (sysUserInfo) => {
         this.props.dispatch({
-            type:"sysUser/updateUserInfo",
+            type:"sysUserModel/updateUserInfo",
             payload:sysUserInfo
         })
     }
@@ -120,7 +129,7 @@ class SysUserRouter extends React.Component{
 
     searchOrg = (v) => {
         this.props.dispatch({
-            type:"sysUser/querySysOrgData",
+            type:"sysUserModel/querySysOrgData",
             payload:v
         })
     }
@@ -134,18 +143,30 @@ class SysUserRouter extends React.Component{
         具体加载样式由对应组件自己提供。
         */
        
-        const queryLoading = this.props.loading.effects['sysUser/getUserData'] || this.props.loading.effects['sysUser/queryUser'];
-        const saveLoading = this.props.loading.effects['sysUser/saveUserInfo'];
-        const updateUserInfo = this.props.loading.effects['sysUser/updateUserInfo'];
-        const editLoading = this.props.loading.effects['sysUser/queryUser'];
+        const queryLoading = this.props.loading.effects['sysUserModel/getUserData'] || this.props.loading.effects['sysUser/queryUser'];
+        const saveLoading = this.props.loading.effects['sysUserModel/saveUserInfo'];
+        const updateUserInfo = this.props.loading.effects['sysUserModel/updateUserInfo'];
+        const editLoading = this.props.loading.effects['sysUserModel/queryUser'];
 
         const operations = [];
         operations.push(
             <Button key="xzBton" type="primary" icon="plus" onClick={this.openSysUserFormModal}>新增用户</Button>
         )
         return(
-            <div className="content">
-
+            <div className={stl.content}>
+                <Breadcrumb style={{padding:8}}>
+                    <Breadcrumb.Item href="">
+                    <Icon type="home" />
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item href="">
+                    <Icon type="user" />
+                    <span>Application List</span>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                    用户管理
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+                {/*
                 <Tabs 
                     defaultActiveKey="1"
                     tabBarExtraContent={operations}
@@ -153,7 +174,7 @@ class SysUserRouter extends React.Component{
                     <TabPane tab={<span ><Icon type="tag-o" />用户管理</span>} key="1">
                     </TabPane>
                 </Tabs>
-
+                 */}
                 <Search 
                     onSearch={this.onSearch}
                 >
@@ -179,10 +200,10 @@ class SysUserRouter extends React.Component{
                 </div>
 
                 <SysUserTable
-                    dataSource = {this.props.sysUser.dataSource} 
-                    current = {this.props.sysUser.current}
-                    pageSize = {this.props.sysUser.pageSize}
-                    total = {this.props.sysUser.total}
+                    dataSource = {this.props.sysUserModel.dataSource} 
+                    current = {this.props.sysUserModel.current}
+                    pageSize = {this.props.sysUserModel.pageSize}
+                    total = {this.props.sysUserModel.total}
                     deleteUser={this.deleteUser}
                     editUser={this.editUser}
                     onChange={this.queryAllData}
@@ -194,19 +215,19 @@ class SysUserRouter extends React.Component{
                 </SysUserTable>
 
                 <SysUserForm
-                    visible={this.props.sysUser.SysUserFormModalVisible}
+                    visible={this.props.sysUserModel.SysUserFormModalVisible}
                     onCloseModal={this.closeSysUserFormModal}
                     saveSysUserInfoTemp={this.saveSysUserInfoTemp}
                     saveLoading={saveLoading || updateUserInfo}
-                    sysUserInfo={this.props.sysUser.sysUserInfo}
+                    sysUserInfo={this.props.sysUserModel.sysUserInfo}
                     updateSysUserInfo={this.updateSysUserInfo}
                     searchOrg={this.searchOrg}
-                    sysOrgData={this.props.sysUser.sysOrgData}
+                    sysOrgData={this.props.sysUserModel.sysOrgData}
                 >
                 </SysUserForm>
 
                 <UploadFile
-                    visible={this.props.sysUser.uploadModalVisible}
+                    visible={this.props.sysUserModel.uploadModalVisible}
                     onCloseModal={this.closeUploadModal}
                 >
 
@@ -221,7 +242,7 @@ class SysUserRouter extends React.Component{
 }
 
 
-export default connect(({sysUser,loading }) => ({
-    sysUser,
+export default connect(({sysUserModel,loading }) => ({
+    sysUserModel,
     loading 
   }))(SysUserRouter);

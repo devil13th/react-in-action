@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal,Upload, Icon, message} from 'antd';
 
-import REQUEST_URL from '../../constant/sysVar';
+import REQUEST_URL from '../../../../constant/sysVar';
 const Dragger = Upload.Dragger;
 
 
