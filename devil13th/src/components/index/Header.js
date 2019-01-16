@@ -29,7 +29,6 @@ class Header extends React.Component{
     render(){
         return (
             <AntdHeader style={{height:"auto",padding:0}}>
-                <Affix offsetTop={this.props.top}>
                     <div className="logo" />
                     <Menu
                         onClick={this.handleClick}
@@ -46,6 +45,12 @@ class Header extends React.Component{
                         <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />dva Example</span>}>
                             <Menu.Item key="SysUser">
                                 <Link to="/SysUserRouter"><Icon type="user" /> User Manage </Link>
+                            </Menu.Item>
+                            <Menu.Item key="NoteClassifyRouter">
+                                <Link to="/NoteClassifyRouter"><Icon type="user" /> Note Classify </Link> 
+                            </Menu.Item>
+                            <Menu.Item key="NoteListRouter">
+                                <Link to="/NoteListRouter"><Icon type="user" /> Note List </Link> 
                             </Menu.Item>
                         </SubMenu>
 
@@ -84,7 +89,6 @@ class Header extends React.Component{
                             <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a>
                         </Menu.Item>
                     </Menu>
-                </Affix>
             </AntdHeader>
         )
     }

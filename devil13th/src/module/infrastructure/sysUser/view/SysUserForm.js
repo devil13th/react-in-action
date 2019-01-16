@@ -101,7 +101,7 @@ class SysUserForm extends React.Component{
                 onOk={this.handleOk}
                 onCancel={this.props.onCloseModal}
                 defaultActiveFirstOption={false}
-                width={1200}
+                width={800}
                 destroyOnClose={true}
                 confirmLoading={this.props.saveLoading}
                 maskClosable={false}
@@ -113,6 +113,7 @@ class SysUserForm extends React.Component{
                     <FormItem
                         {...formItemLayout}
                         label="标识"
+                        colon={false}
                     >
                         {
                             getFieldDecorator('userId', {

@@ -29,7 +29,7 @@ function formHeaders() {
 
 function parseResponse(response) {
   return response.json().then((json) => {
-    console.log("--------- result ---------")
+    console.log("rpc response :")
     console.log(json)
     return json;
     /*if(json.status == "FAILURE"){
@@ -41,6 +41,7 @@ function parseResponse(response) {
 }
 
 function queryString(params) {
+  console.log("rpc prams :")
   console.log(params)
   const query = Object.keys(params)
     .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
@@ -62,7 +63,7 @@ export default {
   post(url, data) {
     // data.token = localStorage.getItem('token');
     const body = JSON.stringify(data);
-    console.log("data:" + body);
+    console.log("rpc data:" + body);
     //console.log(body);
     return fetch(`${serverUrl}${url}`, {
       method: 'POST',
@@ -76,7 +77,7 @@ export default {
   put(url, data) {
     // data.token = localStorage.getItem('token');
     const body = JSON.stringify(data);
-    console.log("data:" + body);
+    console.log("rpc data:" + body);
     //console.log(body);
     return fetch(`${serverUrl}${url}`, {
       method: 'PUT',

@@ -10,6 +10,11 @@ var REQUEST_URL = {
     SYSORG : {
       QUERY : "/infrastructure/sysOrg/queryOrgForSelect"
     },
+    NOTE : {
+      QUERYNOTELIST: "/note/ModNoteList/query",
+      QUERYROOT : "/note/queryRoot",
+      QUERYNOTECONTENT : "/note/ModNoteContent/"
+    },
     //QUERY_ALL : "/SysUser/queryAll",
     //QUERY_ALL : "/infrastructure/sysUser/query",
     //SAVE_USER : "/SysUser/saveSysUser",
@@ -21,4 +26,5 @@ var REQUEST_URL = {
     UPLOAD_FILE:"/fileUploadSubmit"
 }
 
-  export{ REQUEST_URL as default};
+
+export{ REQUEST_URL as default};

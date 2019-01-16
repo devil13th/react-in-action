@@ -2,14 +2,14 @@ import _ from 'lodash';
 import { message } from 'antd';
 import request from '../../../utils/request';
 
-import {
+import { 
     fetchQuerySysUser,
     fetchSaveSysUser,
     fetchDeleteSysUser,
     fetchGetSysUser,
     fetchUpdateSysUser,
     fetchQuerySysOrgData
-} from '../../../services/SysUserService'
+} from './SysUserService'
 export default {
 
     namespace: 'sysUserModel',

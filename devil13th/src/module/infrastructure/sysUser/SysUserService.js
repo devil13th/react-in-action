@@ -1,7 +1,7 @@
-import rpc from '../utils/rpc';
+import rpc from '../../../utils/rpc';
 
 
-import REQUEST_URL from '../constant/sysVar';
+import REQUEST_URL from '../../../constant/sysVar';
 
 
 //查询用户
