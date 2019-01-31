@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <script src="polyfill.min.js"></script>
+  <script src="moment.min.js"></script>
+  <script src="babel.min.js"></script>
+  
+  <!-- 参考https://reactjs.org/docs/cdn-links.html 中加入的 UMD规范的react-->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="antd-with-locales.js"></script>
+  <link rel="stylesheet" href="antd.css" />
+</head>
+<body>
+
+<div id="root"></div>
+<script>
+
+window.APP_CFG = {
+  serverUrl : "/ctx"
+  //serverUrl : "/thd-ajaxserver"
+  //serverUrl : "http://127.0.0.1:8080/thd-ajaxserver"
+}
+
+
+
+var react = React;
+
+console.log(window);
+</script>
+
+
+</body>
+</html>
