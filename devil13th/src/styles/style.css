@@ -1,0 +1,15 @@
+.trOdd{
+    background:#deebff;
+}
+.trEve{
+    background:#fff;
+}
+.mainContent{
+    background:#fff;padding:8px;
+}
+.search{
+    margin-bottom:8px;
+}
+.formLabel{
+    padding-top:8px;
+}

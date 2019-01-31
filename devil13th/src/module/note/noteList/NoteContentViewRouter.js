@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import {NoteContentView} from './view/NoteContentView';
+import NoteContentView from './view/NoteContentView';
 class NoteContentViewRouter extends React.Component{
     constructor(props){
         super(props);

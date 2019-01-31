@@ -42,7 +42,7 @@ module.exports = {
       cacheGroups: {
         antd:{
           test:'antd',
-          name:'antd',
+          name:'antd', //拆分出来块的名字(Chunk Names)
           chunks: 'all',
           priority: -10,
         },
@@ -134,13 +134,19 @@ module.exports = {
         test: /\.css$/,
         /*loaders:['style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]','css-loader']*/
         use: [
-          { loader: "style-loader" },
+          { 
+            loader: "style-loader" ,
+            options: {
+              hmr: true
+            }
+          },
           {
             loader: "css-loader",
-            options: {
+            /*options: {
               modules: true,
+              //CSS 生成的名称 
               localIdentName: '[path][name]__[local]--[hash:base64:5]'
-            }
+            }*/
           }
         ],
         exclude: /node_modules/
@@ -209,7 +215,7 @@ module.exports = {
     //拷贝静态资源
     new CopyWebpackPlugin([
       {
-        from: __dirname + '/src/styles/antd.css',
+        from: __dirname + '/src/static/antd.css',
         to: __dirname + '/dist'
       }
     ]),

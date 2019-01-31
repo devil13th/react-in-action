@@ -10,6 +10,7 @@ import Footer from '../components/index/Footer';
 
 import AntdRouter from '../routes/AntdRouter'
 import SysUserRouter from '../module/infrastructure/sysUser/SysUserRouter'
+import SysDicPubRouter from '../module/infrastructure/sysDicPub/SysDicPubRouter'
 import NoteClassifyRouter from '../module/note/noteClassify/NoteClassifyRouter'
 import NoteListRouter from '../module/note/noteList/NoteListRouter'
 import AntdIndex from '../components/antd/AntdIndex'
@@ -60,6 +61,8 @@ class Index extends React.Component {
                                 <Route exact path="/" component={ContentIndex} />
                                 <Route exact path="/antd" component={AntdIndex} />
                                 <Route exact path="/SysUserRouter" component={SysUserRouter} />
+                                <Route exact path="/SysDicPubRouter" component={SysDicPubRouter} />
+                                
                                 <Route exact path="/NoteClassifyRouter" component={NoteClassifyRouter} />
                                 <Route exact path="/NoteListRouter" component={NoteListRouter} />
 

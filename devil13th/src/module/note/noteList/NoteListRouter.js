@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'dva';
 
 import { Row, Col,Drawer,Button} from 'antd';
-import {Search} from './view/Search';
-import {NoteList} from './view/NoteList';
-
+import Search from './view/Search';
+import NoteList from './view/NoteList';
+import NoteContentForm from './view/NoteContentForm';
 
 
 class NoteClassifyRouter extends React.Component{
@@ -82,9 +82,46 @@ class NoteClassifyRouter extends React.Component{
     onRightClick = ({event, node}) => {
         //console.log(event);
         //console.log(node);
-        //alert(node.props.title)
+        //console.log(node.props.title)
+    } 
+    //显示创建记事面板
+    showCreateNotePanel = () => {
+        this.props.dispatch({
+            type:"noteListModel/mergeState",
+            payload : {
+                createNotePanelVisible:true,
+                noteContent:{ 
+                    noteTitle:"1",
+                    noteClassify:"2",
+                    noteDesc:"摘要",
+                    noteId:"",
+                    isDelete:1,
+                    alarmDays:1,
+                    expireDate:"2019-01-01"
+                }
+            }
+        })
     }
-    
+    //
+    createNotePanelHandleOk = (note) => {
+        //console.log(note);
+        this.props.dispatch({
+            type:"noteListModel/mergeState",
+            payload : {
+                createNotePanelVisible:false
+            }
+        })
+    }
+
+    //
+    createNotePanelHandleCancel = () => {
+        this.props.dispatch({
+            type:"noteListModel/mergeState",
+            payload : {
+                createNotePanelVisible:false
+            }
+        })
+    }
 
     onClose = () => {
         this.setState({
@@ -99,6 +136,7 @@ class NoteClassifyRouter extends React.Component{
     };
 
     render(){
+
         const queryModNoteListLoading = this.props.loading.effects['noteListModel/queryNoteList'] 
                                         || this.props.loading.effects['noteListModel/queryNoteListByPage']
                                         || this.props.loading.effects['noteListModel/clearQueryParamsForNoteList']
@@ -109,6 +147,7 @@ class NoteClassifyRouter extends React.Component{
                 
                 <Search
                     showDrawer={this.showDrawer}
+                    createNote={this.showCreateNotePanel}
                     queryList = {this.queryList}
                     clearQueryParams = {this.clearQueryParamsForNoteList}
                     queryParams = {this.props.noteListModel.queryBean.queryParams}
@@ -131,21 +170,31 @@ class NoteClassifyRouter extends React.Component{
 
 
                 <Drawer
-                title="Basic Drawer"
-                placement="right"
-                closable={false}
-                onClose={this.onClose}
-                visible={this.state.visible}
-                width="50%"
-                maskClosable={false}
-                closable={true}
-                mask={false}
+                    title="Basic Drawer"
+                    placement="right"
+                    closable={false}
+                    onClose={this.onClose}
+                    visible={this.state.visible}
+                    width="50%"
+                    maskClosable={false}
+                    closable={true}
+                    mask={false}
                 >
                     <p>Some contents...</p>
                     <p>Some contents...</p>
                     <p>Some contents...</p>
                     <Button onClick={this.onClose}>关闭 </Button>
                 </Drawer>
+
+
+                <NoteContentForm
+                    visible = {this.props.noteListModel.createNotePanelVisible}
+                    handleOk = {this.createNotePanelHandleOk}
+                    handleCancel  = {this.createNotePanelHandleCancel}
+                    noteContent = {this.props.noteListModel.noteContent}
+                >
+                </NoteContentForm>
+
                {/*
                 <div>
                     {JSON.stringify(this.props.noteListModel)}

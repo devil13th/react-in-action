@@ -112,7 +112,7 @@ class Search extends React.PureComponent{
         
         const createMenu = (
         <Menu >
-            <Menu.Item key="1" onClick={this.props.showDrawer}><Icon type="user" />记事</Menu.Item>
+            <Menu.Item key="1" onClick={this.props.createNote}><Icon type="user" />记事</Menu.Item>
             <Menu.Item key="2" onClick={this.props.showDrawer}><Icon type="user" />备忘</Menu.Item>
             <Menu.Item key="3" onClick={this.props.showDrawer}><Icon type="user" />收集</Menu.Item>
         </Menu>
@@ -124,7 +124,7 @@ class Search extends React.PureComponent{
         
 
         return (
-            <div>
+            <div className="search">
                 <Row gutter={24}>
                     <Col span={14}>
                         
@@ -171,7 +171,7 @@ class Search extends React.PureComponent{
                             <RadioButton value="d">收集</RadioButton>
                         </RadioGroup>
                         <Dropdown overlay={createMenu}>
-                        <Button type="primary" icon="plus" >创建</Button>
+                            <Button type="primary" icon="plus" >创建</Button>
                         </Dropdown>
                     </Col>
                 </Row>
@@ -195,4 +195,5 @@ const WrappedSearch = Form.create({
         //console.log(allValues)
     }
 })(Search);
-export {WrappedSearch as Search}
+
+export default WrappedSearch;

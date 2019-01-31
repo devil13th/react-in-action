@@ -22,7 +22,14 @@ class NoteClassifyRouter extends React.Component{
         });
     }
 
-    
+    loadChildData = (treeNode) => {
+        this.dispatch({
+            type:"noteClassifyModel/queryChild",
+            payload:{
+                code : treeNode.props.dataRef.key
+            }
+        });
+    }
 
     searchOrg = (v) => {
         this.props.dispatch({
@@ -46,7 +53,9 @@ class NoteClassifyRouter extends React.Component{
                 
                         <NoteClassifyTree 
                             onRightClick = {this.onRightClick}
-                            treeData={this.props.noteClassifyModel.treeData}>
+                            treeData={this.props.noteClassifyModel.treeData}
+                            loadData={this.loadChildData}
+                            >
                         </NoteClassifyTree>
                    
                 

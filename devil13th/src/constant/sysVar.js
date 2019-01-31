@@ -7,13 +7,21 @@ var REQUEST_URL = {
       UPDATE : "/infrastructure/sysUser/",
       GET : "/infrastructure/sysUser/",
     },
+    SYSDICPUB : {
+      QUERY : "/infrastructure/sysDicPub/query",
+      SAVE : "/infrastructure/sysDicPub/",
+      DELETE : "/infrastructure/sysDicPub/",
+      UPDATE : "/infrastructure/sysDicPub/",
+      GET : "/infrastructure/sysDicPub/",
+    },
     SYSORG : {
       QUERY : "/infrastructure/sysOrg/queryOrgForSelect"
     },
     NOTE : {
       QUERYNOTELIST: "/note/ModNoteList/query",
       QUERYROOT : "/note/queryRoot",
-      QUERYNOTECONTENT : "/note/ModNoteContent/"
+      QUERYNOTECONTENT : "/note/ModNoteContent/",
+      QUERYCHILD : "/note/queryNextNodes"
     },
     //QUERY_ALL : "/SysUser/queryAll",
     //QUERY_ALL : "/infrastructure/sysUser/query",

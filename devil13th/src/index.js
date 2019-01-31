@@ -11,14 +11,16 @@ import createLoading from 'dva-loading';
 //redux 日志组件
 import { createLogger } from 'redux-logger'
 
+
+
 //各个模块的model
 import IndexModel from './models/IndexModel';
 import SysUserModel from './module/infrastructure/sysUser/SysUserModel';
 import NoteClassifyModel from './module/note/noteClassify/NoteClassifyModel';
 import NoteListModel from './module/note/noteList/NoteListModel';
+import SysDicPubModel from './module/infrastructure/sysDicPub/SysDicPubModel';
 
-
-
+import  './styles/style.css';
 
 //创建日志中间件
 const loggerMiddleware = createLogger();
@@ -40,6 +42,7 @@ const app = dva({
   app.model(SysUserModel);
   app.model(NoteClassifyModel);
   app.model(NoteListModel);
+  app.model(SysDicPubModel);
   // 2. Plugins
   // app.use({});
   app.use(createLoading({})); // 开启loading  createLoading的参数opts 仅有一个 namespace 字段，默认为 loading。

@@ -15,6 +15,7 @@ class Header extends React.Component{
         this.state = {
             current : props.current
         }
+        console.log(props);
     }
 
     handleClick = (e) => {
@@ -45,6 +46,9 @@ class Header extends React.Component{
                         <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />dva Example</span>}>
                             <Menu.Item key="SysUser">
                                 <Link to="/SysUserRouter"><Icon type="user" /> User Manage </Link>
+                            </Menu.Item>
+                            <Menu.Item key="SysDicPub">
+                                <Link to="/SysDicPubRouter"><Icon type="user" /> Pub Dic Manage </Link>
                             </Menu.Item>
                             <Menu.Item key="NoteClassifyRouter">
                                 <Link to="/NoteClassifyRouter"><Icon type="user" /> Note Classify </Link> 
@@ -86,7 +90,7 @@ class Header extends React.Component{
                             </MenuItemGroup>
                         </SubMenu>
                         <Menu.Item key="alipay">
-                            <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a>
+                            <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Antd </a>
                         </Menu.Item>
                     </Menu>
             </AntdHeader>

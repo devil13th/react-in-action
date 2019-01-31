@@ -12,7 +12,10 @@ export default {
     state: {
         //记事数据
         noteList : [] ,
-        
+        //单个记事数据
+        noteContent:{noteTitle:"1"},
+        //创建记事面板显示/隐藏
+        createNotePanelVisible:false,
         //查询条件 分页 排序信息
         queryBean : {
             current : 1,

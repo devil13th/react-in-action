@@ -17,16 +17,37 @@ class NoteClassifyTree extends React.PureComponent{
             _this.setState({visible:false})
         }
     }
+
+    onLoadData = treeNode => {
+        return new Promise((resolve) => {
+            console.log(treeNode);
+            this.props.loadData(treeNode);
+            resolve();
+            return;
+        })
+    }
+
     renderTreeNodes = data => data.map((item) => {
         if (item.children) {
             return (
-                <TreeNode title={item.title} key={item.key} dataRef={item}>
+                <TreeNode 
+                icon={<Icon type="smile-o" />}
+                    title={item.title} 
+                    key={item.key}  
+                    dataRef={item}
+                >
                     {this.renderTreeNodes(item.children)}
                 </TreeNode>
             );
         }else{
            //return <TreeNode {...item} dataRef={item}>
-            return <TreeNode title={<span>{item.title}  <Icon type="right" /></span>} key={item.key} dataRef={item} />;
+        return <TreeNode  
+            icon={<Icon type="smile-o" />}
+            isLeaf={item.isLeaf}
+            title={<span>{item.title}  </span>} 
+            key={item.key} 
+            dataRef={item} 
+        />;
         }
         
     })
@@ -61,11 +82,14 @@ class NoteClassifyTree extends React.PureComponent{
             left:_this.state.x,
             border:"1px solid red"
         }
+
         return (
             <div >
                 
                 <Tree 
-                    showLine
+                    showIcon
+                    autoExpandParent={true}
+                    
                     onRightClick={this.onRightClick}
                     loadData={this.onLoadData} 
                 >
@@ -75,8 +99,8 @@ class NoteClassifyTree extends React.PureComponent{
                 {menu}
                 </div>
                 <Dropdown overlay={menu} >
-                        <a className="ant-dropdown-link" href="#">xxx</a>
-                    </Dropdown>
+                    <a className="ant-dropdown-link" href="#">xxx</a>
+                </Dropdown>
             </div>
         )
     }
