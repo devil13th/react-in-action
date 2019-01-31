@@ -34,32 +34,68 @@ module.exports = {
   //单个入口文件
   entry: {
     entry: [__dirname + '/src/index.js'],
-    antd:['antd'] // verdor1包含了react和antd模块
+    antd:['antd'], // 打包后的antd.js包含了antd模块  以antd模块为入口
+    dva:['dva'], // 打包后的dva.js包含了dva模块  以dva模块为入口
+    react:['react','react-dom'] //打包后的react.js包含了react和react-dom模块  以react和react-dom模块模块为入口
   },
   optimization:{
     splitChunks: {
-      cacheGroups: {
-        antd:{
-          test:'antd',
-          name:'antd',
-          chunks: 'all',
-          priority: -10,
-        },
-        commons: {
+      cacheGroups: { //分组规则
+        
+        default: false,//禁用默认配置
+        vendors: {  //cacheGroups中的key(cacheGroups的属性)的名称可以随意取名,无特殊作用  
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all',
-          priority: -20,
-        }
+          minSize:0,
+          //priority: 29
+          priority: 30,
+          enforce:true
+        },
+        dva:{
+          test:'dva',
+          name:'dva',
+          chunks: 'all',
+          minSize:0, //单位字节,打包前的最小文件大小  满足该条件才会单独打包 默认大小为30000(30K)
+          priority: 34, //优先级,数值越大优先级越高 
+          enforce:true  //忽略SplitChunks.MinSize、SplitChunks.MinChunks、SplitChunks.MaxAsyncRequests和SplitChunks.MaxInitialRequests选项，并始终为此缓存组创建块。
+        },
+        antd:{
+          test:'antd',
+          name:'antd_',
+          chunks: 'all',
+          minSize:0,
+          priority: 31,
+          enforce:true
+        },
+        react:{
+          test:'react',
+          name:'react_',
+          chunks: 'all',
+          minSize:0,
+          priority: 36,
+          enforce:true
+        },
+        reactDom:{
+          test:'react-dom',
+          name:'react-dom_',
+          chunks: 'all',
+          minSize:0,
+          priority: 35,
+          enforce:true
+        },
       }
     }
   },
   //不要进行打包的组件
-  externals: {
+  /*externals: {
     jquery: 'jQuery',
-    //antd:"antd"
+    antd:"antd",
+    react:"react",
+    dva:"dva",
+    reactDom:"react-dom"
     //lodash: 'lodash'
-  },
+  },*/
   
   //打包后的文件路径 (webpack4默认dist目录下)
   output: {
