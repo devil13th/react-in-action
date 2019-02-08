@@ -1,5 +1,7 @@
 var REQUEST_URL = {
-
+    COMMON : {
+      QUERYSELECT : "/infrastructure/common/querySelectDataSource",
+    },
     SYSUSER : {
       QUERY : "/infrastructure/sysUser/query",
       SAVE : "/infrastructure/sysUser/",
@@ -13,6 +15,8 @@ var REQUEST_URL = {
       DELETE : "/infrastructure/sysDicPub/",
       UPDATE : "/infrastructure/sysDicPub/",
       GET : "/infrastructure/sysDicPub/",
+      DELETEBATCH : "/infrastructure/sysDicPub/deleteSysDicPubBatch/",
+      QUERYDICCLASSIFY : "/infrastructure/sysDicPub/querySysDicPubClassify",
     },
     SYSORG : {
       QUERY : "/infrastructure/sysOrg/queryOrgForSelect"

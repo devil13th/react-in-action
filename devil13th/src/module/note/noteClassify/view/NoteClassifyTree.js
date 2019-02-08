@@ -80,7 +80,9 @@ class NoteClassifyTree extends React.PureComponent{
             position:"absolute",
             top:_this.state.y,
             left:_this.state.x,
-            border:"1px solid red"
+            border:"1px solid #e8e8e8",
+            borderRightWidth:0,
+            width:250
         }
 
         return (
@@ -98,9 +100,7 @@ class NoteClassifyTree extends React.PureComponent{
                 <div style={menuStyle}>
                 {menu}
                 </div>
-                <Dropdown overlay={menu} >
-                    <a className="ant-dropdown-link" href="#">xxx</a>
-                </Dropdown>
+                
             </div>
         )
     }

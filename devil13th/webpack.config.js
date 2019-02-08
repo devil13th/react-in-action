@@ -213,6 +213,7 @@ module.exports = {
 
 
     //拷贝静态资源
+    //注意： 该拷贝文件所在文件夹尽量不要和style-loader匹配到同一文件夹 否则代码中import 'xx.css' 修改时不能及时应用,必须重启webpack才能让修改生效
     new CopyWebpackPlugin([
       {
         from: __dirname + '/src/static/antd.css',
@@ -220,7 +221,7 @@ module.exports = {
       }
     ]),
 
-
+/*
     //包引用分析
     new BundleAnalyzerPlugin({
       //  可以是`server`，`static`或`disabled`。
@@ -252,6 +253,7 @@ module.exports = {
       statsOptions: null,
       logLevel: 'info'// 日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
     })
+    */
   ],
 
 };

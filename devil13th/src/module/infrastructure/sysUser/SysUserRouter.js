@@ -136,7 +136,7 @@ class SysUserRouter extends React.Component{
     
 
 
-    render(){
+    render = () => {
         /** 
         根据 loading.effects 对象判断当前异步加载是否完成，并将该值传递给 Table 组件的 loading 属性，
         Table 组件会自己控制加载样式。dva-loading 在这里的作用只是提供异步加载的状态，

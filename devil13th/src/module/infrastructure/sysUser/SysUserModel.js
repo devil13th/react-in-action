@@ -15,7 +15,7 @@ export default {
     namespace: 'sysUserModel',
     // 初始化state 也可以在index.js中进行初始化(如果属性名相同会覆盖模块state的初始化内容),
     state: {
-        dataSource: [], // 列表数据
+        dataSource: ["EFORM","A6"], // 列表数据
         current: 1, //列表当前页
         pageSize: 10, //列表每页条目数
         SysUserFormModalVisible: false,//用户信息编辑模态窗口显示/隐藏状态
