@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Modal,Tabs, Icon ,Drawer,Button,Tooltip,Popconfirm,Breadcrumb,Divider} from 'antd';
+import { Modal, Tabs, Icon, Drawer, Button } from 'antd';
 import SysDicPubList from './view/SysDicPubList';
 import SysDicPubSearch from './view/SysDicPubSearch';
 import SysDicPubForm from './view/SysDicPubForm';
@@ -9,24 +9,24 @@ import CFG from '../../../constants';
 const TabPane = Tabs.TabPane;
 const ButtonGroup = Button.Group;
 
-class SysDicPubRouter extends React.Component{
-    constructor(props){
+class SysDicPubRouter extends React.Component {
+    constructor(props) {
         super(props);
-        
+
         this.state = {
-            sysDicPubFormVisible : false
+            sysDicPubFormVisible: false
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //查询列表
         this.props.dispatch({
-            type:"sysDicPubModel/queryList"
+            type: "sysDicPubModel/queryList"
         });
 
         //查询字典分类下拉菜单数据
         this.props.dispatch({
-            type:"sysDicPubModel/queryDicClassify"
+            type: "sysDicPubModel/queryDicClassify"
         });
     }
 
@@ -34,12 +34,12 @@ class SysDicPubRouter extends React.Component{
     //分页,排序,筛选改变时触发
     changePageAndSort = (pagination, filters, sorter) => {
         this.props.dispatch({
-            type:"sysDicPubModel/setPageAndSort",
-            payload:{
-                current:pagination.current,
-                pageSize:pagination.pageSize,
-                sortColumn:sorter.field,
-                sortOrder:sorter.order
+            type: "sysDicPubModel/setPageAndSort",
+            payload: {
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                sortColumn: sorter.field,
+                sortOrder: sorter.order
             }
         })
     }
@@ -47,11 +47,11 @@ class SysDicPubRouter extends React.Component{
     //打开编辑窗口
     openSysDicPubForm = () => {
         this.props.dispatch({
-            type:"sysDicPubModel/mergeState",
-            payload:{
-                sysDicPubFormVisible:true,
-                entity:{},
-                operateType:CFG.OPERATETYPE.SAVE
+            type: "sysDicPubModel/mergeState",
+            payload: {
+                sysDicPubFormVisible: true,
+                entity: {},
+                operateType: CFG.OPERATETYPE.SAVE
             }
         })
     }
@@ -59,9 +59,9 @@ class SysDicPubRouter extends React.Component{
     //关闭编辑窗口
     closeSysDicPubForm = () => {
         this.props.dispatch({
-            type:"sysDicPubModel/mergeState",
-            payload:{
-                sysDicPubFormVisible:false
+            type: "sysDicPubModel/mergeState",
+            payload: {
+                sysDicPubFormVisible: false
             }
         })
     }
@@ -69,69 +69,69 @@ class SysDicPubRouter extends React.Component{
     //保存
     saveSysDicPubForm = (obj) => {
         this.props.dispatch({
-            type:"sysDicPubModel/saveSysDicPub",
-            payload : obj
+            type: "sysDicPubModel/saveSysDicPub",
+            payload: obj
         })
     }
 
     //删除单条记录
     deleteSysDicPub = (id) => {
         this.props.dispatch({
-            type:"sysDicPubModel/deleteSysDicPub",
-            payload : id
+            type: "sysDicPubModel/deleteSysDicPub",
+            payload: id
         })
     }
 
     //删除多条记录
     deleteSysDicPubBatch = (id) => {
         this.props.dispatch({
-            type:"sysDicPubModel/deleteSysDicPubBatch",
-            payload : id
+            type: "sysDicPubModel/deleteSysDicPubBatch",
+            payload: id
         })
     }
 
 
-   
+
     //编辑公共字典
     editSysDicPub = (id) => {
         this.props.dispatch({
-            type:"sysDicPubModel/editSysDicPub",
-            payload : id
+            type: "sysDicPubModel/editSysDicPub",
+            payload: id
         })
     }
 
     //查询公共字典
     searchSysDicPub = (queryCondition) => {
         this.props.dispatch({
-            type:"sysDicPubModel/setQueryCondition",
-            payload : {...queryCondition}
+            type: "sysDicPubModel/setQueryCondition",
+            payload: { ...queryCondition }
         })
     }
     //勾选/取消勾选列表
     onChangeSelectedRow = (selectedEntityIds) => {
         this.props.dispatch({
-            type:"sysDicPubModel/mergeState",
-            payload : {
+            type: "sysDicPubModel/mergeState",
+            payload: {
                 selectedEntityIds
             }
         })
     }
 
-  
 
-    render(){
-        
-        
+
+    render() {
+
+
         //dva组件state
         const state = this.props.sysDicPubModel;
         //组件state字符串
         var stateStr = JSON.stringify(state);
 
-        const {current,pageSize,total} = this.props.sysDicPubModel.queryExtraBean;
+        const { current, pageSize, total } = this.props.sysDicPubModel.queryExtraBean;
 
         //列表查询loading
         const queryListLoading = this.props.loading.effects['sysDicPubModel/queryList'];
-        return(
+        return (
             <div className="mainContent">
 
                 <SysDicPubSearch
@@ -140,7 +140,7 @@ class SysDicPubRouter extends React.Component{
                     openSysDicPubForm={this.openSysDicPubForm}
                     selectedEntityIds={this.props.sysDicPubModel.selectedEntityIds}
                     deleteSysDicPubBatch={this.deleteSysDicPubBatch}
-                    dicClassifyDataSource = {this.props.sysDicPubModel.dicClassifyDataSource}
+                    dicClassifyDataSource={this.props.sysDicPubModel.dicClassifyDataSource}
                     queryListLoading={queryListLoading}
                 >
                 </SysDicPubSearch>
@@ -149,15 +149,15 @@ class SysDicPubRouter extends React.Component{
                     queryListLoading={queryListLoading}
                     changePageAndSort={this.changePageAndSort}
                     pagination={{
-                        current,pageSize,total
+                        current, pageSize, total
                     }}
                     listDataSource={this.props.sysDicPubModel.listDataSource}
                     deleteSysDicPub={this.deleteSysDicPub}
-                    
+
                     editSysDicPub={this.editSysDicPub}
                     selectedEntityIds={this.props.sysDicPubModel.selectedEntityIds}
                     onChangeSelectedRow={this.onChangeSelectedRow}
-                    
+
                 >
 
                 </SysDicPubList>
@@ -186,9 +186,10 @@ class SysDicPubRouter extends React.Component{
                     title="公共字典信息"
                     placement="right"
                     width={350}
+                    destroyOnClose={true}
                     onClose={this.closeSysDicPubForm}
                     visible={this.props.sysDicPubModel.sysDicPubFormVisible}
-                >    
+                >
 
                     <SysDicPubForm
                         entity={this.props.sysDicPubModel.entity}
@@ -205,7 +206,7 @@ class SysDicPubRouter extends React.Component{
 }
 
 
-export default connect(({sysDicPubModel,loading }) => ({
+export default connect(({ sysDicPubModel, loading }) => ({
     sysDicPubModel,
-    loading 
+    loading
 }))(SysDicPubRouter);

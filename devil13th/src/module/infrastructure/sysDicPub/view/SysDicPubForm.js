@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form, Row, Col, Select, Divider, Button } from 'antd';
+import { Input, Form, Row, Col,  Divider, Button } from 'antd';
 import MyRpcSelect from '../../../../components/custom/MyRpcSelect';
 
 class SysDicPubForm extends React.Component {
@@ -65,7 +65,7 @@ class SysDicPubForm extends React.Component {
                             </Form.Item>
 
 
-                            
+
                         </Col>
                         <Col {...colLayout}>
                             <Form.Item
@@ -99,17 +99,17 @@ class SysDicPubForm extends React.Component {
                                         valueColumn="classify_name"
                                     >
                                     </MyRpcSelect>
-                                 /*
-                                    <Select 
-                                        showSearch
-                                        style={{width:250}}
-                                        allowClear={true}
-                                        onSearch={this.onSearch}
-                                        filterOption={false}
-                                    >
-                                        {options}
-                                    </Select>
-                                */
+                                    /*
+                                       <Select 
+                                           showSearch
+                                           style={{width:250}}
+                                           allowClear={true}
+                                           onSearch={this.onSearch}
+                                           filterOption={false}
+                                       >
+                                           {options}
+                                       </Select>
+                                   */
                                 )}
                             </Form.Item>
                         </Col>

@@ -18,58 +18,58 @@ export default {
     namespace: 'sysDicPubModel',
     // 初始化state 也可以在index.js中进行初始化(如果属性名相同会覆盖模块state的初始化内容),
     state: {
-        
+
         //弹出窗口操作类型 save:保存 update:更新
-        operateType : CFG.OPERATETYPE.SAVE,
+        operateType: CFG.OPERATETYPE.SAVE,
         //选择的行ID - 用于表格的勾选
-        selectedEntityIds:[],
+        selectedEntityIds: [],
         //新增或编辑窗口是否显示
-        sysDicPubFormVisible : false,
+        sysDicPubFormVisible: false,
         //实体对象,用于编辑和新增
-        entity : {
-            dicName:"",
-            dicClassify:"",
-            dicDesc:"",
-            dicId:""
+        entity: {
+            dicName: "",
+            dicClassify: "",
+            dicDesc: "",
+            dicId: ""
         },
         //表格列表数据
-        listDataSource:[],
+        listDataSource: [],
         //分页及排序信息 用于查询
-        queryExtraBean : {
-            current : 1,
-            pageSize : CFG.PAGESIZE,
-            total : 0,
-            sortColumn : "DIC_NAME",
-            sortOrder : "descend",
+        queryExtraBean: {
+            current: 1,
+            pageSize: CFG.PAGESIZE,
+            total: 0,
+            sortColumn: "DIC_NAME",
+            sortOrder: "descend",
         },
         //查询条件信息 用于查询
-        queryConditionBean : {
-            dicName:"",
-            dicClassify:"",
-            dicDesc:""
+        queryConditionBean: {
+            dicName: "",
+            dicClassify: "",
+            dicDesc: ""
         }
     },
     effects: {
-       
-       
+
+
         /**
          * 编辑公共字典
          * @param {payload} param0 
          *  payload:实体主键
          * @param {*} param1 
          */
-        *editSysDicPub({ payload }, { call, put, select }){
-            const data = yield call(fetchGetSysDicPub,payload);
-            if(data.errMessage){
+        *editSysDicPub({ payload }, { call, put, select }) {
+            const data = yield call(fetchGetSysDicPub, payload);
+            if (data.errMessage) {
                 message.error("Error : " + data.errMessage);
-            }else{
-                
+            } else {
+
                 yield put({
-                    type:"mergeState",
-                    payload:{
-                        entity : data.result,
-                        sysDicPubFormVisible : true,
-                        operateType:"update"
+                    type: "mergeState",
+                    payload: {
+                        entity: data.result,
+                        sysDicPubFormVisible: true,
+                        operateType: "update"
                     }
                 });
             }
@@ -80,13 +80,13 @@ export default {
          *  payload: 实体主键
          * @param {*} param1 
          */
-        *deleteSysDicPub({ payload }, { call, put, select }){
-            const data = yield call(fetchDeleteSysDicPub,payload);
-            if(data.errMessage){
+        *deleteSysDicPub({ payload }, { call, put, select }) {
+            const data = yield call(fetchDeleteSysDicPub, payload);
+            if (data.errMessage) {
                 message.error("Error : " + data.errMessage);
-            }else{
+            } else {
                 message.success(" OK !");
-                yield put({type:"queryList"});
+                yield put({ type: "queryList" });
             }
         },
 
@@ -96,17 +96,17 @@ export default {
          *  payload: 实体主键数组
          * @param {*} param1 
          */
-        *deleteSysDicPubBatch({ payload }, { call, put, select }){
+        *deleteSysDicPubBatch({ payload }, { call, put, select }) {
             const ids = payload.join(",");
-            const data = yield call(fetchDeleteSysDicPubBatch,ids);
-            if(data.errMessage){
+            const data = yield call(fetchDeleteSysDicPubBatch, ids);
+            if (data.errMessage) {
                 message.error("Error : " + data.errMessage);
-            }else{
+            } else {
                 message.success(" OK !");
-                yield put({type:"queryList"});
+                yield put({ type: "queryList" });
             }
         },
-        
+
 
 
         /**
@@ -115,31 +115,31 @@ export default {
          *  payload:保存的对象
          * @param {*} param1 
          */
-        *saveSysDicPub({ payload }, { call, put, select }){
+        *saveSysDicPub({ payload }, { call, put, select }) {
             let operateType = yield select((state) => {
                 return state.sysDicPubModel.operateType
             });
-            
+
             let operateFn = null;
-            if(operateType === CFG.OPERATETYPE.UPDATE){
+            if (operateType === CFG.OPERATETYPE.UPDATE) {
                 operateFn = fetchUpdateSysDicPub;
-            }else if(operateType === CFG.OPERATETYPE.SAVE){
+            } else if (operateType === CFG.OPERATETYPE.SAVE) {
                 operateFn = fetchSaveSysDicPub;
-            }else{
+            } else {
                 message.error("Error : operate type not be found");
                 return;
             }
-            const data = yield call(operateFn,payload);
+            const data = yield call(operateFn, payload);
 
-            if(data.errMessage){
+            if (data.errMessage) {
                 message.error("Error : " + data.errMessage);
-            }else{
+            } else {
                 message.success(" OK !");
                 yield put({
-                    type:"mergeState",
-                    payload:{sysDicPubFormVisible:false}
+                    type: "mergeState",
+                    payload: { sysDicPubFormVisible: false }
                 });
-                yield put({type:"queryList"});
+                yield put({ type: "queryList" });
             }
         },
         /**
@@ -156,47 +156,47 @@ export default {
             let queryExtraBean = null;
             let queryConditionBean = null;
             let newState = {};
-           
-            if(payload && payload.queryExtraBean){//如果payload中有queryExtraBean则设置到state中
+
+            if (payload && payload.queryExtraBean) {//如果payload中有queryExtraBean则设置到state中
                 newState.queryExtraBean = payload.queryExtraBean;
-            }else{//如果payload中没有queryExtraBean则从state中获取
+            } else {//如果payload中没有queryExtraBean则从state中获取
                 queryExtraBean = yield select((state) => {
                     return state.sysDicPubModel.queryExtraBean;
                 });
                 newState.queryExtraBean = queryExtraBean;
             }
 
-        
-            if(payload && payload.queryConditionBean){ //如果payload中有queryConditionBean则设置到state中
+
+            if (payload && payload.queryConditionBean) { //如果payload中有queryConditionBean则设置到state中
                 newState.queryConditionBean = payload.queryConditionBean;
-            }else{//如果payload中没有queryConditionBean则从state中获取
-                queryConditionBean  = yield select((state) => {
+            } else {//如果payload中没有queryConditionBean则从state中获取
+                queryConditionBean = yield select((state) => {
                     return state.sysDicPubModel.queryConditionBean;
                 });
                 newState.queryConditionBean = queryConditionBean;
             }
-           
+
             //将值为空的查询条件去掉 否则到后台收到的字符串是undefined
             const realConditionBean = {};
-            for(let p in queryConditionBean){
-                if(queryConditionBean[p] != null && queryConditionBean[p]!=undefined){
+            for (let p in queryConditionBean) {
+                if (queryConditionBean[p] != null && queryConditionBean[p] != undefined) {
                     realConditionBean[p] = queryConditionBean[p];
                 }
             }
 
             //fetch查询数据
-            const data = yield call(fetchQuerySysDicPub,queryExtraBean,realConditionBean);
-        
+            const data = yield call(fetchQuerySysDicPub, queryExtraBean, realConditionBean);
+
             //设置总条目数
             newState.queryExtraBean.total = data.result.total;
-           
+
             //将数据及条目数设置到state中
             //将分页排序信息(如果有)和查询条件信息(如果有)设置到state中
             //清空勾选内容
             yield put({
                 type: "mergeState",
                 payload: {
-                    selectedEntityIds:[], 
+                    selectedEntityIds: [],
                     listDataSource: data.result.result,
                     ...newState
                 }
@@ -219,16 +219,16 @@ export default {
             //设置当前页为第一页
             const newQueryExtraBean = {
                 ...queryExtraBean,
-                current : 1
+                current: 1
             }
 
             //设置查询条件和分页信息到state
             yield put({
-                type:"mergeState",
-                payload:{queryConditionBean:payload,queryExtraBean:newQueryExtraBean}
+                type: "mergeState",
+                payload: { queryConditionBean: payload, queryExtraBean: newQueryExtraBean }
             })
 
-            yield put({type:"queryList"})
+            yield put({ type: "queryList" })
         },
 
         /**
@@ -246,12 +246,12 @@ export default {
             //设置排序及分页信息state
             yield put({
                 type: "mergeState",
-                payload:{queryExtraBean:{...queryExtraBean,...payload}}
+                payload: { queryExtraBean: { ...queryExtraBean, ...payload } }
             })
 
-            yield put({type:"queryList"});
+            yield put({ type: "queryList" });
         },
-        
+
     },
     reducers: {
         mergeState(state, { payload }) {

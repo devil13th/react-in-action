@@ -53,7 +53,8 @@ module.exports = {
         minifyJS:true,//是否压缩直接出现在页面中的js
       }
     }),
-    //拷贝静态资源
+    //拷贝静态资源   
+    //注意： 该拷贝文件所在文件夹尽量不要和style-loader匹配到同一文件夹 否则代码中import 'xx.css' 修改时不能及时应用,必须重启webpack才能让修改生效
     new CopyWebpackPlugin([
       {
         from: __dirname + '/static/a.css',

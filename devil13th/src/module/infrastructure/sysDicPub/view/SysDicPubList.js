@@ -1,23 +1,21 @@
 import React from 'react';
-import {Table, Icon,Popconfirm,Tooltip,Button,Menu,Divider} from 'antd';
+import { Table, Icon, Popconfirm, Tooltip, Button, Menu, Divider } from 'antd';
 const ButtonGroup = Button.Group;
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 import CFG from '../../../../constants';
-class SysDicPubList extends React.Component{
-    constructor(props){
+class SysDicPubList extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            menuVisible : "none",
-            t:0,
-            l:0,
-            rightClickId : ""
+            menuVisible: "none",
+            t: 0,
+            l: 0,
+            rightClickId: ""
         }
     }
 
     componentDidMount = () => {
         const _this = this;
-        window.addEventListener("click",_this.closeContextMenu,false);
+        window.addEventListener("click", _this.closeContextMenu, false);
         // window.addEventListener("click",function(){
         //     _this.closeContextMenu()
         // },false);
@@ -25,12 +23,12 @@ class SysDicPubList extends React.Component{
 
     componentWillUnmount = () => {
         const _this = this;
-        window.removeEventListener("click",_this.closeContextMenu);
+        window.removeEventListener("click", _this.closeContextMenu);
     }
 
     closeContextMenu = () => {
         this.setState({
-            menuVisible:"none"
+            menuVisible: "none"
         })
     }
 
@@ -41,9 +39,9 @@ class SysDicPubList extends React.Component{
 
     //tr斑马条纹样式
     rowClassNameRender = (record, index) => {
-        if(index % 2 == 0){
+        if (index % 2 == 0) {
             return "trEve";
-        }else{
+        } else {
             return "trEve";
         }
     }
@@ -54,9 +52,9 @@ class SysDicPubList extends React.Component{
     }
 
     rowClassName = (record, index) => {
-        if(index % 2 == 0){
+        if (index % 2 == 0) {
             return "trOdd";
-        }else{
+        } else {
             return "trEve";
         }
     }
@@ -75,7 +73,7 @@ class SysDicPubList extends React.Component{
     showTotal = (total, range) => {
         return `共 ${total} 条`;
     }
-    render(){
+    render() {
         const _this = this;
         //排序及分页信息
         const queryExtraBean = this.props.queryExtraBean;
@@ -97,69 +95,69 @@ class SysDicPubList extends React.Component{
                 render: text => <a href="javascript:;">{text}</a>,
                 sorter:true
             }, */
-            
+
             {
                 title: 'Dic Id',
                 key: 'DIC_ID',
                 dataIndex: 'DIC_ID',
-                align:'left',
-                sorter:true,
-                sortOrder : ("DIC_ID" === sortColumn)  ? sortOrder : false,
-                width:'20%'
+                align: 'left',
+                sorter: true,
+                sortOrder: ("DIC_ID" === sortColumn) ? sortOrder : false,
+                width: '20%'
             },
             {
                 title: 'Dic Name',
                 key: 'DIC_NAME',
                 dataIndex: 'DIC_NAME',
-                align:'left',
-                sorter:true,
-                sortOrder : ("DIC_NAME" === sortColumn)  ? sortOrder : false,
-                width:'20%'
+                align: 'left',
+                sorter: true,
+                sortOrder: ("DIC_NAME" === sortColumn) ? sortOrder : false,
+                width: '20%'
             },
             {
                 title: 'Dic Classify',
                 key: 'DIC_CLASSIFY',
                 dataIndex: 'DIC_CLASSIFY',
-                align:'center',
-                sorter:true,
-                sortOrder : ("DIC_CLASSIFY" === sortColumn)  ? sortOrder : false,
-                width:'20%'
-            }, 
+                align: 'center',
+                sorter: true,
+                sortOrder: ("DIC_CLASSIFY" === sortColumn) ? sortOrder : false,
+                width: '20%'
+            },
             {
                 title: 'Description',
                 key: 'DIC_DESC',
                 dataIndex: 'DIC_DESC',
-                align:'left',
-                sorter:true,
-                sortOrder : ("DIC_DESC" === sortColumn)  ? sortOrder : false,
+                align: 'left',
+                sorter: true,
+                sortOrder: ("DIC_DESC" === sortColumn) ? sortOrder : false,
             },
             {
                 title: 'Operator',
                 key: 'OPERATOR',
-                align:'center',
-                width:150,
+                align: 'center',
+                width: 150,
                 render: (text, record, index) => {
                     return (
 
                         <ButtonGroup>
                             <Tooltip placement="left" title="Edit">
-                                <Button icon="edit" size="small" onClick={() => {this.props.editSysDicPub(record.DIC_ID)}} ></Button>
+                                <Button icon="edit" size="small" onClick={() => { this.props.editSysDicPub(record.DIC_ID) }} ></Button>
                             </Tooltip>
                             <Tooltip placement="top" title="Delete">
-                                <Popconfirm 
-                                    title="Are you sure delete this record ?" 
+                                <Popconfirm
+                                    title="Are you sure delete this record ?"
                                     placement="left"
-                                    okText="Yes" 
+                                    okText="Yes"
                                     cancelText="No"
-                                    onConfirm={() => {this.deleteSysDicPub(record.DIC_ID)}}
+                                    onConfirm={() => { this.deleteSysDicPub(record.DIC_ID) }}
                                 >
                                     <Button icon="delete" size="small"></Button>
                                 </Popconfirm>
                             </Tooltip>
-                            
-                                
-                                
-                            
+
+
+
+
                         </ButtonGroup>
                     )
                 }
@@ -173,117 +171,94 @@ class SysDicPubList extends React.Component{
             selectedRowKeys: this.props.selectedEntityIds,
             //勾选改变时触发
             onChange: (selectedRowKeys, selectedRows) => {
-              //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-              //console.log(selectedRowKeys);
-              this.props.onChangeSelectedRow(selectedRowKeys);
+                //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                //console.log(selectedRowKeys);
+                this.props.onChangeSelectedRow(selectedRowKeys);
             },
             //勾选时触发
             onSelect: (record, selected, selectedRows) => {
-              //console.log("-------------");
-              //console.log(record);
-              //console.log(selected);
-              //console.log(selectedRows);
-              //this.props.onSelectedRow(record,selected,selectedRows)
+                //console.log("-------------");
+                //console.log(record);
+                //console.log(selected);
+                //console.log(selectedRows);
+                //this.props.onSelectedRow(record,selected,selectedRows)
             },
             //全选时触发
             onSelectAll: (selected, selectedRows, changeRows) => {
-              //console.log(selected, selectedRows, changeRows);
+                //console.log(selected, selectedRows, changeRows);
             },
         };
 
         //分页信息
         const pagination = {
             ...this.props.pagination,
-            showTotal:this.showTotal, 
-            showSizeChanger: true, 
+            showTotal: this.showTotal,
+            showSizeChanger: true,
             pageSizeOptions: CFG.PAGESIZEOPTIONS
         }
 
         //表格行的各种事件
-        const onRowFn = (record) => {return {
-            // 点击行
-            onClick: (event) => {
-            },       
-            // 双击行
-            onDoubleClick: (event) => {},
-            // 右键点击行
-            onContextMenu: (event) => {
-                //console.log(record);
-                //屏蔽浏览器右键默认事件
-                event.preventDefault(); 
-                _this.setState({
-                    t:event.clientY + document.documentElement.scrollTop,
-                    l:event.clientX,
-                    menuVisible:"block",
-                    rightClickId:record.DIC_ID
-                })
+        const onRowFn = (record) => {
+            return {
+                // 点击行
+                onClick: (event) => {
+                },
+                // 双击行
+                onDoubleClick: (event) => { },
+                // 右键点击行
+                onContextMenu: (event) => {
+                    //console.log(record);
+                    //屏蔽浏览器右键默认事件
+                    event.preventDefault();
+                    _this.setState({
+                        t: event.clientY + document.documentElement.scrollTop,
+                        l: event.clientX,
+                        menuVisible: "block",
+                        rightClickId: record.DIC_ID
+                    })
 
-            },
-            //鼠标移入行
-            onMouseEnter: (event) => {},
-            //鼠标移出行
-            onMouseLeave: (event) => {}
-        }}
-        
+                },
+                //鼠标移入行
+                onMouseEnter: (event) => { },
+                //鼠标移出行
+                onMouseLeave: (event) => { }
+            }
+        }
+
 
         const menuStyle = {
-            border:"1px solid #e8e8e8",
-            borderRightWidth:0,
-            position:"absolute",
-            display:_this.state.menuVisible,
-            top:_this.state.t,
-            left:_this.state.l
+            border: "1px solid #e8e8e8",
+            borderRightWidth: 0,
+            position: "absolute",
+            display: _this.state.menuVisible,
+            top: _this.state.t,
+            left: _this.state.l
         }
-        return(
+        return (
             <div>
-            <Table 
-                expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
-                rowSelection = {rowSelection}
-                type="checkbox"
-                rowKey="DIC_ID"
-                size="small"
-                columns={columns} 
-                dataSource={this.props.listDataSource} 
-                loading={this.props.loading}
-                rowClassName={this.rowClassNameRender}
-                pagination={pagination}
-                onChange={this.changePageAndSort}
-                bordered={false}
-                rowClassName={this.rowClassName}
-                onRow = {onRowFn}
-            />
+                <Table
+                    expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+                    rowSelection={rowSelection}
+                    type="checkbox"
+                    rowKey="DIC_ID"
+                    size="small"
+                    columns={columns}
+                    dataSource={this.props.listDataSource}
+                    loading={this.props.loading}
+                    rowClassName={this.rowClassNameRender}
+                    pagination={pagination}
+                    onChange={this.changePageAndSort}
+                    bordered={false}
+                    rowClassName={this.rowClassName}
+                    onRow={onRowFn}
+                />
 
-<div style={menuStyle}>
-<Menu  style={{ width: 200 }} mode="vertical">
-    <Menu.Item key="9" onClick={this.rightClickEdit}><span><Icon type="edit" /><span>Edit</span></span></Menu.Item>
-
-    <Menu.Item key="10" onClick={this.rightClickDelete}><span><Icon type="delete" /><span>Delete</span></span></Menu.Item>
-                                
-    {/* <Divider></Divider>
-    <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
-      <MenuItemGroup title="Item 1">
-        <Menu.Item key="1">Option 1</Menu.Item>
-        <Menu.Item key="2">Option 2</Menu.Item>
-      </MenuItemGroup>
-      <MenuItemGroup title="Iteom 2">
-        <Menu.Item key="3">Option 3</Menu.Item>
-        <Menu.Item key="4">Option 4</Menu.Item>
-      </MenuItemGroup>
-    </SubMenu>
-    <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Navigation Two</span></span>}>
-      <Menu.Item key="5">Option 5</Menu.Item>
-      <Menu.Item key="6">Option 6</Menu.Item>
-      <SubMenu key="sub3" title="Submenu">
-        <Menu.Item key="7">Option 7</Menu.Item>
-        <Menu.Item key="8">Option 8</Menu.Item>
-      </SubMenu>
-    </SubMenu>
-    
-      */}
-     
-    
-  </Menu>
-  </div>
+                <div style={menuStyle}>
+                    <Menu style={{ width: 200 }} mode="vertical">
+                        <Menu.Item key="editMenuItem" onClick={this.rightClickEdit}><span><Icon type="edit" /><span>Edit</span></span></Menu.Item>
+                        <Menu.Item key="deleteMenuItem" onClick={this.rightClickDelete}><span><Icon type="delete" /><span>Delete</span></span></Menu.Item>
+                    </Menu>
+                </div>
             </div>
 
         )

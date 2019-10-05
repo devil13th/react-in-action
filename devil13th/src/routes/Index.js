@@ -11,9 +11,14 @@ import Footer from '../components/index/Footer';
 import AntdRouter from '../routes/AntdRouter'
 import SysUserRouter from '../module/infrastructure/sysUser/SysUserRouter'
 import SysDicPubRouter from '../module/infrastructure/sysDicPub/SysDicPubRouter'
+import SysDicPubClassifyRouter from '../module/infrastructure/sysDicPubClassify/SysDicPubClassifyRouter'
 import NoteClassifyRouter from '../module/note/noteClassify/NoteClassifyRouter'
 import NoteListRouter from '../module/note/noteList/NoteListRouter'
+import ReactCodegenTestRouter from '../module/infrastructure/reactCodegenTest/ReactCodegenTestRouter'
+import ModNoteListRouter from '../module/note/modNodeList/ModNoteListRouter'
+
 import AntdIndex from '../components/antd/AntdIndex'
+
 //加载图片 //加载图片  使用方法 -> <img src={img_yay_src}/>
 import img_yay_src from '../imgs/yay.jpg';
 
@@ -62,12 +67,15 @@ class Index extends React.Component {
                                 <Route exact path="/antd" component={AntdIndex} />
                                 <Route exact path="/SysUserRouter" component={SysUserRouter} />
                                 <Route exact path="/SysDicPubRouter" component={SysDicPubRouter} />
+                                <Route exact path="/SysDicPubClassifyRouter" component={SysDicPubClassifyRouter} />
                                 
                                 <Route exact path="/NoteClassifyRouter" component={NoteClassifyRouter} />
                                 <Route exact path="/NoteListRouter" component={NoteListRouter} />
+                                <Route exact path="/ReactCodegenTestRouter" component={ReactCodegenTestRouter} />
+                                <Route exact path="/note/ModNoteListRouter" component={ModNoteListRouter} />
 
                                 <Route path="/antd/x2" component={AntdIndex2} />
-                                <Route path="/antd/x3" component={AntdIndex3} />
+                                <Route path="/antd/x3" component={AntdIndex3} /> 
                             </Switch>
                         </div>
                     </AntdContent>

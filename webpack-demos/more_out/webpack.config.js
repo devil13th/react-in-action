@@ -19,7 +19,8 @@ module.exports = {
     bundle2: './main2.js'
   },
   output: {
-    filename: './[name]-[hash].bundle.js'
+   // filename: './[name]-[hash].bundle.js'
+    filename: './[name].js'
   },
   plugins: [
     new CleanWebpackPlugin('dist') 

@@ -25,6 +25,18 @@ console.log(path.resolve('./', 'dist'));
 
 
 module.exports = {
+  //模块打包后的预警(大小超过此设置会按照配置进行预警、报错)
+  performance: {
+    // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告...
+    hints: "warning",
+    // 开发环境设置较大防止警告
+    // 根据入口起点的最大体积，控制webpack何时生成性能提示,整数类型,以字节为单位
+    maxEntrypointSize: 5000000, 
+    // 最大单个资源体积，默认250000 (bytes)
+    maxAssetSize: 3000000
+  },
+
+
   //mode:生产模式production(会压缩代码)  开发模式development(不会压缩代码)
   mode:"production", 
 
@@ -44,16 +56,16 @@ module.exports = {
         
         default: false,//禁用默认配置
         vendors: {  //cacheGroups中的key(cacheGroups的属性)的名称可以随意取名,无特殊作用  
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/]/,  //node_modules 中的第三方包打到名为vendors的包
           name: 'vendors',
           chunks: 'all',
           minSize:0,
           //priority: 29
-          priority: 30,
+          priority: 30, //优先级
           enforce:true
         },
         dva:{
-          test:'dva',
+          test:'dva', //dva目录中的js到名为vendors的包
           name:'dva',
           chunks: 'all',
           minSize:0, //单位字节,打包前的最小文件大小  满足该条件才会单独打包 默认大小为30000(30K)
@@ -61,15 +73,15 @@ module.exports = {
           enforce:true  //忽略SplitChunks.MinSize、SplitChunks.MinChunks、SplitChunks.MaxAsyncRequests和SplitChunks.MaxInitialRequests选项，并始终为此缓存组创建块。
         },
         antd:{
-          test:'antd',
-          name:'antd_',
+          test:'antd',  //antd目录中的js到名为vendors的包
+          name:'antd_', 
           chunks: 'all',
           minSize:0,
           priority: 31,
           enforce:true
         },
         react:{
-          test:'react',
+          test:'react',//react目录中的js到名为vendors的包
           name:'react_',
           chunks: 'all',
           minSize:0,
@@ -77,7 +89,7 @@ module.exports = {
           enforce:true
         },
         reactDom:{
-          test:'react-dom',
+          test:'react-dom',//react-dom目录中的js到名为vendors的包
           name:'react-dom_',
           chunks: 'all',
           minSize:0,
@@ -240,8 +252,8 @@ module.exports = {
     }),
     */
 
-
     //拷贝静态资源
+    //注意： 该拷贝文件所在文件夹尽量不要和style-loader匹配到同一文件夹 否则代码中import 'xx.css' 修改时不能及时应用,必须重启webpack才能让修改生效
     new CopyWebpackPlugin([
       {
         from: __dirname + '/src/styles/antd.css',

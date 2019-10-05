@@ -60,10 +60,6 @@ class NoteClassifyRouter extends React.Component{
     }
     //打开行信息
     onExpand = (expanded, record) => {
-        //console.log(expanded);
-        //console.log(record.NOTE_ID);
-
-
         this.props.dispatch({
             type:"noteListModel/loadNoteContent",
             payload:record.NOTE_ID

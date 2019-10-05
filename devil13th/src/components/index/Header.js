@@ -15,7 +15,6 @@ class Header extends React.Component{
         this.state = {
             current : props.current
         }
-        console.log(props);
     }
 
     handleClick = (e) => {
@@ -50,11 +49,20 @@ class Header extends React.Component{
                             <Menu.Item key="SysDicPub">
                                 <Link to="/SysDicPubRouter"><Icon type="user" /> Pub Dic Manage </Link>
                             </Menu.Item>
+                            <Menu.Item key="SysDicPubClassify">
+                                <Link to="/SysDicPubClassifyRouter"><Icon type="user" /> Pub Dic Classify Manage </Link>
+                            </Menu.Item> 
                             <Menu.Item key="NoteClassifyRouter">
                                 <Link to="/NoteClassifyRouter"><Icon type="user" /> Note Classify </Link> 
                             </Menu.Item>
                             <Menu.Item key="NoteListRouter">
                                 <Link to="/NoteListRouter"><Icon type="user" /> Note List </Link> 
+                            </Menu.Item>
+                            <Menu.Item key="ReactCodegenTest">
+                                <Link to="/ReactCodegenTestRouter"><Icon type="user" />  ReactCodeGenTest </Link>
+                            </Menu.Item>
+                            <Menu.Item key="ModNoteList">
+                                <Link to="/note/ModNoteListRouter"><Icon type="user" />  记事 </Link>
                             </Menu.Item>
                         </SubMenu>
 
