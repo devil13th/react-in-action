@@ -22,7 +22,7 @@ console.log("__dirname = %s", path.resolve(__dirname));
 console.log(path.resolve(__dirname, 'dist'));
 console.log(path.resolve('./', 'dist'));
 
-
+console.log('环境：' + process.env);
 
 module.exports = {
   //模块打包后的预警(大小超过此设置会按照配置进行预警、报错)

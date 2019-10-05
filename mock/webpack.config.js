@@ -13,7 +13,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 
 // __dirname是node.js的全局变量，它指向当前执行脚本所在的目录
-console.log("----------- 当前目录 ----------------" );
+console.log("---------------- 当前目录 start -----------------" );
 console.log( __dirname );
 var path = require("path");
 var projectRoot = path.resolve(".");
@@ -22,8 +22,8 @@ console.log("__dirname = %s", path.resolve(__dirname));
 console.log(path.resolve(__dirname, 'dist'));
 console.log(path.resolve('./', 'dist'));
 
-
-
+console.log('环境：' + JSON.stringify(process.env));
+console.log("---------------- 当前目录  finish -----------------" ); 
 module.exports = {
   performance: {
     // false | "error" | "warning" // 不显示性能提示 | 以错误形式提示 | 以警告...
