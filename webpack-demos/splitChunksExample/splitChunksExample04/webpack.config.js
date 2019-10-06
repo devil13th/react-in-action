@@ -29,11 +29,26 @@ module.exports = {
         common: {
           //表示模块被import的最小次数,例如某个js被import至少2次的会打到这个包中
           minChunks: 2,
+
+          //maxInitialRequests:2,
           //改组打包后的文件名称
           name:'commons',
 
           chunks: 'all',
-          priority: 10,
+          priority: 10, //优先级
+          reuseExistingChunk: true,
+          enforce: true
+        },
+        common3: {
+          //表示模块被import的最小次数,例如某个js被import至少2次的会打到这个包中
+          minChunks: 3 ,
+
+          //maxInitialRequests:2,
+          //改组打包后的文件名称
+          name:'commons3',
+
+          chunks: 'all',
+          priority: 20, //优先级
           reuseExistingChunk: true,
           enforce: true
         }

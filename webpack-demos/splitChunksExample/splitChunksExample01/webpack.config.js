@@ -12,36 +12,50 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
   //mode:生产模式production(会压缩代码)  开发模式development(不会压缩代码)
-  mode:"development", 
+  mode:"production", 
   //三个入口,也就是生成的index.html中会自动进入下面三个打好包的JS 
   //<script type="text/javascript" src="vendor2.js"></script>
   //<script type="text/javascript" src="vendor1.js"></script>
   //<script type="text/javascript" src="entry.js"></script>
   entry: {
     entry: ['./main.js'],
-    vendor1:['jquery'], // verdor1包含了jquery模块
-    vendor2:['lodash']  //verdor2 包含了lodash模块
+    //jquery:['jquery'],
+    //lodash:['lodash']
   },
 
   optimization:{
+    runtimeChunk: 'single', //对应webpack运行时代码单独打包
     splitChunks: {
       cacheGroups: {
-          vendor1: { 
-              chunks: 'initial',
-              name: 'vendor1',  //对应entry的vendor1属性
-              test: 'vendor1',
-              enforce: true
-          },
-          vendor2: {
-            chunks: 'initial',
-            name: 'vendor2', //对应entry的vendor2属性
-            test: 'vendor2',
+        default: false,//禁用默认配置
+        vendors: false,//禁用默认配置
+        vendorsx: {  //生成的文件名称,如果定义了name属性则name属性优先
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+          minSize:0,
+          //maxSize:204800, //单个bundle 最大字节数
+          //priority: 29
+          priority: 6,
+          enforce:true
+        },
+        vendor1: { 
+            chunks: 'all',
+            test: /[\\/]node_modules[\\/](jquery)[\\/]/,
+            minSize:0,
+            minChunks:1,
+            priority: 39,
             enforce: true
-          }
+        },
+        third: {
+          test: /[\\/]node_modules[\\/](moment|lodash)[\\/]/,
+          chunks: 'all',
+          priority: 39,
+          enforce: true
+        }
       }
     }
   },
- 
+
   
   //打包后的文件路径 (webpack4默认dist目录下)
   output: {
@@ -60,7 +74,6 @@ module.exports = {
   },
 
 
-  
 
 
 

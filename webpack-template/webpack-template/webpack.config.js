@@ -46,18 +46,23 @@ module.exports = {
   //单个入口文件
   entry: {
     entry: [__dirname + '/src/index.js'],
-    antd:['antd'], // 打包后的antd.js包含了antd模块  以antd模块为入口
-    dva:['dva'], // 打包后的dva.js包含了dva模块  以dva模块为入口
-    react:['react','react-dom'] //打包后的react.js包含了react和react-dom模块  以react和react-dom模块模块为入口
+    //antd:['antd'], // 打包后的antd.js包含了antd模块  以antd模块为入口
+    //dva:['dva'], // 打包后的dva.js包含了dva模块  以dva模块为入口
+    //react:['react','react-dom'] //打包后的react.js包含了react和react-dom模块  以react和react-dom模块模块为入口
   },
   optimization:{
     splitChunks: {
       cacheGroups: { //分组规则
         
         default: false,//禁用默认配置
-        vendors: {  //cacheGroups中的key(cacheGroups的属性)的名称可以随意取名,无特殊作用  
+        //vendors: false,//禁用默认配置
+        vendors: { //生成的文件名称,如果定义了name属性则name属性优先
           test: /[\\/]node_modules[\\/]/,  //node_modules 中的第三方包打到名为vendors的包
-          name: 'vendors',
+          
+          //If the splitChunks.name matches an entry point name, the entry point will be removed.
+          //如果splitChunks.name与entry入口指定的名称相同,则入口则会被移除
+          name: 'vendors', // name是生成的bundle的具体名称 如果指定了name属性则会忽略该组的key(这里是vendors),
+        
           chunks: 'all',
           minSize:0,
           //priority: 29
@@ -65,7 +70,7 @@ module.exports = {
           enforce:true
         },
         dva:{
-          test:'dva', //dva目录中的js到名为vendors的包
+          test: /[\\/]node_modules[\\/](dva)[\\/]/,
           name:'dva',
           chunks: 'all',
           minSize:0, //单位字节,打包前的最小文件大小  满足该条件才会单独打包 默认大小为30000(30K)
@@ -73,7 +78,7 @@ module.exports = {
           enforce:true  //忽略SplitChunks.MinSize、SplitChunks.MinChunks、SplitChunks.MaxAsyncRequests和SplitChunks.MaxInitialRequests选项，并始终为此缓存组创建块。
         },
         antd:{
-          test:'antd',  //antd目录中的js到名为vendors的包
+          test: /[\\/]node_modules[\\/](antd)[\\/]/,
           name:'antd_', 
           chunks: 'all',
           minSize:0,
@@ -81,21 +86,21 @@ module.exports = {
           enforce:true
         },
         react:{
-          test:'react',//react目录中的js到名为vendors的包
+          test: /[\\/]node_modules[\\/](react|react-router|react-dom)[\\/]/,
           name:'react_',
           chunks: 'all',
           minSize:0,
           priority: 36,
           enforce:true
         },
-        reactDom:{
+        /*reactDom:{
           test:'react-dom',//react-dom目录中的js到名为vendors的包
           name:'react-dom_',
           chunks: 'all',
           minSize:0,
           priority: 35,
           enforce:true
-        },
+        },*/
       }
     }
   },
