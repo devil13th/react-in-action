@@ -12,7 +12,7 @@
     "codemirror": "^5.42.2",
     "dva": "^2.4.1",
     "dva-loading": "^2.0.6",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "react": "^16.7.0",
