@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "antd": "^3.12.1",
-    "codemirror": "^5.42.2",
+    "codemirror": "^5.58.2",
     "dva": "^2.4.1",
     "dva-loading": "^2.0.6",
     "jquery": "^3.3.1",
